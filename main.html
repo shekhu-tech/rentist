@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Rentist</title>
+    <!-- Tailwind CSS CDN (Self-contained styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Fonts (Inter/Noto Sans Devanagari for readability) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GLOBAL & THEME VARIABLES (थीम वेरिएबल्स) --- */
+        :root {
+            --color-primary: #76FF03; /* Bright Lime Green Glow (चमकीला हरा) */
+            --color-secondary: #00897B; /* Dark Teal (गहरा टील) */
+            --color-text-primary: #f3f4f6; /* White/Light Text */
+            --bg-main-dark: #1C3144; /* Deep Blue-Grey (गहरा नीला-ग्रे) */
+            --electric-green-glow: #76FF03; 
+            --glass-bg-dark: rgba(28, 49, 68, 0.7); /* Based on --bg-main-dark */
+            --premium-bg-dark: #1A2733; /* Slightly darker inner card */
+            --premium-outer-bg: #28475c; /* Lighter outer card for gradient */
+            --color-primary-rgb: 118, 255, 3; 
+        }
+
+        /* --- BASE LAYOUT --- */
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', 'Noto Sans Devangari', sans-serif;
+            background-color: var(--bg-main-dark); 
+            color: var(--color-text-primary); 
+            min-height: 100vh;
+            padding-top: 78px; /* Header Height */
+            padding-bottom: 80px; /* Bottom Nav Height */
+        }
+        .fixed-header-container {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+        }
+        
+        /* --- MOBILE SIDEBAR STYLES (मोबाइल साइडबार) --- */
+        .mobile-menu-panel {
+            top: 85px; 
+            height: calc(100vh - 165px);
+            transition: transform 0.5s ease-in-out;
+            background-color: rgba(28, 49, 68, 0.9); /* New dark color */
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid var(--electric-green-glow); /* New green glow */
+        }
+
+        /* --- BOTTOM NAV STYLES (बॉटम नेविगेशन) --- */
+        .bottom-nav-fixed {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: var(--glass-bg-dark); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 60;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.7); 
+        }
+        .nav-item-shs {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--color-text-secondary); transition: all 0.3s ease;
+            font-size: 0.75rem; padding-top: 10px; padding-bottom: 10px;
+        }
+        .nav-item-shs:hover, .nav-item-shs.active {
+            color: var(--color-primary); transform: scale(1.1);
+        }
+        .nav-icon-shs { font-size: 1.5rem; margin-bottom: 2px; }
+        .central-nav-item-shs { position: relative; height: 80px; display: flex; justify-content: center; }
+        
+        /* FAB Button Pulse */
+        @keyframes pulseShadow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(var(--color-primary-rgb), 0); }
+        }
+        .animate-pulse-shadow { animation: pulseShadow 2s infinite; }
+        .central-fab {
+            position: absolute; top: -28px; width: 64px; height: 64px; border-radius: 50%;
+            background-color: var(--color-primary); border: 4px solid var(--bg-main-dark); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); transform: scale(1.0);
+            display: flex; /* Ensure content is centered */
+            align-items: center;
+            justify-content: center;
+            text-decoration: none; /* Hide default link underline */
+        }
+        .central-fab-icon { color: var(--color-button-text); font-size: 1.8rem; }
+        .central-fab-label { 
+            position: absolute; 
+            bottom: 5px; 
+            font-size: 0.75rem; 
+            font-weight: bold; 
+            color: var(--color-primary); 
+            pointer-events: none; /* Ensure clicks pass through to the FAB 'a' tag */
+        }
+
+        /* --- PREMIUM CARD STYLES (प्रीमियम कार्ड स्टाइल्स) --- */
+        .premium-card {
+            background: linear-gradient(145deg, var(--premium-outer-bg), var(--bg-main-dark)); /* New gradient colors */
+            /* --- PADDING: 5px for all cards as requested --- */
+            padding:10px; 
+            border-radius:35px; border:2px solid rgba(118,255,3,0.7); /* New primary RGB */
+            box-shadow: 0 0 20px rgba(118,255,3,0.4), inset 0 0 30px rgba(118,255,3,0.3); /* New primary RGB */
+            transition:0.3s ease-in-out; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; cursor: pointer; 
+            height: 350px; /* All cards fixed Height */
+        }
+        .premium-card:hover {
+            box-shadow: 0 0 35px rgba(118,255,3,0.9), inset 0 0 30px rgba(118,255,3,0.45); /* New primary RGB */
+            transform: translateY(-8px);
+        }
+        .inner-box {
+            background: var(--premium-bg-dark); padding:15px; border-radius:45px;
+            border:1.5px solid rgba(118,255,3,1); /* New primary RGB */
+            box-shadow: inset 0 0 35px rgba(118,255,3,0.45), 0 0 25px rgba(118,255,3,0.3); /* New primary RGB */
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .inner-box img {
+            width:100%; 
+            height: 170px; /* Fixed height for image */
+            object-fit: cover; border-radius:50px; display:block;
+            box-shadow: 0 0 25px rgba(118,255,3,0.35), inset 0 0 15px rgba(255,255,255,0.12); /* New primary RGB */
+        }
+        .premium-title {
+            margin-top:15px; font-size:19px; font-weight:700; color:var(--color-primary); /* Use variable */
+            text-shadow:0 0 10px rgba(118,255,3,0.8); /* New primary RGB */
+            text-align: center;
+        }
+        .premium-desc {
+            margin-top:8px; font-size:15px; line-height:1.4; color:#e9e9e9;
+            opacity:0.95; text-align: center; margin-bottom: 5px;
+        }
+
+        /* --- GRID AND RESPONSIVENESS (ग्रिड और प्रतिक्रियाशीलता) --- */
+        .card-grid-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile Default: 1 Column */
+            gap: 1.5rem;
+        }
+        @media(min-width: 768px){
+            .card-grid-container {
+                grid-template-columns: repeat(4, 1fr); /* Desktop: 4 Columns */
+            }
+        }
+        
+        /* --- SLIDER SPECIFIC STYLES (स्लाइडर विशेष स्टाइल) --- */
+        .slider-container {
+            position: relative; 
+            height: 100%; 
+            width: 100%; 
+            overflow: hidden;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0; 
+        }
+        /* Slider Controls - Shown only on Mobile for manual control */
+        .slider-control {
+            position: absolute; 
+            top: 100px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5); 
+            color: var(--electric-green-glow); /* Changed to green glow */
+            padding: 0.5rem 0.6rem; 
+            cursor: pointer; z-index: 10; border-radius: 50%;
+            font-size: 1.2rem; 
+            border: none;
+            transition: background 0.3s;
+            display: none !important; 
+        }
+        @media(max-width: 767px) {
+            .slider-control {
+                display: block !important; 
+            }
+        }
+        #prev-slide { left: 25px; }
+        #next-slide { right: 25px; }
+        
+        /* Slide Item Styling */
+        #slide-wrapper {
+             position: relative; /* Wrapper needs relative position for absolute slides */
+             width: 100%;
+             height: 100%;
+        }
+        .slide-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex; 
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center; 
+            padding: 15px; 
+            
+            opacity: 0; /* Hidden by default */
+            transition: opacity 1s ease-in-out; /* Smooth transition for slides */
+            pointer-events: none; /* Disable interaction when hidden */
+        }
+        .slide-item.active {
+            opacity: 1;
+            pointer-events: auto; /* Enable interaction when active */
+        }
+        .slide-link {
+            /* Full clickable area for the entire slide content */
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* --- SLIDER IMAGE OVERRIDE FOR WIDER DISPLAY --- */
+        /* Target the image inside the inner-box of the slider card (id=premium-card-1) */
+        #premium-card-1 .slide-link .inner-box img {
+            /* Make the image take up the full available width inside the inner-box.
+               This is the key to making the slider image wider than the static cards.
+            */
+            max-width: 100% !important; 
+            width: 100%;
+            height: 170px;
+        }
+        /* Ensure the inner-box itself doesn't constrain the width excessively */
+        #premium-card-1 .slide-link .inner-box {
+            max-width: 100% !important;
+        }
+
+
+/* --- LATEST RECRUITMENT SLIDER STYLES (UPDATED FOR CARD STYLE) --- */
+        #slider-bg {
+            position: relative;
+            height: 210px; /* Mobile height */
+            /* Matching Card Styles */
+            border-radius: 35px; /* Matched card radius */
+            border: 2px solid rgba(118,255,3,0.7); /* Matched card border */
+            box-shadow: 0 0 20px rgba(118,255,3,0.4), inset 0 0 30px rgba(118,255,3,0.3); /* Matched card box-shadow */
+            /* End Card Styles */
+            margin-bottom: 2rem;
+            overflow: hidden;
+            background-color: var(--premium-bg-dark); /* Darker background consistent with cards */
+            transition: background-image 0.8s ease-in-out; 
+            background-size: cover;
+            background-position: center;
+            /* FIX: Add top margin to prevent being hidden under header on load */
+            margin-top: 1rem; 
+        }
+
+        @media (min-width: 1024px) {
+            #slider-bg {
+                /* FIX 2: PC slider height set to 350px */
+                height: 350px; 
+            }
+        }
+
+        #slider-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45); 
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: 0;
+        }
+
+        .latest-forms {
+            position: relative;
+            height: 100%;
+            padding: 0; 
+            z-index: 10;
+             justify-content: center; 
+        }
+        
+        .slider-container { 
+            position: center; 
+            width: 100%; 
+            height: 60%;
+            overflow: hidden; 
+        }
+
+        .slide { 
+            background: transparent !important; 
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            padding: 1rem; 
+            text-align: center; 
+            opacity: 0; 
+            transition: opacity 1s ease-in-out; 
+        }
+        
+        .slide-content-wrapper {
+            max-width: 90%; 
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        }
+        
+        .slide-content-wrapper .post-name {
+            font-weight: 1000;
+            line-height: 1.2;
+            color: var(--color-primary); /* Changed to primary green glow */
+            margin-bottom: 0.5rem; 
+            word-wrap: break-word; 
+            white-space: normal;
+        }
+        .slide-content-wrapper .last-date {
+            font-size: 0.9rem; 
+            font-weight: 800;
+            color: var(--color-text-primary); /* Using text primary for date */
+            margin-bottom: 0.8rem; 
+        }
+        .apply-btn {
+            background-image: linear-gradient(45deg, #FFC107, #B8860B);
+            color: var(--color-button-text); /* Use the dark button text variable */
+            padding: 0.5rem 1.2rem; 
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            min-height: 2.5rem; 
+            line-height: 1.5;
+        }
+        .apply-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        @media (min-width: 1024px) {
+            .slide-content-wrapper .post-name {
+                font-size: 1.25rem; 
+            }
+            .slide-content-wrapper .last-date {
+                font-size: 1.25rem; 
+            }
+            .slide {
+                padding: 3rem;
+            }
+        }
+
+        #prev-btn, #next-btn {
+            background-color: rgba(255, 255, 255, 0.15); 
+            color: var(--color-primary); /* Changed to primary green glow */
+            border: 1px solid var(--color-primary); /* Changed to primary green glow */
+            box-shadow: 0 0 10px rgba(118, 255, 3, 0.4); /* Updated shadow to green */
+        }
+        #progress-bar-container {
+            bottom: 0.5rem; 
+        }
+
+        /* --- Global Styles (Updated to reflect new primary color for glow) --- */
+        .text-primary-glow { 
+            color: var(--color-primary); 
+            text-shadow: 0 0 5px rgba(118, 255, 3, 0.5); 
+        } 
+        
+        /* Removed .text-golden-dark as it's replaced by .text-primary-glow */
+
+
+        /* --- MODAL STYLES (लोकेशन पॉपअप स्टाइल) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 200; /* Above header and bottom nav */
+            display: none; /* Controlled by JS */
+            justify-content: center; /* Horizontally center */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal-content {
+            /* Centering logic: position between header (78px) and footer (80px) */
+            position: absolute;
+            top: 78px; 
+            bottom: 80px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%; /* Responsive width */
+            max-width: 600px;
+            
+            /* Matching Card Styles */
+            background: linear-gradient(145deg, var(--premium-outer-bg), var(--bg-main-dark));
+            padding: 10px; 
+            border-radius: 35px; 
+            border: 2px solid rgba(118,255,3,0.7); 
+            box-shadow: 0 0 35px rgba(118,255,3,0.9), inset 0 0 30px rgba(118,255,3,0.45);
+            
+            overflow-y: hidden; /* Hide scrollbar for the modal-content container */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Inner scrollable area for locations, matching inner-box style */
+        .location-list-container {
+            padding: 15px;
+            border-radius: 25px;
+            background: var(--premium-bg-dark);
+            border: 1.5px solid rgba(118,255,3,1);
+            box-shadow: inset 0 0 35px rgba(118,255,3,0.45), 0 0 25px rgba(118,255,3,0.3);
+            flex-grow: 1;
+            overflow-y: auto; /* Enable scrolling for the location list */
+        }
+
+        .location-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border-left: 5px solid var(--color-primary);
+            transition: background-color 0.2s, transform 0.2s;
+            font-weight: 500;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .location-item:hover {
+            background-color: rgba(118, 255, 3, 0.1);
+            transform: translateX(5px);
+            color: var(--color-primary);
+        }
+        /* Mobile adjustment for modal content to take less height */
+        @media (max-height: 600px) and (max-width: 768px) {
+            .modal-content {
+                top: 40px;
+                bottom: 40px;
+            }
+        }
+
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <!-- HEADER (शीर्षक) -->
+    <div class="fixed-header-container">
+        <header id="main-header" class="bg-glass-bg-dark/90 backdrop-blur-xl shadow-2xl p-4 fixed top-0 left-0 right-0 z-[100] border-b-4 border-primary/50">
+              <div class="container mx-auto flex justify-between items-center px-2 sm:px-4" style="padding-top: env(safe-area-inset-top);">
+                <!-- Logo and Title (लोगो और शीर्षक) -->
+                <a href="index.html" class="flex items-center no-underline">
+                  <!-- rentist.jpg इमेज का उपयोग किया गया -->
+                  <img src="rentist.png" alt="Rentist Logo" class="h-10 w-10 mr-3 rounded-full border border-primary/50 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/48x48/1C3144/76FF03?text=R';"/>
+                   <span class="text-xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center">
+                    <img src="skillora.png" alt="Logo" class="h-[35px] w-auto object-contain inline-block" onerror="this.onerror=null;this.src='https://placehold.co/100x35/1C3144/76FF03?text=SkillAurA';" /> <!-- Placeholder color changed -->
+                  </span>
+                </a>
+
+                <!-- Desktop Navigation (डेस्कटॉप नेविगेशन) -->
+                <div class="hidden lg:flex items-center space-x-10">
+                  <nav class="flex space-x-8 font-extrabold">
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Rooms
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Flats
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        PG/Hostels
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Houses
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                  </nav>
+                  
+                  <!-- Contact Side Bar (संपर्क साइड बार) -->
+                  <div class="border-l-4 border-primary/50 pl-6 text-sm flex flex-col items-start bg-primary/5 p-2 rounded-xl shadow-inner">
+                    <a href="tel:8816014071" class="flex items-center font-extrabold text-white hover:text-primary transition-colors">
+                      <i class="fas fa-phone-alt mr-2 text-primary"></i> <span class="text-xl tracking-wider"></span>
+                    </a>
+                    <a href="mailto:care@yourtrueguide.com" class="flex items-center text-xs text-gray-400 hover:text-primary transition-colors mt-1">
+                      <i class="fas fa-envelope mr-2 text-secondary/70"></i> <b></b>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Mobile Menu Button (मोबाइल मेन्यू बटन) -->
+                <button id="mobile-menu-button" class="lg:hidden text-primary p-2 rounded-full bg-primary/10" aria-label="Toggle menu" aria-expanded="false">
+                  <i class="fas fa-bars text-2xl text-primary" id="mobile-menu-icon"></i>
+                </button>
+              </div>
+        </header>
+
+        <!-- Mobile Menu Panel (मोबाइल मेन्यू पैनल) -->
+        <div id="mobile-menu-panel" class="mobile-menu-panel fixed right-0 w-3/4 max-w-sm z-[110] lg:hidden translate-x-full overflow-hidden border border-primary/50 rounded-2xl shadow-lg shadow-primary/10">
+            <button id="mobile-menu-close-button" class="absolute top-4 right-4 text-white hover:text-primary p-2 rounded-full bg-secondary/50 shadow-lg" aria-label="Close menu">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="flex flex-col h-full space-y-6 font-extrabold text-left mt-8 p-6 overflow-y-auto">
+                <div class="mb-4 pb-4 border-b border-primary/50">
+                    <p class="text-sm font-light text-text-secondary">Welcome to</p>
+                    <h2 class="text-3xl font-black text-primary drop-shadow-md">Rentist</h2>
+                    <!-- FIX: Added back the missing tagline -->
+                    <p class="text-xs font-semibold text-text-secondary">Your Rent Guide!</p>
+                </div>
+                <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Rooms
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                     <div class="border-t border-primary/30 w-full my-4"></div>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Flats
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                     <div class="border-t border-primary/30 w-full my-4"></div>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        PG/Hostels
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                     <div class="border-t border-primary/30 w-full my-4"></div>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Houses
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                <div class="border-t border-primary/30 w-full my-4"></div>
+                <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50">
+                  <h4 class="text-base font-bold text-primary mb-1">Need Help? (24x7)</h4>
+                  <a href="tel:8816014071" class="flex items-center font-extrabold text-white text-xl p-3 rounded-full bg-primary/90 w-full justify-center">
+                     <i class="fas fa-phone-volume mr-3"></i> <span>0000000000</span>
+                  </a>
+                </div>
+                <p class="text-xs text-center text-gray-500 mt-auto">© 2025 Skillaura</p>
+            </div>
+        </div>
+        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/70 mobile-menu-overlay hidden lg:hidden"></div>
+    </div>
+    <!-- END HEADER & SIDEBAR -->
+
+
+    <!-- MAIN CONTENT AREA (मुख्य सामग्री क्षेत्र) -->
+    <main class="container mx-auto p-4 md:p-8 lg:p-12" style="min-height: calc(100vh - 160px);">
+        
+       
+            
+ <!-- SLIDE SECTION WRAPPER (FOR DYNAMIC BACKGROUND & BORDER) -->
+        <div id="slider-bg"> 
+            <section class="latest-forms">
+                <!-- Title is now placed relative to the inner section for Z-index -->
+                <div class="text-center mb-6">
+                    <!-- Updated class to use primary color glow -->
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-4 pb-1">Top Trending Now</h2>
+                </div>
+                
+                <div class="slider-container relative">
+                    <!-- Slides Wrapper will contain the dynamic content over the image -->
+                    <div id="slides-wrapper" class="relative w-full h-full"></div>
+
+                    <!-- Navigation Buttons -->
+                    <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-primary p-2 rounded-full shadow-lg transition-all z-20">❮</button>
+                    <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-primary p-2 rounded-full shadow-lg transition-all z-20">❯</button>
+                    
+            </section>
+        </div>
+        <!-- END SLIDE SECTION WRAPPER -->
+
+            <div class="card-grid-container">
+                
+                <!-- CARD 2: Room Link (Ayushman Card) (Room लिंक) -->
+                <!-- Added click event listener via JS -->
+                <div class="premium-card" id="premium-card-2">
+                    <div class="inner-box">
+                        <img src="rooms.png" alt="Ayushman Card Image" onerror="this.onerror=null;this.src='https://placehold.co/300x170/1C3144/76FF03?text=Room';"> <!-- Placeholder color changed -->
+                    </div>
+                    <div class="premium-title">Rooms Available</div>
+                    <div class="premium-desc">If You Are Single Wants Only Rooms For Renting </div>
+                </div>
+
+                <!-- CARD 3: Flats Link (Government Health Plan) (Flats लिंक) -->
+                <!-- Added click event listener via JS -->
+                <div class="premium-card" id="premium-card-3">
+                    <div class="inner-box">
+                        <img src="flats.png" alt="Government Health Plan Image" onerror="this.onerror=null;this.src='https://placehold.co/300x170/1C3144/76FF03?text=Flats';"> <!-- Placeholder color changed -->
+                    </div>
+                    <div class="premium-title">Flats Available</div>
+                    <div class="premium-desc">If You Are Sing/With family Wants Only Flats For Renting</div>
+                </div>
+
+                <!-- CARD 4: PG/Hostel Link (Smart Health Coverage) (PG/Hostel लिंक) -->
+                <!-- Added click event listener via JS -->
+                <div class="premium-card" id="premium-card-4">
+                    <div class="inner-box">
+                        <img src="pghostels.png" alt="Smart Health Coverage Image" onerror="this.onerror=null;this.src='https://placehold.co/300x170/1C3144/76FF03?text=PG+Hostel';"> <!-- Placeholder color changed -->
+                    </div>
+                    <div class="premium-title">PG/Hostel Available</div>
+                    <div class="premium-desc">If You Are Single and Wants To Be Alone This Is For You</div>
+                </div>
+
+                <!-- CARD 5: Houses Link (Secure Medical Benefits) (Houses लिंक) -->
+                <!-- Added click event listener via JS -->
+                <div class="premium-card" id="premium-card-5">
+                    <div class="inner-box">
+                        <img src="houses.png" alt="Secure Medical Benefits Image" onerror="this.onerror=null;this.src='https://placehold.co/300x170/1C3144/76FF03?text=Houses';"> <!-- Placeholder color changed -->
+                    </div>
+                    <div class="premium-title">Houses Available </div>
+                    <div class="premium-desc">With family And Want House For rent </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- END MAIN CONTENT AREA -->
+    
+    <!-- === FIXED BOTTOM NAVIGATION (निश्चित बॉटम नेविगेशन) === -->
+    <nav 
+        class="lg:hidden bottom-nav-fixed" 
+        style="padding-bottom: env(safe-area-inset-bottom);" 
+        id="bottom-nav-shs"
+    >
+        <div class="flex justify-around items-end h-20 relative px-2">
+            
+            <!-- Item 1: Room (Card 2 से लिंक्ड) -->
+            <a href="#premium-card-2" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-2')">
+                <i class="fas fa-bed nav-icon-shs"></i>
+                <span class="font-medium">Room</span>
+            </a>
+
+            <!-- Item 2: Flats (Card 3 से लिंक्ड) -->
+            <a href="#premium-card-3" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-3')">
+                <i class="fas fa-city nav-icon-shs"></i>
+                <span class="font-medium">Flats</span>
+            </a>
+            
+            <!-- Central FAB Button (Home - index.html से लिंक्ड) -->
+            <div class="central-nav-item-shs w-1/5">
+                <a 
+                    href="index.html" 
+                    class="central-fab animate-pulse-shadow"
+                    aria-label="Go to Home"
+                >
+                    <i class="fas fa-home central-fab-icon"></i>
+                </a>
+                <span class="central-fab-label">Home</span>
+            </div>
+            
+            <!-- Item 4: P.G/Hostel (Card 4 से लिंक्ड) -->
+            <a href="#premium-card-4" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-4')">
+                <i class="fas fa-users-viewfinder nav-icon-shs"></i>
+                <span class="font-medium">PG/Hostel</span>
+            </a>
+            
+            <!-- Item 5: Houses (Card 5 से लिंक्ड) -->
+            <a href="#premium-card-5" class="nav-item-shs w-1/5">
+                <i class="fas fa-house-chimney nav-icon-shs" onclick="scrollToSection('premium-card-5')"></i>
+                <span class="font-medium">Houses</span>
+            </a>
+            
+        </div>
+    </nav>
+    <!-- ================================================= -->
+
+    <!-- LOCATION SELECTION MODAL (लोकेशन चयन पॉपअप) -->
+    <div id="location-modal-overlay" class="modal-overlay">
+        <div id="location-modal-content" class="modal-content">
+            <div class="flex justify-between items-center mb-4 p-2">
+                <h3 id="modal-title" class="text-xl font-bold text-primary-glow">Available Locations (स्थान)</h3>
+                <button id="modal-close-button" class="text-white hover:text-primary transition-colors p-2 rounded-full hover:bg-white/10" aria-label="Close modal">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <div id="location-list" class="location-list-container flex-grow">
+                <!-- Location list will be dynamically populated here (लोकेशन लिस्ट यहाँ डायनामिक रूप से लोड होगी) -->
+            </div>
+        </div>
+    </div>
+    <!-- END MODAL -->
+
+    
+    <script>
+        
+        // --- START: HEADER/SIDEBAR JS LOGIC (हेडर/साइडबार जेएस लॉजिक) ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+        const menuLinks = document.querySelectorAll('.menu-link');
+        
+        function toggleMobileMenu() {
+            const isMenuOpen = mobileMenuPanel.classList.contains('translate-x-0');
+            
+            if (isMenuOpen) {
+                // Close menu
+                mobileMenuPanel.classList.remove('translate-x-0');
+                mobileMenuPanel.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            } else {
+                // Open menu
+                mobileMenuPanel.classList.remove('translate-x-full');
+                mobileMenuPanel.classList.add('translate-x-0');
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        mobileMenuCloseButton.addEventListener('click', toggleMobileMenu);
+        mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Close menu when a link is clicked
+                setTimeout(toggleMobileMenu, 200); 
+            });
+        });
+        
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                // Adjust scroll to account for fixed header height (78px)
+                const headerHeight = 78; 
+                const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                const offsetPosition = elementPosition - headerHeight;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+        
+         // --- START: SLIDER LOGIC (Moved inside DOMContentLoaded) ---
+        // Variables for slider logic
+        const sliderBg = document.getElementById('slider-bg');
+        const slidesWrapper = document.getElementById('slides-wrapper');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        let slidesData = [];
+        let currentSlide = 0;
+        let slideInterval;
+        const slideDuration = 5000;
+
+        function formatDate(dateStr) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-IN', options);
+        }
+
+        async function fetchSlidesData() {
+            // Hardcoded data source - updated links to point to internal HTML pages
+            return [
+                { "title": "Room In 2000 Only", "date": "10 जनवरी 2026", "link": "room_details_1.html", "deadline": "2026-01-10", "bgImage": "rooms.png" },
+                { "title": "Flats In Just 5000", "date": "25 दिसंबर 2025", "link": "flat_details_2.html", "deadline": "2025-12-25", "bgImage": "flats.png" },
+                { "title": "Pg In Just 7000", "date": "05 फरवरी 2026", "link": "pg_details_3.html", "deadline": "2026-02-05", "bgImage": "pghostels.png" },
+                { "title": "Hostels In Just 15000", "date": "18 मार्च 2026", "link": "hostel_details_4.html", "deadline": "2026-03-18", "bgImage": "houses.png" },
+                { "title": "Houses In Urben Area", "date": "01 फरवरी 2026", "link": "house_details_5.html", "deadline": "2026-02-01", "bgImage": "rooms.png" },
+                { "title": "Houses In Rural Area", "date": "07 मई 2026", "link": "house_details_6.html", "deadline": "2026-05-07", "bgImage": "flats.png" } // Corrected key to bgImage
+            ];
+        }
+
+        function createSlides(data) {
+            slidesWrapper.innerHTML = '';
+            data.forEach((item, index) => {
+                const slide = document.createElement('a');
+                const deadline = new Date(item.deadline);
+                const now = new Date();
+                const isExpired = deadline < now;
+                // Button Text
+                const buttonText = isExpired ? 'आवेदन बंद' : 'Click To View Details';
+                
+                // Link is now assigned directly from item.link (internal page)
+                slide.href = item.link; 
+                // Removed target="_blank" for internal links
+                
+                slide.className = `slide absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-1000`;
+                slide.style.zIndex = index === 0 ? 1 : 0;
+                
+                let contentHTML = `
+                    <div class="slide-content-wrapper">
+                        <h3 class="post-name">${item.title}</h3>
+                        <p class="last-date">Last Date: ${item.date}</p>
+                        <button class="apply-btn" ${isExpired ? 'disabled' : ''}>
+                            ${buttonText}
+                        </button>
+                    </div>
+                `;
+                
+                slide.innerHTML = contentHTML;
+                slidesWrapper.appendChild(slide);
+            });
+        }
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                slide.style.opacity = 0;
+                slide.style.zIndex = 0;
+            });
+            
+            if (slides[index]) {
+                slides[index].classList.add('active');
+                slides[index].style.opacity = 1;
+                slides[index].style.zIndex = 1;
+                
+                if (slidesData[index] && slidesData[index].bgImage) {
+                     sliderBg.style.backgroundImage = `url('${slidesData[index].bgImage}')`;
+                }
+            }
+        }
+
+        function startAutoSlide() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slidesData.length;
+                showSlide(currentSlide);
+            }, slideDuration);
+        }
+
+        async function initializeSlider() {
+            slidesData = await fetchSlidesData();
+            slidesData.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+            createSlides(slidesData);
+            showSlide(currentSlide);
+            startAutoSlide();
+
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slidesData.length) % slidesData.length;
+                showSlide(currentSlide);
+                startAutoSlide();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slidesData.length;
+                showSlide(currentSlide);
+                startAutoSlide();
+            });
+        }
+        // --- END: SLIDER LOGIC ---
+
+        
+        // --- START: MODAL/LOCATION SELECTION LOGIC (पॉपअप/लोकेशन चयन लॉजिक) ---
+        const modalOverlay = document.getElementById('location-modal-overlay');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const modalTitle = document.getElementById('modal-title');
+        const locationList = document.getElementById('location-list');
+
+        // Sample Location Data (लोकेशन के लिए नमूना डेटा)
+        const locationData = {
+            'premium-card-2': { // Room
+                title: 'Rooms Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
+            },
+            'premium-card-3': { // Flats
+                title: 'Flats Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
+            },
+            'premium-card-4': { // PG/Hostel
+                title: 'PG/Hostel Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
+            },
+            'premium-card-5': { // Houses
+                title: 'Houses Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
+            }
+        };
+
+        function alertMessage(message) {
+            // Placeholder for real app functionality. Using console.log instead of alert().
+            console.log("Action: " + message);
+            // In a real app, this would trigger a search or navigation.
+        }
+
+        function showLocationModal(cardId) {
+            const data = locationData[cardId];
+            if (!data) return;
+
+            // Set Modal Content
+            modalTitle.textContent = data.title;
+            locationList.innerHTML = ''; // Clear previous content
+
+            data.locations.forEach(location => {
+                const item = document.createElement('div');
+                item.className = 'location-item';
+                item.innerHTML = `<span>${location}</span> <i class="fas fa-arrow-right text-sm"></i>`;
+                
+                // Click handler for location item
+                item.onclick = () => {
+                    alertMessage(`Searching for ${location} in ${data.title.split(' ')[0]}...`);
+                    closeLocationModal();
+                };
+                locationList.appendChild(item);
+            });
+
+            // Show Modal
+            modalOverlay.style.display = 'flex';
+            setTimeout(() => {
+                modalOverlay.style.opacity = 1;
+            }, 10);
+            document.body.style.overflow = 'hidden'; // Prevent body scroll
+        }
+
+        function closeLocationModal() {
+            modalOverlay.style.opacity = 0;
+            // Hide after transition completes
+            setTimeout(() => {
+                modalOverlay.style.display = 'none';
+                document.body.style.overflow = ''; 
+            }, 300);
+        }
+
+        // Attach event listeners for cards and close button
+        modalCloseButton.addEventListener('click', closeLocationModal);
+        modalOverlay.addEventListener('click', (e) => {
+            // Close when clicking outside the content area
+            if (e.target === modalOverlay) {
+                closeLocationModal();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSlider();
+            
+            // Attach click listeners to cards (Card 2 to 5)
+            document.getElementById('premium-card-2').addEventListener('click', () => showLocationModal('premium-card-2'));
+            document.getElementById('premium-card-3').addEventListener('click', () => showLocationModal('premium-card-3'));
+            document.getElementById('premium-card-4').addEventListener('click', () => showLocationModal('premium-card-4'));
+            document.getElementById('premium-card-5').addEventListener('click', () => showLocationModal('premium-card-5'));
+        });
+        
+    </script>
+</body>
+</html>
