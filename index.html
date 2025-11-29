@@ -16,7 +16,6 @@
     
     <style>
         /* --- GLOBAL & THEME VARIABLES (थीम वेरिएबल्स) --- */
-        /* रंगों को rentist.jpg इमेज के गहरे नीले-हरे और चमकीले हरे रंग से बदला गया है */
         :root {
             --color-primary: #76FF03; /* Bright Lime Green Glow (चमकीला हरा) */
             --color-secondary: #00897B; /* Dark Teal (गहरा टील) */
@@ -241,16 +240,18 @@
         }
 
 
-/* --- LATEST RECRUITMENT SLIDER STYLES (UPDATED) --- */
+/* --- LATEST RECRUITMENT SLIDER STYLES (UPDATED FOR CARD STYLE) --- */
         #slider-bg {
             position: relative;
             height: 210px; /* Mobile height */
-            border-radius: 1.5rem;
+            /* Matching Card Styles */
+            border-radius: 35px; /* Matched card radius */
+            border: 2px solid rgba(118,255,3,0.7); /* Matched card border */
+            box-shadow: 0 0 20px rgba(118,255,3,0.4), inset 0 0 30px rgba(118,255,3,0.3); /* Matched card box-shadow */
+            /* End Card Styles */
             margin-bottom: 2rem;
             overflow: hidden;
-            background-color: #1A1C20; 
-            border: 3px solid var(--electric-gold-glow);
-            box-shadow: 0 0 10px var(--electric-gold-glow), 0 4px 15px rgba(0, 0, 0, 0.6);
+            background-color: var(--premium-bg-dark); /* Darker background consistent with cards */
             transition: background-image 0.8s ease-in-out; 
             background-size: cover;
             background-position: center;
@@ -310,7 +311,7 @@
         .slide-content-wrapper .post-name {
             font-weight: 1000;
             line-height: 1.2;
-            color: var(--electric-gold-glow);
+            color: var(--color-primary); /* Changed to primary green glow */
             margin-bottom: 0.5rem; 
             word-wrap: break-word; 
             white-space: normal;
@@ -318,7 +319,7 @@
         .slide-content-wrapper .last-date {
             font-size: 0.9rem; 
             font-weight: 800;
-            color: var(--text-light);
+            color: var(--color-text-primary); /* Using text primary for date */
             margin-bottom: 0.8rem; 
         }
         .apply-btn {
@@ -351,19 +352,21 @@
 
         #prev-btn, #next-btn {
             background-color: rgba(255, 255, 255, 0.15); 
-            color: var(--electric-gold-glow);
-            border: 1px solid var(--electric-gold-glow);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            color: var(--color-primary); /* Changed to primary green glow */
+            border: 1px solid var(--color-primary); /* Changed to primary green glow */
+            box-shadow: 0 0 10px rgba(118, 255, 3, 0.4); /* Updated shadow to green */
         }
         #progress-bar-container {
             bottom: 0.5rem; 
         }
 
-        /* --- Global Styles --- */
-        .text-golden-dark { 
-            color: var(--electric-gold-glow); 
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); 
+        /* --- Global Styles (Updated to reflect new primary color for glow) --- */
+        .text-primary-glow { 
+            color: var(--color-primary); 
+            text-shadow: 0 0 5px rgba(118, 255, 3, 0.5); 
         } 
+        
+        /* Removed .text-golden-dark as it's replaced by .text-primary-glow */
 
     </style>
 </head>
@@ -449,7 +452,8 @@
             <section class="latest-forms">
                 <!-- Title is now placed relative to the inner section for Z-index -->
                 <div class="text-center mb-6">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-golden-dark border-b-4 border-golden-dark inline-block px-4 pb-1">Top Trending Now</h2>
+                    <!-- Updated class to use primary color glow -->
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-4 pb-1">Top Trending Now</h2>
                 </div>
                 
                 <div class="slider-container relative">
@@ -457,8 +461,8 @@
                     <div id="slides-wrapper" class="relative w-full h-full"></div>
 
                     <!-- Navigation Buttons -->
-                    <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-golden-dark p-2 rounded-full shadow-lg transition-all z-20">❮</button>
-                    <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-golden-dark p-2 rounded-full shadow-lg transition-all z-20">❯</button>
+                    <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-primary p-2 rounded-full shadow-lg transition-all z-20">❮</button>
+                    <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-primary p-2 rounded-full shadow-lg transition-all z-20">❯</button>
                     
             </section>
         </div>
@@ -628,14 +632,14 @@
         }
 
         async function fetchSlidesData() {
-            // Hardcoded data source (retained from previous step)
+            // Hardcoded data source - updated links to point to internal HTML pages
             return [
-                { "title": "Room In 2000 Only", "date": "10 जनवरी 2026", "link": "#", "deadline": "2026-01-10", "bgImage": "rooms.png" },
-                { "title": "Flats In Just 5000", "date": "25 दिसंबर 2025", "link": "#", "deadline": "2025-12-25", "bgImage": "flats.png" },
-                { "title": "Pg In Just 7000", "date": "05 फरवरी 2026", "link": "#", "deadline": "2026-02-05", "bgImage": "pghostels.png" },
-                { "title": "Hostels In Just 15000", "date": "18 मार्च 2026", "link": "#", "deadline": "2026-03-18", "bgImage": "houses.png" },
-                { "title": "Houses In Urben Area", "date": "01 फरवरी 2026", "link": "#", "deadline": "2026-02-01", "bgImage": "rooms.png" },
-                { "title": "Houses In Rural Area", "date": "07 मई 2026", "link": "#", "deadline": "2026-05-07", "flats": "upsc.png" }
+                { "title": "Room In 2000 Only", "date": "10 जनवरी 2026", "link": "room_details_1.html", "deadline": "2026-01-10", "bgImage": "rooms.png" },
+                { "title": "Flats In Just 5000", "date": "25 दिसंबर 2025", "link": "flat_details_2.html", "deadline": "2025-12-25", "bgImage": "flats.png" },
+                { "title": "Pg In Just 7000", "date": "05 फरवरी 2026", "link": "pg_details_3.html", "deadline": "2026-02-05", "bgImage": "pghostels.png" },
+                { "title": "Hostels In Just 15000", "date": "18 मार्च 2026", "link": "hostel_details_4.html", "deadline": "2026-03-18", "bgImage": "houses.png" },
+                { "title": "Houses In Urben Area", "date": "01 फरवरी 2026", "link": "house_details_5.html", "deadline": "2026-02-01", "bgImage": "rooms.png" },
+                { "title": "Houses In Rural Area", "date": "07 मई 2026", "link": "house_details_6.html", "deadline": "2026-05-07", "bgImage": "flats.png" } // Corrected key to bgImage
             ];
         }
 
@@ -649,8 +653,9 @@
                 // Button Text
                 const buttonText = isExpired ? 'आवेदन बंद' : 'Click To View Details';
                 
-                slide.href = typeof item.link === 'string' ? item.link : Object.values(item.link)[0];
-                slide.target = "_blank";
+                // Link is now assigned directly from item.link (internal page)
+                slide.href = item.link; 
+                // Removed target="_blank" for internal links
                 
                 slide.className = `slide absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-1000`;
                 slide.style.zIndex = index === 0 ? 1 : 0;
