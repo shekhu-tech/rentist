@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Sarkari Yojana Improvised Layout</title>
+    <title>Rentist</title>
     <!-- Tailwind CSS CDN (Self-contained styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome (for icons) -->
@@ -467,7 +467,19 @@
                 <div class="hidden lg:flex items-center space-x-10">
                   <nav class="flex space-x-8 font-extrabold">
                     <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
-                        Sarkari Yojana (सरकारी योजना)
+                        Rooms
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Flats
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        PG/Hostels
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Houses
                         <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
                     </a>
                   </nav>
@@ -475,10 +487,10 @@
                   <!-- Contact Side Bar (संपर्क साइड बार) -->
                   <div class="border-l-4 border-primary/50 pl-6 text-sm flex flex-col items-start bg-primary/5 p-2 rounded-xl shadow-inner">
                     <a href="tel:8816014071" class="flex items-center font-extrabold text-white hover:text-primary transition-colors">
-                      <i class="fas fa-phone-alt mr-2 text-primary"></i> <span class="text-xl tracking-wider">000000000</span>
+                      <i class="fas fa-phone-alt mr-2 text-primary"></i> <span class="text-xl tracking-wider"></span>
                     </a>
                     <a href="mailto:care@yourtrueguide.com" class="flex items-center text-xs text-gray-400 hover:text-primary transition-colors mt-1">
-                      <i class="fas fa-envelope mr-2 text-secondary/70"></i> <b>0000000000000000000</b>
+                      <i class="fas fa-envelope mr-2 text-secondary/70"></i> <b></b>
                     </a>
                   </div>
                 </div>
@@ -502,9 +514,25 @@
                     <!-- FIX: Added back the missing tagline -->
                     <p class="text-xs font-semibold text-text-secondary">Your Rent Guide!</p>
                 </div>
-                <a href="#sarkari-yojana-section" class="text-lg text-white hover:text-primary transition-all flex items-center p-2 rounded-lg hover:bg-white/10 menu-link">
-                  <i class="fas fa-hand-holding-heart mr-4 text-xl text-primary/80"></i> Sarkari Yojana Guide
-                </a>
+                <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Rooms
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                     <div class="border-t border-primary/30 w-full my-4"></div>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Flats
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                     <div class="border-t border-primary/30 w-full my-4"></div>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        PG/Hostels
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                     <div class="border-t border-primary/30 w-full my-4"></div>
+                    <a href="#sarkari-yojana-section" class="text-white text-lg relative group py-1 hover:text-primary">
+                        Houses
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
                 <div class="border-t border-primary/30 w-full my-4"></div>
                 <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50">
                   <h4 class="text-base font-bold text-primary mb-1">Need Help? (24x7)</h4>
@@ -832,20 +860,24 @@
         // Sample Location Data (लोकेशन के लिए नमूना डेटा)
         const locationData = {
             'premium-card-2': { // Room
-                title: 'Rooms Available',
-                locations: ['Dwarka, Sector 14', 'Rohini, Sector 23', 'Laxmi Nagar', 'Karol Bagh', 'Noida Phase 2', 'Ghaziabad']
+                title: 'Rooms Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
             },
             'premium-card-3': { // Flats
-                title: 'Flats Available',
-                locations: ['South Delhi (G.K. 2)', 'Noida Extension', 'Gurugram, Sector 45', 'Vasant Kunj', 'Patel Nagar', 'Civil Lines']
+                title: 'Flats Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
             },
             'premium-card-4': { // PG/Hostel
-                title: 'PG/Hostel Available',
-                locations: ['Mukherjee Nagar', 'North Campus', 'South Campus', 'Janakpuri', 'Lajpat Nagar', 'Pitampura']
+                title: 'PG/Hostel Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
             },
             'premium-card-5': { // Houses
-                title: 'Houses Available',
-                locations: ['Punjabi Bagh', 'Rajouri Garden', 'Defence Colony', 'Hauz Khas', 'Saket', 'Preet Vihar', 'Faridabad']
+                title: 'Houses Available ',
+                locations: ["India" ,"United States", "Russia", "France", "Japan", "Australia", "United Kingdom", "Germany", "Canada", "Israel", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Singapore", "South Korea", "Vietnam", "Nepal", "Bhutan", "Sri Lanka", "Bangladesh", "Maldives", "Mauritius", "Seychelles", "Brazil", "Argentina", "Mexico", "South Africa", "Egypt", "Kenya", "Nigeria", "Indonesia", "Philippines", "Thailand", "Myanmar", "Malaysia", "Mongolia", "Kazakhstan", "Uzbekistan", "Tajikistan", "Turkey", "Greece", "Italy", "Spain", "Netherlands", "Sweden", "Norway", "Poland", "New Zealand"]
+
             }
         };
 
