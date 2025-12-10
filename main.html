@@ -55,7 +55,7 @@
             background-repeat: no-repeat;
             opacity: 0.5; /* Subtle visibility */
             /* Using a generic rental image placeholder */
-            background-image: url('flats.png');
+            background-image: url('https://placehold.co/1920x1080/241F0D/FFC72C?text=RENTIST+BACKGROUND');
         }
 
         .fixed-header-container {
@@ -270,6 +270,36 @@
             background-color: rgba(var(--color-primary-rgb), 0.1);
             color: var(--color-primary);
         }
+
+        /* New CSS for JS-controlled desktop dropdown content */
+        .desktop-dropdown-content {
+            position: absolute; 
+            top: 100%; /* Position below the link */
+            left: 0;
+            width: 256px; /* w-64 equivalent */
+            margin-top: 8px; /* mt-2 equivalent */
+            background: var(--premium-bg-dark); 
+            border: 1px solid var(--color-primary); /* Adjusted border from primary/50 for clarity */
+            border-radius: 0.75rem; /* rounded-xl equivalent */
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5), 0 10px 10px -5px rgba(0,0,0,0.2); /* shadow-2xl equivalent */
+            z-index: 50; 
+            padding: 8px; /* p-2 equivalent */
+            
+            /* Transition properties for smooth toggle */
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s;
+            
+            /* Default Hidden State */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+        }
+
+        .desktop-dropdown-content.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
 
         /* === MOBILE DROPDOWN STYLING FIX === */
         /* Custom Styles for Mobile Accordion Link Items (Sub-links in sidebar) */
@@ -505,52 +535,67 @@
                 </a>
 
                 <!-- Desktop Navigation (डेस्कटॉप नेविगेशन) -->
-                <div class="desktop-nav-area hidden items-center space-x-8">
+                <div class="desktop-nav-area hidden lg:flex items-center space-x-8">
                   <nav class="flex space-x-6 font-extrabold">
                     
-                    <!-- Dropdown 1: Rooms -->
+                    <!-- Dropdown 1: Rooms (Desktop Toggle) -->
                     <div class="relative group">
-                        <a href="#" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Rooms<i class="fas fa-caret-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        <a href="#" id="desktop-rooms-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
+                            Rooms<i id="desktop-rooms-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
                             <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
                         </a>
-                        <div id="dropdown-rooms" class="dropdown-content"></div>
+                        <!-- Dropdown Content Container - Controlled by JS .open class -->
+                        <div id="dropdown-rooms" class="desktop-dropdown-content">
+                            <!-- Links populated by JS -->
+                        </div>
                     </div>
                     
-                    <!-- Dropdown 2: Flats -->
+                    <!-- Dropdown 2: Flats (Desktop Toggle) -->
                     <div class="relative group">
-                        <a href="#" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Flats <i class="fas fa-caret-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        <a href="#" id="desktop-flats-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
+                            Flats <i id="desktop-flats-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
                             <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
                         </a>
-                        <div id="dropdown-flats" class="dropdown-content"></div>
+                        <!-- Dropdown Content Container - Controlled by JS .open class -->
+                        <div id="dropdown-flats" class="desktop-dropdown-content">
+                            <!-- Links populated by JS -->
+                        </div>
                     </div>
 
-                    <!-- Dropdown 3: Paying Guest -->
+                    <!-- Dropdown 3: Paying Guest (Desktop Toggle) -->
                     <div class="relative group">
-                        <a href="#" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            P.G. <i class="fas fa-caret-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        <a href="#" id="desktop-pg-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
+                            P.G. <i id="desktop-pg-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
                             <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
                         </a>
-                        <div id="dropdown-pg" class="dropdown-content"></div>
+                        <!-- Dropdown Content Container - Controlled by JS .open class -->
+                        <div id="dropdown-pg" class="desktop-dropdown-content">
+                            <!-- Links populated by JS -->
+                        </div>
                     </div>
                     
-                    <!-- Dropdown 4: Hostels -->
+                    <!-- Dropdown 4: Hostels (Desktop Toggle) -->
                     <div class="relative group">
-                        <a href="#" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Hostels <i class="fas fa-caret-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        <a href="#" id="desktop-hostels-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
+                            Hostels <i id="desktop-hostels-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
                             <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
                         </a>
-                        <div id="dropdown-hostels" class="dropdown-content"></div>
+                        <!-- Dropdown Content Container - Controlled by JS .open class -->
+                        <div id="dropdown-hostels" class="desktop-dropdown-content">
+                            <!-- Links populated by JS -->
+                        </div>
                     </div>
 
-                    <!-- Dropdown 5: Houses -->
+                    <!-- Dropdown 5: Houses (Desktop Toggle) -->
                     <div class="relative group">
-                        <a href="#" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Houses <i class="fas fa-caret-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                        <a href="#" id="desktop-houses-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
+                            Houses <i id="desktop-houses-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
                             <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
                         </a>
-                        <div id="dropdown-houses" class="dropdown-content"></div>
+                        <!-- Dropdown Content Container - Controlled by JS .open class -->
+                        <div id="dropdown-houses" class="desktop-dropdown-content">
+                            <!-- Links populated by JS -->
+                        </div>
                     </div>
                     
                   </nav>
@@ -669,7 +714,7 @@
         <!-- NEW HEADING ADDED HERE -->
         <div class="text-center mb-8 mt-4">
             <h2 class="text-3xl sm:text-4xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-6 pb-2 uppercase tracking-wide">
-                Our Services
+                Rental Services
             </h2>
         </div>
         <!-- END NEW HEADING -->
@@ -780,7 +825,7 @@
                 <span class="font-medium">P.G.</span>
             </a>
             
-            <!-- Item 5: Hostels (Card 4 से लिंक्ड) - Note: Corrected the icon and link to point to Hostels card ID 4 -->
+            <!-- Item 5: Hostels (Card 4 से लिंक्ड) -->
             <a href="#premium-card-4" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-4')">
                 <i class="fas fa-school nav-icon-shs"></i> 
                 <span class="font-medium">Hostels</span>
@@ -1140,22 +1185,64 @@
         
         // --- START: DROPDOWN / ACCORDION LOGIC (ड्रॉपडाउन / अकॉर्डियन लॉजिक) ---
         
+        // Function to set up the desktop click toggle for navigation links
+        function setupDesktopToggle(linkId, contentId, iconId) {
+            const link = document.getElementById(linkId);
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+
+            if (link && content) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Close all other open desktop dropdowns
+                    document.querySelectorAll('.desktop-dropdown-content.open').forEach(openContent => {
+                        const openContentId = openContent.id;
+                        if (openContentId !== contentId) {
+                            openContent.classList.remove('open');
+                            const otherIcon = document.getElementById(openContentId.replace('dropdown', 'desktop') + '-icon');
+                            if (otherIcon) {
+                                otherIcon.classList.remove('rotate-180');
+                            }
+                        }
+                    });
+
+                    // Toggle current dropdown
+                    const isOpen = content.classList.toggle('open');
+                    if (icon) {
+                        if (isOpen) {
+                            icon.classList.add('rotate-180');
+                        } else {
+                            icon.classList.remove('rotate-180');
+                        }
+                    }
+                });
+
+                // Close dropdown if user clicks anywhere else on the document
+                document.addEventListener('click', (e) => {
+                    // Check if the click is outside the link AND outside the content
+                    if (content.classList.contains('open') && 
+                        !link.contains(e.target) && 
+                        !content.contains(e.target)) {
+                        
+                        content.classList.remove('open');
+                        if (icon) {
+                            icon.classList.remove('rotate-180');
+                        }
+                    }
+                });
+            }
+        }
+        
         function generateDropdownContent(dataId, containerId) {
             const container = document.getElementById(containerId);
-            // Desktop dropdown style positioning
             const isDesktopDropdown = !containerId.startsWith('mobile');
 
             if (!container || !locationData[dataId]) return;
 
-            // Apply specific desktop dropdown styling
+            // Ensure desktop dropdown container has the correct class if it's the desktop version
             if (isDesktopDropdown) {
-                 container.classList.add(
-                    'absolute', 'hidden', 'group-hover:block', 'w-64', 'mt-2', 
-                    'bg-premium-bg-dark', 'border', 'border-primary/50', 'rounded-xl', 
-                    'shadow-2xl', 'z-50', 'p-2', 'transform', 'origin-top', 
-                    'transition-all', 'duration-300', 'opacity-0', 
-                    'group-hover:opacity-100', 'group-hover:translate-y-0', 'translate-y-2'
-                );
+                 // No need to add classes here; they are now defined in CSS .desktop-dropdown-content
             }
             
             // Use 'dropdown-link' for desktop and 'mobile-dropdown-link' for mobile
@@ -1193,12 +1280,21 @@
         }
         
         function initializeDropdowns() {
-            // 1. Generate Desktop Dropdown Content
+            // 1. Generate Desktop Dropdown Content and Setup Toggle
             generateDropdownContent('premium-card-1', 'dropdown-rooms');
+            setupDesktopToggle('desktop-rooms-link', 'dropdown-rooms', 'desktop-rooms-icon');
+            
             generateDropdownContent('premium-card-2', 'dropdown-flats');
+            setupDesktopToggle('desktop-flats-link', 'dropdown-flats', 'desktop-flats-icon');
+
             generateDropdownContent('premium-card-3', 'dropdown-pg');
+            setupDesktopToggle('desktop-pg-link', 'dropdown-pg', 'desktop-pg-icon');
+
             generateDropdownContent('premium-card-4', 'dropdown-hostels');
+            setupDesktopToggle('desktop-hostels-link', 'dropdown-hostels', 'desktop-hostels-icon');
+
             generateDropdownContent('premium-card-5', 'dropdown-houses');
+            setupDesktopToggle('desktop-houses-link', 'dropdown-houses', 'desktop-houses-icon');
             
             // 2. Generate Mobile Accordion Content
             generateDropdownContent('premium-card-1', 'mobile-rooms-dropdown');
