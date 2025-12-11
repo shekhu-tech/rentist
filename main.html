@@ -156,7 +156,7 @@
             align-items: center; 
             justify-content: start; 
             cursor: pointer; 
-            height: 280px; /* Increased height for content */
+            height: 260px; /* Increased height for content */
             position: relative; /* For Shine Effect */
             overflow: hidden; /* For Shine Effect */
         }
@@ -198,7 +198,7 @@
         /* NEW IMAGE STYLE */
         .premium-card-image {
             width: 100%; 
-            height: 140px; /* Adjusted height to fit the card better */
+            height: 130px; /* Adjusted height to fit the card better */
             object-fit: cover; 
             border-radius: 25px; /* Sharper corners like main.html */
             display: block;
@@ -365,9 +365,11 @@
         }
         
         /* 5 cards in a row for screens >= 1280px (to fit 5 cards elegantly) */
+        /* NOTE: Now supporting 6 cards gracefully */
         @media(min-width: 1280px){
             .card-grid-container {
-                grid-template-columns: repeat(5, 1fr); 
+                grid-template-columns: repeat(6, 1fr); /* Changed to 6 columns for large screens */
+                /* If 6 columns look too tight, could use repeat(3, 1fr) with larger minmax, but 6 is more flexible */
             }
         }
         
@@ -598,6 +600,18 @@
                         </div>
                     </div>
                     
+                    <!-- Dropdown 6: Plots (Desktop Toggle) - NEW -->
+                    <div class="relative group">
+                        <a href="#" id="desktop-plots-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
+                            Plots <i id="desktop-plots-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
+                            <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                        </a>
+                        <!-- Dropdown Content Container - Controlled by JS .open class -->
+                        <div id="dropdown-plots" class="desktop-dropdown-content">
+                            <!-- Links populated by JS -->
+                        </div>
+                    </div>
+
                   </nav>
                   
                   <!-- Contact Side Bar (संपर्क साइड बार) -->
@@ -674,6 +688,15 @@
                     <div id="mobile-houses-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
                 </div>
                 <div class="border-t border-primary/30 w-full my-4"></div>
+                
+                <!-- Sidebar Accordion 6: Plots - NEW -->
+                <div class="w-full">
+                    <button id="mobile-plots-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
+                        Plots <i id="icon-plots-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
+                    </button>
+                    <div id="mobile-plots-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
+                </div>
+                <div class="border-t border-primary/30 w-full my-4"></div>
 
                 <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50">
                   <h4 class="text-base font-bold text-primary mb-1">Need Help? (24x7)</h4>
@@ -728,7 +751,7 @@
                         src="rooms.png" 
                         alt="Rooms Image" 
                         class="premium-card-image"
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=Rooms';"
+                        onerror="this.onerror=null;this.src='rooms.png';"
                     >
                     <div class="premium-title" data-mobile-title="Rooms"><span>Rooms</span></div>
                     <div class="premium-desc">Find Single/Shared Rooms for Rent.</div>
@@ -782,6 +805,19 @@
                     <div class="premium-title" data-mobile-title="Houses"><span>Houses</span></div>
                     <div class="premium-desc">Independent Houses and Villas for Rent.</div>
                 </div>
+
+                <!-- CARD 6: Plots - UPDATED -->
+               
+                 <div class="premium-card" id="premium-card-6">
+                    <img 
+                        src="plots.png" 
+                        alt="Plots Image" 
+                        class="premium-card-image"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=Plots';"
+                    >
+                    <div class="premium-title" data-mobile-title="Plots"><span>Plots</span></div>
+                    <div class="premium-desc">Residential and Commercial Plots for Rent/Lease.</div>
+                </div>
             </div>
         </section>
     </main>
@@ -825,10 +861,10 @@
                 <span class="font-medium">P.G.</span>
             </a>
             
-            <!-- Item 5: Hostels (Card 4 से लिंक्ड) -->
-            <a href="#premium-card-4" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-4')">
-                <i class="fas fa-school nav-icon-shs"></i> 
-                <span class="font-medium">Hostels</span>
+            <!-- Item 5: Plots (Card 6 से लिंक्ड) - HOSTELS REPLACED WITH PLOTS -->
+            <a href="#premium-card-6" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-6')">
+                <i class="fas fa-map nav-icon-shs"></i> 
+                <span class="font-medium">Plots</span>
             </a>
             
         </div>
@@ -1104,6 +1140,15 @@
             { name: "View Your Listings", link: "houses_my_listings.html" } 
         ];
 
+        // --- Plots Menu - UPDATED ---
+        const plotItems = [
+            { name: "Search Plots in Rural", link: "plots_search_rural.html" },
+            { name: "Search Plots in Urban", link: "plots_search_urban.html" },
+            { name: "List Your Plot (Rural)", link: "plots_list_rural.html" },
+            { name: "List Your Plot (Urban)", link: "plots_list_urban.html" },
+            { name: "View Your Listings", link: "plots_my_listings.html" } 
+        ];
+
 
         // All cards now use unique item lists
         const locationData = {
@@ -1126,6 +1171,10 @@
             'premium-card-5': { 
                 title: 'Houses & Villas',
                 locations: houseItems
+            },
+            'premium-card-6': { // NEW PLOTS CARD ENTRY
+                title: 'Plots & Land',
+                locations: plotItems
             }
             
         };
@@ -1296,6 +1345,10 @@
             generateDropdownContent('premium-card-5', 'dropdown-houses');
             setupDesktopToggle('desktop-houses-link', 'dropdown-houses', 'desktop-houses-icon');
             
+            // NEW: Plots Desktop Dropdown
+            generateDropdownContent('premium-card-6', 'dropdown-plots');
+            setupDesktopToggle('desktop-plots-link', 'dropdown-plots', 'desktop-plots-icon');
+
             // 2. Generate Mobile Accordion Content
             generateDropdownContent('premium-card-1', 'mobile-rooms-dropdown');
             generateDropdownContent('premium-card-2', 'mobile-flats-dropdown');
@@ -1303,12 +1356,18 @@
             generateDropdownContent('premium-card-4', 'mobile-hostels-dropdown');
             generateDropdownContent('premium-card-5', 'mobile-houses-dropdown');
             
+            // NEW: Plots Mobile Accordion
+            generateDropdownContent('premium-card-6', 'mobile-plots-dropdown');
+
             // 3. Setup Mobile Accordion Toggles
             setupMobileAccordion('mobile-rooms-toggle', 'mobile-rooms-dropdown', 'icon-rooms-mobile');
             setupMobileAccordion('mobile-flats-toggle', 'mobile-flats-dropdown', 'icon-flats-mobile');
             setupMobileAccordion('mobile-pg-toggle', 'mobile-pg-dropdown', 'icon-pg-mobile');
             setupMobileAccordion('mobile-hostels-toggle', 'mobile-hostels-dropdown', 'icon-hostels-mobile');
             setupMobileAccordion('mobile-houses-toggle', 'mobile-houses-dropdown', 'icon-houses-mobile');
+            
+            // NEW: Plots Mobile Accordion Toggle
+            setupMobileAccordion('mobile-plots-toggle', 'mobile-plots-dropdown', 'icon-plots-mobile');
         }
 
         // --- END: DROPDOWN / ACCORDION LOGIC ---
@@ -1323,6 +1382,7 @@
             document.getElementById('premium-card-3').addEventListener('click', () => showLocationModal('premium-card-3'));
             document.getElementById('premium-card-4').addEventListener('click', () => showLocationModal('premium-card-4'));
             document.getElementById('premium-card-5').addEventListener('click', () => showLocationModal('premium-card-5'));
+            document.getElementById('premium-card-6').addEventListener('click', () => showLocationModal('premium-card-6')); // NEW: Plots handler
             
             console.log("All card handlers initialized.");
         });
