@@ -368,8 +368,8 @@
         /* NOTE: Now supporting 6 cards gracefully */
         @media(min-width: 1280px){
             .card-grid-container {
-                grid-template-columns: repeat(6, 1fr); /* Changed to 6 columns for large screens */
-                /* If 6 columns look too tight, could use repeat(3, 1fr) with larger minmax, but 6 is more flexible */
+                /* Dynamically adjusts based on the number of cards */
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
             }
         }
         
@@ -536,82 +536,11 @@
                   </span>
                 </a>
 
-                <!-- Desktop Navigation (डेस्कटॉप नेविगेशन) -->
+                <!-- Desktop Navigation Container (डेस्कटॉप नेविगेशन कंटेनर) -->
+                <!-- The JS will dynamically inject the dropdowns here -->
                 <div class="desktop-nav-area hidden lg:flex items-center space-x-8">
-                  <nav class="flex space-x-6 font-extrabold">
-                    
-                    <!-- Dropdown 1: Rooms (Desktop Toggle) -->
-                    <div class="relative group">
-                        <a href="#" id="desktop-rooms-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Rooms<i id="desktop-rooms-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                            <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                        </a>
-                        <!-- Dropdown Content Container - Controlled by JS .open class -->
-                        <div id="dropdown-rooms" class="desktop-dropdown-content">
-                            <!-- Links populated by JS -->
-                        </div>
-                    </div>
-                    
-                    <!-- Dropdown 2: Flats (Desktop Toggle) -->
-                    <div class="relative group">
-                        <a href="#" id="desktop-flats-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Flats <i id="desktop-flats-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                            <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                        </a>
-                        <!-- Dropdown Content Container - Controlled by JS .open class -->
-                        <div id="dropdown-flats" class="desktop-dropdown-content">
-                            <!-- Links populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- Dropdown 3: Paying Guest (Desktop Toggle) -->
-                    <div class="relative group">
-                        <a href="#" id="desktop-pg-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            P.G. <i id="desktop-pg-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                            <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                        </a>
-                        <!-- Dropdown Content Container - Controlled by JS .open class -->
-                        <div id="dropdown-pg" class="desktop-dropdown-content">
-                            <!-- Links populated by JS -->
-                        </div>
-                    </div>
-                    
-                    <!-- Dropdown 4: Hostels (Desktop Toggle) -->
-                    <div class="relative group">
-                        <a href="#" id="desktop-hostels-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Hostels <i id="desktop-hostels-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                            <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                        </a>
-                        <!-- Dropdown Content Container - Controlled by JS .open class -->
-                        <div id="dropdown-hostels" class="desktop-dropdown-content">
-                            <!-- Links populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- Dropdown 5: Houses (Desktop Toggle) -->
-                    <div class="relative group">
-                        <a href="#" id="desktop-houses-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Houses <i id="desktop-houses-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                            <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                        </a>
-                        <!-- Dropdown Content Container - Controlled by JS .open class -->
-                        <div id="dropdown-houses" class="desktop-dropdown-content">
-                            <!-- Links populated by JS -->
-                        </div>
-                    </div>
-                    
-                    <!-- Dropdown 6: Plots (Desktop Toggle) - NEW -->
-                    <div class="relative group">
-                        <a href="#" id="desktop-plots-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                            Plots <i id="desktop-plots-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                            <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
-                        </a>
-                        <!-- Dropdown Content Container - Controlled by JS .open class -->
-                        <div id="dropdown-plots" class="desktop-dropdown-content">
-                            <!-- Links populated by JS -->
-                        </div>
-                    </div>
-
+                  <nav id="desktop-nav-links" class="flex space-x-6 font-extrabold">
+                    <!-- Dropdown links will be generated here by JS -->
                   </nav>
                   
                   <!-- Contact Side Bar (संपर्क साइड बार) -->
@@ -644,58 +573,11 @@
                     <p class="text-xs font-semibold text-gray-400">Your Rent Guide</p>
                 </div>
                 
-                <!-- Sidebar Accordion 1: Rooms -->
-                <div class="w-full">
-                    <button id="mobile-rooms-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        Rooms <i id="icon-rooms-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
-                    </button>
-                    <div id="mobile-rooms-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
+                <!-- Sidebar Accordion Container - The accordion links will be generated here by JS -->
+                <div id="mobile-accordion-container" class="w-full">
+                    <!-- Dynamic accordion items will go here -->
                 </div>
-                <div class="border-t border-primary/30 w-full my-4"></div>
-
-                <!-- Sidebar Accordion 2: Flats -->
-                <div class="w-full">
-                    <button id="mobile-flats-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        Flats <i id="icon-flats-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
-                    </button>
-                    <div id="mobile-flats-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
-                </div>
-                <div class="border-t border-primary/30 w-full my-4"></div>
-
-                <!-- Sidebar Accordion 3: Paying Guest -->
-                <div class="w-full">
-                    <button id="mobile-pg-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        Paying Guest <i id="icon-pg-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
-                    </button>
-                    <div id="mobile-pg-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
-                </div>
-                <div class="border-t border-primary/30 w-full my-4"></div>
                 
-                <!-- Sidebar Accordion 4: Hostels -->
-                <div class="w-full">
-                    <button id="mobile-hostels-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        Hostels <i id="icon-hostels-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
-                    </button>
-                    <div id="mobile-hostels-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
-                </div>
-                <div class="border-t border-primary/30 w-full my-4"></div>
-                
-                <!-- Sidebar Accordion 5: Houses -->
-                <div class="w-full">
-                    <button id="mobile-houses-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        Houses <i id="icon-houses-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
-                    </button>
-                    <div id="mobile-houses-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
-                </div>
-                <div class="border-t border-primary/30 w-full my-4"></div>
-                
-                <!-- Sidebar Accordion 6: Plots - NEW -->
-                <div class="w-full">
-                    <button id="mobile-plots-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        Plots <i id="icon-plots-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
-                    </button>
-                    <div id="mobile-plots-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out"></div>
-                </div>
                 <div class="border-t border-primary/30 w-full my-4"></div>
 
                 <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50">
@@ -743,81 +625,9 @@
         <!-- END NEW HEADING -->
 
         <section id="service-cards">
-            <div class="card-grid-container">
-                
-                <!-- CARD 1: Rooms -->
-                <div class="premium-card" id="premium-card-1">
-                    <img 
-                        src="rooms.png" 
-                        alt="Rooms Image" 
-                        class="premium-card-image"
-                        onerror="this.onerror=null;this.src='rooms.png';"
-                    >
-                    <div class="premium-title" data-mobile-title="Rooms"><span>Rooms</span></div>
-                    <div class="premium-desc">Find Single/Shared Rooms for Rent.</div>
-                </div>
-
-                <!-- CARD 2: Flats -->
-                <div class="premium-card" id="premium-card-2">
-                    <img 
-                        src="flats.png" 
-                        alt="Flats Image" 
-                        class="premium-card-image" 
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=Flats';"
-                    >
-                    <div class="premium-title" data-mobile-title="Flats"><span>Flats</span></div>
-                    <div class="premium-desc">Search for 1BHK, 2BHK, 3BHK Flats.</div>
-                </div>
-
-                <!-- CARD 3: Paying Guest -->
-                <div class="premium-card" id="premium-card-3">
-                    <img 
-                        src="payingguest.png" 
-                        alt="Paying Guest Image" 
-                        class="premium-card-image" 
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=P.G.';"
-                    >
-                    <div class="premium-title" data-mobile-title="P.G."><span>Paying Guest</span></div>
-                    <div class="premium-desc">Comfortable P.G. with Food Options.</div>
-                </div>
-
-                <!-- CARD 4: Hostels -->
-                <div class="premium-card" id="premium-card-4">
-                    <img 
-                        src="hostels.png" 
-                        alt="Hostels Image" 
-                        class="premium-card-image" 
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=Hostels';"
-                    >
-                    <div class="premium-title" data-mobile-title="Hostels"><span>Hostels</span></div>
-                    <div class="premium-desc">Affordable Hostels for Students/Workers.</div>
-                </div>
-
-                <!-- CARD 5: Houses -->
-               
-                 <div class="premium-card" id="premium-card-5">
-                    <img 
-                        src="houses.png" 
-                        alt="Houses Image" 
-                        class="premium-card-image"
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=Houses';"
-                    >
-                    <div class="premium-title" data-mobile-title="Houses"><span>Houses</span></div>
-                    <div class="premium-desc">Independent Houses and Villas for Rent.</div>
-                </div>
-
-                <!-- CARD 6: Plots - UPDATED -->
-               
-                 <div class="premium-card" id="premium-card-6">
-                    <img 
-                        src="plots.png" 
-                        alt="Plots Image" 
-                        class="premium-card-image"
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=Plots';"
-                    >
-                    <div class="premium-title" data-mobile-title="Plots"><span>Plots</span></div>
-                    <div class="premium-desc">Residential and Commercial Plots for Rent/Lease.</div>
-                </div>
+            <!-- All Cards will be dynamically inserted into this container by JS -->
+            <div id="card-grid-container-dynamic" class="card-grid-container">
+                <!-- Cards injected here -->
             </div>
         </section>
     </main>
@@ -829,44 +639,8 @@
         style="padding-bottom: env(safe-area-inset-bottom);" 
         id="bottom-nav-shs"
     >
-        <div class="flex justify-around items-end h-20 relative px-2">
-            
-            <!-- Item 1: Rooms (Card 1 से लिंक्ड) -->
-            <a href="#premium-card-1" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-1')">
-                <i class="fas fa-bed nav-icon-shs"></i>
-                <span class="font-medium">Rooms</span>
-            </a>
-
-            <!-- Item 2: Flats (Card 2 से लिंक्ड) -->
-            <a href="#premium-card-2" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-2')">
-                <i class="fas fa-building nav-icon-shs"></i>
-                <span class="font-medium">Flats</span>
-            </a>
-            
-            <!-- Central FAB Button (Home - index.html से लिंक्ड) -->
-            <div class="central-nav-item-shs w-1/5">
-                <a 
-                    href="main.html" 
-                    class="central-fab animate-pulse-shadow"
-                    aria-label="Go to Home"
-                >
-                    <i class="fas fa-home central-fab-icon"></i>
-                </a>
-                <span class="central-fab-label">Home</span>
-            </div>
-            
-            <!-- Item 4: P.G. (Card 3 से लिंक्ड) -->
-            <a href="#premium-card-3" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-3')">
-                <i class="fas fa-user-friends nav-icon-shs"></i>
-                <span class="font-medium">P.G.</span>
-            </a>
-            
-            <!-- Item 5: Plots (Card 6 से लिंक्ड) - HOSTELS REPLACED WITH PLOTS -->
-            <a href="#premium-card-6" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-6')">
-                <i class="fas fa-map nav-icon-shs"></i> 
-                <span class="font-medium">Plots</span>
-            </a>
-            
+        <div id="bottom-nav-items-container" class="flex justify-around items-end h-20 relative px-2">
+            <!-- Dynamic Nav Items will be inserted here, along with the central FAB -->
         </div>
     </nav>
     <!-- ================================================= -->
@@ -891,39 +665,78 @@
     
     <script>
         
-        // --- START: HEADER/SIDEBAR JS LOGIC (हेडर/साइडबार जेएस लॉजिक) ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
-        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
-        
-        function toggleMobileMenu() {
-            const isMenuOpen = mobileMenuPanel.classList.contains('translate-x-0');
-            
-            if (isMenuOpen) {
-                // Close menu
-                mobileMenuPanel.classList.remove('translate-x-0');
-                mobileMenuPanel.classList.add('translate-x-full');
-                mobileMenuOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
-            } else {
-                // Open menu
-                mobileMenuPanel.classList.remove('translate-x-full');
-                mobileMenuPanel.classList.add('translate-x-0');
-                mobileMenuOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+        // --- CENTRALIZED DATA STRUCTURE (केंद्रीय डेटा स्ट्रक्चर) ---
+        // New services and menus can be added here easily.
+        const SERVICE_DATA = [
+            {
+                id: 'rooms', title: 'Rooms', mobileTitle: 'Rooms', desc: 'Find Single/Shared Rooms for Rent.', imgSrc: 'rooms.png', icon: 'fa-bed', modalTitle: 'Rooms Options',
+                menu: [
+                    { name: "Search Rooms in Rural", link: "rooms_search_rural.html" },
+                    { name: "Search Rooms in Urban", link: "rooms_search_urban.html" },
+                    { name: "List Your Room (Rural)", link: "rooms_list_rural.html" },
+                    { name: "List Your Room (Urban)", link: "rooms_list_urban.html" },
+                    { name: "View Your Listings", link: "rooms_my_listings.html" } 
+                ]
+            },
+            {
+                id: 'flats', title: 'Flats', mobileTitle: 'Flats', desc: 'Search for 1BHK, 2BHK, 3BHK Flats.', imgSrc: 'flats.png', icon: 'fa-building', modalTitle: 'Flats & Apartments',
+                menu: [
+                    { name: "Search Flats in Rural", link: "flats_search_rural.html" },
+                    { name: "Search Flats in Urban", link: "flats_search_urban.html" },
+                    { name: "List Your Flat (Rural)", link: "flats_list_rural.html" },
+                    { name: "List Your Flat (Urban)", link: "flats_list_urban.html" },
+                    { name: "View Your Listings", link: "flats_my_listings.html" } 
+                ]
+            },
+            {
+                id: 'pg', title: 'P.G.', mobileTitle: 'P.G.', desc: 'Comfortable P.G. with Food Options.', imgSrc: 'payingguest.png', icon: 'fa-user-friends', modalTitle: 'Paying Guest Options',
+                menu: [
+                    { name: "Search P.G. in Rural", link: "pg_search_rural.html" },
+                    { name: "Search P.G. in Urban", link: "pg_search_urban.html" },
+                    { name: "List Your P.G. (Rural)", link: "pg_list_rural.html" },
+                    { name: "List Your P.G. (Urban)", link: "pg_list_urban.html" },
+                    { name: "View Your Listings", link: "pg_my_listings.html" } 
+                ]
+            },
+            {
+                id: 'hostels', title: 'Hostels', mobileTitle: 'Hostels', desc: 'Affordable Hostels for Students/Workers.', imgSrc: 'hostels.png', icon: 'fa-school', modalTitle: 'Hostels & Accommodations',
+                menu: [
+                    { name: "Search Hostels in Rural", link: "hostels_search_rural.html" },
+                    { name: "Search Hostels in Urban", link: "hostels_search_urban.html" },
+                    { name: "List Your Hostel (Rural)", link: "hostels_list_rural.html" },
+                    { name: "List Your Hostel (Urban)", link: "hostels_list_urban.html" },
+                    { name: "View Your Listings", link: "hostels_my_listings.html" } 
+                ]
+            },
+            {
+                id: 'houses', title: 'Houses', mobileTitle: 'Houses', desc: 'Independent Houses and Villas for Rent.', imgSrc: 'houses.png', icon: 'fa-home', modalTitle: 'Houses & Villas',
+                menu: [
+                    { name: "Search Houses in Rural", link: "houses_search_rural.html" },
+                    { name: "Search Houses in Urban", link: "houses_search_urban.html" },
+                    { name: "List Your House (Rural)", link: "houses_list_rural.html" },
+                    { name: "List Your House (Urban)", link: "houses_list_urban.html" },
+                    { name: "View Your Listings", link: "houses_my_listings.html" } 
+                ]
+            },
+            {
+                id: 'plots', title: 'Plots', mobileTitle: 'Plots', desc: 'Residential and Commercial Plots for Rent/Lease.', imgSrc: 'plots.png', icon: 'fa-map', modalTitle: 'Plots & Land',
+                menu: [
+                    { name: "Search Plots in Rural", link: "plots_search_rural.html" },
+                    { name: "Search Plots in Urban", link: "plots_search_urban.html" },
+                    { name: "List Your Plot (Rural)", link: "plots_list_rural.html" },
+                    { name: "List Your Plot (Urban)", link: "plots_list_urban.html" },
+                    { name: "View Your Listings", link: "plots_my_listings.html" } 
+                ]
             }
-        }
+        ];
+        // --- END CENTRALIZED DATA STRUCTURE ---
 
-        mobileMenuButton.addEventListener('click', toggleMobileMenu);
-        mobileMenuCloseButton.addEventListener('click', toggleMobileMenu);
-        mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+        // --- START: UTILITY FUNCTIONS ---
         
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
-                // Adjust scroll to account for fixed header height (78px)
                 const headerHeight = 78; 
                 const elementPosition = element.getBoundingClientRect().top + window.scrollY;
                 const offsetPosition = elementPosition - headerHeight;
@@ -935,8 +748,418 @@
             }
         }
         
-         // --- START: SLIDER LOGIC ---
-        // Variables for slider logic
+        // --- END: UTILITY FUNCTIONS ---
+
+
+        // --- START: DYNAMIC CONTENT GENERATION ---
+
+        // 1. Generate Cards
+        function generateServiceCards() {
+            const container = document.getElementById('card-grid-container-dynamic');
+            if (!container) return;
+
+            container.innerHTML = SERVICE_DATA.map((service, index) => `
+                <!-- CARD: ${service.title} -->
+                <div class="premium-card" id="premium-card-${service.id}">
+                    <img 
+                        src="${service.imgSrc}" 
+                        alt="${service.title} Image" 
+                        class="premium-card-image"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=${service.title}';"
+                    >
+                    <div class="premium-title" data-mobile-title="${service.mobileTitle}"><span>${service.title}</span></div>
+                    <div class="premium-desc">${service.desc}</div>
+                </div>
+            `).join('');
+            
+            // Re-attach card interaction handlers after generation
+            attachCardInteractionHandlers();
+        }
+
+        // 2. Generate Desktop Navigation (Header)
+        function generateDesktopNav() {
+            const container = document.getElementById('desktop-nav-links');
+            if (!container) return;
+            
+            container.innerHTML = SERVICE_DATA.map(service => `
+                <div class="relative group">
+                    <a href="#" id="desktop-${service.id}-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
+                        ${service.title} <i id="desktop-${service.id}-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                    </a>
+                    <!-- Dropdown Content Container -->
+                    <div id="dropdown-${service.id}" class="desktop-dropdown-content">
+                        ${service.menu.map(item => `<a href="${item.link}" class="dropdown-link">${item.name}</a>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Attach desktop dropdown toggles
+            SERVICE_DATA.forEach(service => {
+                setupDesktopToggle(`desktop-${service.id}-link`, `dropdown-${service.id}`, `desktop-${service.id}-icon`);
+            });
+        }
+        
+        // 3. Generate Mobile Accordion (Sidebar)
+        function generateMobileAccordion() {
+            const container = document.getElementById('mobile-accordion-container');
+            if (!container) return;
+            
+            container.innerHTML = SERVICE_DATA.map(service => `
+                <div class="w-full">
+                    <button id="mobile-${service.id}-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
+                        ${service.title} <i id="icon-${service.id}-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
+                    </button>
+                    <div id="mobile-${service.id}-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        ${service.menu.map(item => `<a href="${item.link}" class="mobile-dropdown-link">${item.name}</a>`).join('')}
+                    </div>
+                </div>
+                <div class="border-t border-primary/30 w-full my-4"></div>
+            `).join('');
+
+            // Attach mobile accordion toggles
+            SERVICE_DATA.forEach(service => {
+                setupMobileAccordion(`mobile-${service.id}-toggle`, `mobile-${service.id}-dropdown`, `icon-${service.id}-mobile`);
+            });
+        }
+        
+        // 4. Generate Bottom Navigation
+        function generateBottomNav() {
+            const container = document.getElementById('bottom-nav-items-container');
+            if (!container) return;
+
+            // Only use the first 5 services for the fixed bottom nav (4 items + 1 central FAB)
+            const navServices = SERVICE_DATA.slice(0, 5); 
+            
+            let navHtml = '';
+
+            navServices.forEach((service, index) => {
+                // If it's the 3rd item (index 2), insert the central FAB
+                if (index === 2) {
+                    navHtml += `
+                        <div class="central-nav-item-shs w-1/5">
+                            <a 
+                                href="main.html" 
+                                class="central-fab animate-pulse-shadow"
+                                aria-label="Go to Home"
+                            >
+                                <i class="fas fa-home central-fab-icon"></i>
+                            </a>
+                            <span class="central-fab-label">Home</span>
+                        </div>
+                    `;
+                }
+
+                navHtml += `
+                    <!-- Item: ${service.title} -->
+                    <a href="#premium-card-${service.id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${service.id}')">
+                        <i class="fas ${service.icon} nav-icon-shs"></i>
+                        <span class="font-medium">${service.mobileTitle}</span>
+                    </a>
+                `;
+            });
+            
+            // Handle cases where SERVICE_DATA is too short (less than 5)
+            if (navServices.length < 5) {
+                // To keep the layout stable, ensure the FAB is present even if the items are missing.
+                if (navServices.length <= 2) {
+                    navHtml = `
+                        ${navServices.map(s => `
+                            <a href="#premium-card-${s.id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${s.id}')">
+                                <i class="fas ${s.icon} nav-icon-shs"></i>
+                                <span class="font-medium">${s.mobileTitle}</span>
+                            </a>
+                        `).join('')}
+                        <div class="central-nav-item-shs w-1/5">
+                            <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
+                                <i class="fas fa-home central-fab-icon"></i>
+                            </a>
+                            <span class="central-fab-label">Home</span>
+                        </div>
+                        ${navServices.length === 2 ? `
+                            <div class="nav-item-shs w-1/5 opacity-0 pointer-events-none"></div>
+                            <div class="nav-item-shs w-1/5 opacity-0 pointer-events-none"></div>
+                        ` : ''}
+                    `;
+                }
+            } else if (navServices.length === 5) {
+                // Standard 5 items: 1, 2, FAB, 3, 4 -> Needs correction since my loop generates 1, 2, 3, 4, 5 and inserts FAB at index 2 (between 2 and 3).
+                // Let's force the structure for robustness: 1, 2, FAB, 3, 4
+                navHtml = `
+                    <!-- 1 -->
+                    <a href="#premium-card-${navServices[0].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[0].id}')">
+                        <i class="fas ${navServices[0].icon} nav-icon-shs"></i>
+                        <span class="font-medium">${navServices[0].mobileTitle}</span>
+                    </a>
+                    <!-- 2 -->
+                    <a href="#premium-card-${navServices[1].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[1].id}')">
+                        <i class="fas ${navServices[1].icon} nav-icon-shs"></i>
+                        <span class="font-medium">${navServices[1].mobileTitle}</span>
+                    </a>
+                    <!-- FAB -->
+                    <div class="central-nav-item-shs w-1/5">
+                        <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
+                            <i class="fas fa-home central-fab-icon"></i>
+                        </a>
+                        <span class="central-fab-label">Home</span>
+                    </div>
+                    <!-- 3 -->
+                    <a href="#premium-card-${navServices[2].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[2].id}')">
+                        <i class="fas ${navServices[2].icon} nav-icon-shs"></i>
+                        <span class="font-medium">${navServices[2].mobileTitle}</span>
+                    </a>
+                    <!-- 4 -->
+                    <a href="#premium-card-${navServices[3].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[3].id}')">
+                        <i class="fas ${navServices[3].icon} nav-icon-shs"></i>
+                        <span class="font-medium">${navServices[3].mobileTitle}</span>
+                    </a>
+                `;
+            } else if (navServices.length >= 6) {
+                 // For 6 services, we show 4 items + FAB (1, 2, FAB, 3, 4) or 1, 2, 5, 6, FAB to cover all. 
+                 // Sticking to 1, 2, FAB, 3, 4 for visual consistency. If Plots is the 6th, it won't show here.
+                 // Let's use 1, 3, FAB, 5, 6 to cover a wider range if needed. Sticking to the first 4 for now.
+                 // Reusing the 5-item logic but excluding the 5th service (index 4) and using the 6th (index 5) item's icon for a new item.
+                 
+                 // Standard 5 items: 1, 2, FAB, 3, 4
+                  navHtml = `
+                    <!-- 1: Rooms -->
+                    <a href="#premium-card-${navServices[0].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[0].id}')">
+                        <i class="fas ${navServices[0].icon} nav-icon-shs"></i>
+                        <span class="font-medium">${navServices[0].mobileTitle}</span>
+                    </a>
+                    <!-- 2: Flats -->
+                    <a href="#premium-card-${navServices[1].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[1].id}')">
+                        <i class="fas ${navServices[1].icon} nav-icon-shs"></i>
+                        <span class="font-medium">${navServices[1].mobileTitle}</span>
+                    </a>
+                    <!-- Central FAB Button -->
+                    <div class="central-nav-item-shs w-1/5">
+                        <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
+                            <i class="fas fa-home central-fab-icon"></i>
+                        </a>
+                        <span class="central-fab-label">Home</span>
+                    </div>
+                    <!-- 3: P.G. -->
+                    <a href="#premium-card-${navServices[2].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[2].id}')">
+                        <i class="fas ${navServices[2].icon} nav-icon-shs"></i>
+                        <span class="font-medium">${navServices[2].mobileTitle}</span>
+                    </a>
+                    <!-- 4: Plots (Now using the last item for a more visible spot) -->
+                    <a href="#premium-card-${SERVICE_DATA[5].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${SERVICE_DATA[5].id}')">
+                        <i class="fas ${SERVICE_DATA[5].icon} nav-icon-shs"></i> 
+                        <span class="font-medium">${SERVICE_DATA[5].mobileTitle}</span>
+                    </a>
+                  `;
+            }
+
+            container.innerHTML = navHtml;
+        }
+
+        // --- END: DYNAMIC CONTENT GENERATION ---
+
+        
+        // --- START: TILT and MODAL LOGIC (event handling) ---
+
+        // Function to attach 3D tilt and click handlers
+        function attachCardInteractionHandlers() {
+            const tiltCards = document.querySelectorAll('.premium-card');
+            const TILT_STRENGTH = 10; 
+
+            tiltCards.forEach(card => {
+                const cardId = card.id;
+                
+                // Remove existing handlers to prevent duplicates after DOM regeneration
+                card.onclick = null;
+                card.onmousemove = null;
+                card.onmouseleave = null;
+                card.ontouchstart = null;
+                card.ontouchend = null;
+                card.ontouchcancel = null;
+                
+                // 1. Click Handler (Modal)
+                card.addEventListener('click', () => showLocationModal(cardId));
+
+                // 2. 3D Tilt Effect
+                const resetTilt = () => {
+                    card.style.transform = 'translateY(0px) rotateX(0deg) rotateY(0deg) scale(1.0)';
+                };
+
+                if (!('ontouchstart' in window)) { 
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const centerX = rect.left + rect.width / 2;
+                        const centerY = rect.top + rect.height / 2;
+                        const x = (e.clientX - centerX) / (rect.width / 2);
+                        const y = (e.clientY - centerY) / (rect.height / 2);
+                        const rotateX = -y * TILT_STRENGTH; 
+                        const rotateY = x * TILT_STRENGTH; 
+                        card.style.transform = `translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`; 
+                    });
+
+                    card.addEventListener('mouseleave', resetTilt);
+                }
+                
+                // 3. Touch support
+                card.addEventListener('touchstart', () => {
+                    card.style.transform = 'translateY(-8px) scale(1.05)';
+                });
+                card.addEventListener('touchend', resetTilt);
+                card.addEventListener('touchcancel', resetTilt);
+            });
+        }
+        
+        const modalOverlay = document.getElementById('location-modal-overlay');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const modalTitle = document.getElementById('modal-title');
+        const locationList = document.getElementById('location-list');
+
+        function showLocationModal(cardId) {
+            // Extract the service ID from the full card ID (e.g., 'premium-card-rooms' -> 'rooms')
+            const serviceId = cardId.replace('premium-card-', '');
+            const service = SERVICE_DATA.find(s => s.id === serviceId);
+
+            if (!service || !service.menu || service.menu.length === 0) {
+                 console.error("No service or menu data found for card ID:", cardId);
+                 closeLocationModal(); 
+                 return;
+            }
+
+            // Set Modal Content 
+            modalTitle.textContent = service.modalTitle;
+            locationList.innerHTML = ''; 
+
+            service.menu.forEach(item => {
+                const elementId = `${service.id}-link-${item.name.replace(/\s/g, '-')}`;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'location-item';
+                itemDiv.id = elementId; // Add ID for potential future tracking/styling
+                itemDiv.innerHTML = `<span>${item.name}</span> <i class="fas fa-arrow-right text-sm"></i>`;
+                
+                itemDiv.onclick = () => {
+                    window.location.href = item.link;
+                };
+                locationList.appendChild(itemDiv);
+            });
+
+            // Show Modal
+            modalOverlay.style.display = 'flex';
+            setTimeout(() => {
+                modalOverlay.style.opacity = 1;
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLocationModal() {
+            modalOverlay.style.opacity = 0;
+            setTimeout(() => {
+                modalOverlay.style.display = 'none';
+                document.body.style.overflow = ''; 
+            }, 300);
+        }
+
+        // Attach static modal listeners once
+        modalCloseButton.addEventListener('click', closeLocationModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeLocationModal();
+            }
+        });
+        
+        // --- END: TILT and MODAL LOGIC ---
+
+
+        // --- START: DROPDOWN / ACCORDION LOGIC (Moved helpers outside of initialize) ---
+
+        function setupDesktopToggle(linkId, contentId, iconId) {
+            const link = document.getElementById(linkId);
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+
+            if (link && content) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll('.desktop-dropdown-content.open').forEach(openContent => {
+                        const openContentId = openContent.id;
+                        if (openContentId !== contentId) {
+                            openContent.classList.remove('open');
+                            const otherIcon = document.getElementById(openContentId.replace('dropdown', 'desktop') + '-icon');
+                            if (otherIcon) {
+                                otherIcon.classList.remove('rotate-180');
+                            }
+                        }
+                    });
+
+                    const isOpen = content.classList.toggle('open');
+                    if (icon) {
+                        if (isOpen) {
+                            icon.classList.add('rotate-180');
+                        } else {
+                            icon.classList.remove('rotate-180');
+                        }
+                    }
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (content.classList.contains('open') && 
+                        !link.contains(e.target) && 
+                        !content.contains(e.target)) {
+                        
+                        content.classList.remove('open');
+                        if (icon) {
+                            icon.classList.remove('rotate-180');
+                        }
+                    }
+                });
+            }
+        }
+        
+        function setupMobileAccordion(toggleId, dropdownId, iconId) {
+            const toggleButton = document.getElementById(toggleId);
+            const dropdown = document.getElementById(dropdownId);
+            const icon = document.getElementById(iconId);
+
+            if (toggleButton && dropdown) {
+                toggleButton.addEventListener('click', () => {
+                    // Close all other open accordions
+                    document.querySelectorAll('.mobile-accordion-toggle').forEach(btn => {
+                        const otherDropdownId = btn.id.replace('toggle', 'dropdown');
+                        const otherIconId = btn.id.replace('toggle', 'icon');
+                        const otherDropdown = document.getElementById(otherDropdownId);
+                        const otherIcon = document.getElementById(otherIconId);
+
+                        if (otherDropdownId !== dropdownId && otherDropdown && otherDropdown.classList.contains('expanded')) {
+                            otherDropdown.classList.remove('expanded');
+                            otherDropdown.style.height = '0';
+                            otherDropdown.style.paddingTop = '0';
+                            otherDropdown.style.paddingBottom = '0';
+                            if (otherIcon) otherIcon.classList.remove('rotate-180');
+                        }
+                    });
+
+                    // Toggle current accordion
+                    const isExpanded = dropdown.classList.toggle('expanded');
+                    
+                    if (isExpanded) {
+                        dropdown.style.height = dropdown.scrollHeight + 'px';
+                        dropdown.style.paddingTop = '8px';
+                        dropdown.style.paddingBottom = '8px';
+                        icon.classList.add('rotate-180');
+                    } else {
+                        dropdown.style.height = '0';
+                        dropdown.style.paddingTop = '0';
+                        dropdown.style.paddingBottom = '0';
+                        icon.classList.remove('rotate-180');
+                    }
+                });
+            }
+        }
+
+        // --- END: DROPDOWN / ACCORDION LOGIC ---
+
+
+        // --- START: SLIDER LOGIC (unchanged) ---
+        
         const sliderBg = document.getElementById('slider-bg');
         const slidesWrapper = document.getElementById('slides-wrapper');
         const prevBtn = document.getElementById('prev-btn');
@@ -965,12 +1188,9 @@
                 const deadline = new Date(item.deadline);
                 const now = new Date();
                 const isExpired = deadline < now;
-                // Button Text
                 const buttonText = isExpired ? 'Check Previous Listings' : 'View Details';
                 
-                // Link is now assigned directly from item.link (internal page)
                 slide.href = item.link; 
-                
                 slide.className = `slide absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-1000`;
                 slide.style.zIndex = index === 0 ? 1 : 0;
                 
@@ -1041,353 +1261,7 @@
         // --- END: SLIDER LOGIC ---
         
         
-        // --- START: 3D TILT EFFECT LOGIC (3D झुकाव प्रभाव) ---
-
-        const tiltCards = document.querySelectorAll('.premium-card');
-        const TILT_STRENGTH = 10; // Max rotation in degrees
-        const SHADOW_OFFSET = 20; // Max shadow offset in pixels
-
-        tiltCards.forEach(card => {
-            const cardRect = card.getBoundingClientRect();
-            
-            // This function resets the tilt when mouse leaves (or on touch end)
-            const resetTilt = () => {
-                card.style.transform = 'translateY(0px) rotateX(0deg) rotateY(0deg) scale(1.0)';
-            };
-
-            // Only apply this logic on desktop (non-touch devices)
-            if (!('ontouchstart' in window)) { 
-                card.addEventListener('mousemove', (e) => {
-                    // Get card position and center
-                    const rect = card.getBoundingClientRect();
-                    const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
-
-                    // Calculate mouse position relative to center (-1 to 1 range)
-                    const x = (e.clientX - centerX) / (rect.width / 2);
-                    const y = (e.clientY - centerY) / (rect.height / 2);
-
-                    // Calculate rotation angles
-                    const rotateX = -y * TILT_STRENGTH; // Tilt up/down
-                    const rotateY = x * TILT_STRENGTH;  // Tilt left/right
-
-                    // Apply 3D transform and slight lift
-                    card.style.transform = `translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`; 
-                });
-
-                card.addEventListener('mouseleave', resetTilt);
-            }
-            // Add touch support for the lift effect, ignoring the continuous tilt
-            card.addEventListener('touchstart', () => {
-                card.style.transform = 'translateY(-8px) scale(1.05)';
-            });
-            card.addEventListener('touchend', resetTilt);
-            card.addEventListener('touchcancel', resetTilt);
-        });
-
-        // --- END: 3D TILT EFFECT LOGIC ---
-        
-        
-        // --- START: MODAL/LOCATION SELECTION LOGIC (पॉपअप/लोकेशन चयन लॉजिक) ---
-        const modalOverlay = document.getElementById('location-modal-overlay');
-        const modalCloseButton = document.getElementById('modal-close-button');
-        const modalTitle = document.getElementById('modal-title');
-        const locationList = document.getElementById('location-list');
-
-        // Standardized 5-item menu structure for all rental types, with 'View Your Listings' last
-        // --- Rooms Menu ---
-        const roomItems = [
-            { name: "Search Rooms in Rural", link: "rooms_search_rural.html" },
-            { name: "Search Rooms in Urban", link: "rooms_search_urban.html" },
-            { name: "List Your Room (Rural)", link: "rooms_list_rural.html" },
-            { name: "List Your Room (Urban)", link: "rooms_list_urban.html" },
-            { name: "View Your Listings", link: "rooms_my_listings.html" } 
-        ];
-
-        // --- Flats Menu ---
-        const flatItems = [
-            { name: "Search Flats in Rural", link: "flats_search_rural.html" },
-            { name: "Search Flats in Urban", link: "flats_search_urban.html" },
-            { name: "List Your Flat (Rural)", link: "flats_list_rural.html" },
-            { name: "List Your Flat (Urban)", link: "flats_list_urban.html" },
-            { name: "View Your Listings", link: "flats_my_listings.html" } 
-        ];
-
-        // --- P.G. Menu ---
-        const pgItems = [
-            { name: "Search P.G. in Rural", link: "pg_search_rural.html" },
-            { name: "Search P.G. in Urban", link: "pg_search_urban.html" },
-            { name: "List Your P.G. (Rural)", link: "pg_list_rural.html" },
-            { name: "List Your P.G. (Urban)", link: "pg_list_urban.html" },
-            { name: "View Your Listings", link: "pg_my_listings.html" } 
-        ];
-
-        // --- Hostels Menu ---
-        const hostelItems = [
-            { name: "Search Hostels in Rural", link: "hostels_search_rural.html" },
-            { name: "Search Hostels in Urban", link: "hostels_search_urban.html" },
-            { name: "List Your Hostel (Rural)", link: "hostels_list_rural.html" },
-            { name: "List Your Hostel (Urban)", link: "hostels_list_urban.html" },
-            { name: "View Your Listings", link: "hostels_my_listings.html" } 
-        ];
-
-        // --- Houses Menu ---
-        const houseItems = [
-            { name: "Search Houses in Rural", link: "houses_search_rural.html" },
-            { name: "Search Houses in Urban", link: "houses_search_urban.html" },
-            { name: "List Your House (Rural)", link: "houses_list_rural.html" },
-            { name: "List Your House (Urban)", link: "houses_list_urban.html" },
-            { name: "View Your Listings", link: "houses_my_listings.html" } 
-        ];
-
-        // --- Plots Menu - UPDATED ---
-        const plotItems = [
-            { name: "Search Plots in Rural", link: "plots_search_rural.html" },
-            { name: "Search Plots in Urban", link: "plots_search_urban.html" },
-            { name: "List Your Plot (Rural)", link: "plots_list_rural.html" },
-            { name: "List Your Plot (Urban)", link: "plots_list_urban.html" },
-            { name: "View Your Listings", link: "plots_my_listings.html" } 
-        ];
-
-
-        // All cards now use unique item lists
-        const locationData = {
-            'premium-card-1': { 
-                title: 'Rooms Options',
-                locations: roomItems
-            },
-            'premium-card-2': { 
-                title: 'Flats & Apartments',
-                locations: flatItems
-            },
-            'premium-card-3': { 
-                title: 'Paying Guest Options',
-                locations: pgItems
-            },
-            'premium-card-4': { 
-                title: 'Hostels & Accommodations',
-                locations: hostelItems
-            },
-            'premium-card-5': { 
-                title: 'Houses & Villas',
-                locations: houseItems
-            },
-            'premium-card-6': { // NEW PLOTS CARD ENTRY
-                title: 'Plots & Land',
-                locations: plotItems
-            }
-            
-        };
-
-        function showLocationModal(cardId) {
-            const data = locationData[cardId];
-            
-            // Check if data exists
-            if (!data || !data.locations || data.locations.length === 0) {
-                 console.error("No location data found or data is empty for card ID:", cardId);
-                 closeLocationModal(); 
-                 return;
-            }
-
-            // Set Modal Content (मोडल सामग्री सेट करें)
-            modalTitle.textContent = data.title;
-            locationList.innerHTML = ''; // Clear previous content (पिछली सामग्री साफ़ करें)
-
-            data.locations.forEach(location => {
-                const item = document.createElement('div');
-                item.className = 'location-item';
-                // HTML is generated with the unique link for the corresponding card (संबंधित कार्ड के लिए अद्वितीय लिंक के साथ HTML जनरेट किया गया है)
-                item.innerHTML = `<span>${location.name}</span> <i class="fas fa-arrow-right text-sm"></i>`;
-                
-                // Click handler uses the unique 'link' property: (क्लिक हैंडलर अद्वितीय 'लिंक' प्रॉपर्टी का उपयोग करता है)
-                item.onclick = () => {
-                    window.location.href = location.link;
-                };
-                locationList.appendChild(item);
-            });
-
-            // Show Modal (मोडल दिखाएँ)
-            modalOverlay.style.display = 'flex';
-            setTimeout(() => {
-                modalOverlay.style.opacity = 1;
-            }, 10);
-            document.body.style.overflow = 'hidden'; // Prevent body scroll (बॉडी स्क्रॉल को रोकें)
-        }
-
-        function closeLocationModal() {
-            modalOverlay.style.opacity = 0;
-            // Hide after transition completes (संक्रमण पूरा होने के बाद छिपाएँ)
-            setTimeout(() => {
-                modalOverlay.style.display = 'none';
-                document.body.style.overflow = ''; 
-            }, 300);
-        }
-
-        // Attach event listeners for cards and close button (कार्ड्स और बंद बटन के लिए इवेंट लिसनर संलग्न करें)
-        modalCloseButton.addEventListener('click', closeLocationModal);
-        modalOverlay.addEventListener('click', (e) => {
-            // Close when clicking outside the content area (सामग्री क्षेत्र के बाहर क्लिक करने पर बंद करें)
-            if (e.target === modalOverlay) {
-                closeLocationModal();
-            }
-        });
-        
-        // --- START: DROPDOWN / ACCORDION LOGIC (ड्रॉपडाउन / अकॉर्डियन लॉजिक) ---
-        
-        // Function to set up the desktop click toggle for navigation links
-        function setupDesktopToggle(linkId, contentId, iconId) {
-            const link = document.getElementById(linkId);
-            const content = document.getElementById(contentId);
-            const icon = document.getElementById(iconId);
-
-            if (link && content) {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Close all other open desktop dropdowns
-                    document.querySelectorAll('.desktop-dropdown-content.open').forEach(openContent => {
-                        const openContentId = openContent.id;
-                        if (openContentId !== contentId) {
-                            openContent.classList.remove('open');
-                            const otherIcon = document.getElementById(openContentId.replace('dropdown', 'desktop') + '-icon');
-                            if (otherIcon) {
-                                otherIcon.classList.remove('rotate-180');
-                            }
-                        }
-                    });
-
-                    // Toggle current dropdown
-                    const isOpen = content.classList.toggle('open');
-                    if (icon) {
-                        if (isOpen) {
-                            icon.classList.add('rotate-180');
-                        } else {
-                            icon.classList.remove('rotate-180');
-                        }
-                    }
-                });
-
-                // Close dropdown if user clicks anywhere else on the document
-                document.addEventListener('click', (e) => {
-                    // Check if the click is outside the link AND outside the content
-                    if (content.classList.contains('open') && 
-                        !link.contains(e.target) && 
-                        !content.contains(e.target)) {
-                        
-                        content.classList.remove('open');
-                        if (icon) {
-                            icon.classList.remove('rotate-180');
-                        }
-                    }
-                });
-            }
-        }
-        
-        function generateDropdownContent(dataId, containerId) {
-            const container = document.getElementById(containerId);
-            const isDesktopDropdown = !containerId.startsWith('mobile');
-
-            if (!container || !locationData[dataId]) return;
-
-            // Ensure desktop dropdown container has the correct class if it's the desktop version
-            if (isDesktopDropdown) {
-                 // No need to add classes here; they are now defined in CSS .desktop-dropdown-content
-            }
-            
-            // Use 'dropdown-link' for desktop and 'mobile-dropdown-link' for mobile
-            const className = containerId.startsWith('mobile') ? 'mobile-dropdown-link' : 'dropdown-link';
-            
-            container.innerHTML = locationData[dataId].locations.map(item => `
-                <a href="${item.link}" class="${className}">${item.name}</a>
-            `).join('');
-        }
-        
-        function setupMobileAccordion(toggleId, dropdownId, iconId) {
-            const toggleButton = document.getElementById(toggleId);
-            const dropdown = document.getElementById(dropdownId);
-            const icon = document.getElementById(iconId);
-
-            if (toggleButton && dropdown) {
-                toggleButton.addEventListener('click', () => {
-                    const isExpanded = dropdown.classList.toggle('expanded');
-                    
-                    if (isExpanded) {
-                        // Set height to scrollHeight for smooth opening
-                        dropdown.style.height = dropdown.scrollHeight + 'px';
-                        dropdown.style.paddingTop = '8px';
-                        dropdown.style.paddingBottom = '8px';
-                        icon.classList.add('rotate-180');
-                    } else {
-                        // Collapse
-                        dropdown.style.height = '0';
-                        dropdown.style.paddingTop = '0';
-                        dropdown.style.paddingBottom = '0';
-                        icon.classList.remove('rotate-180');
-                    }
-                });
-            }
-        }
-        
-        function initializeDropdowns() {
-            // 1. Generate Desktop Dropdown Content and Setup Toggle
-            generateDropdownContent('premium-card-1', 'dropdown-rooms');
-            setupDesktopToggle('desktop-rooms-link', 'dropdown-rooms', 'desktop-rooms-icon');
-            
-            generateDropdownContent('premium-card-2', 'dropdown-flats');
-            setupDesktopToggle('desktop-flats-link', 'dropdown-flats', 'desktop-flats-icon');
-
-            generateDropdownContent('premium-card-3', 'dropdown-pg');
-            setupDesktopToggle('desktop-pg-link', 'dropdown-pg', 'desktop-pg-icon');
-
-            generateDropdownContent('premium-card-4', 'dropdown-hostels');
-            setupDesktopToggle('desktop-hostels-link', 'dropdown-hostels', 'desktop-hostels-icon');
-
-            generateDropdownContent('premium-card-5', 'dropdown-houses');
-            setupDesktopToggle('desktop-houses-link', 'dropdown-houses', 'desktop-houses-icon');
-            
-            // NEW: Plots Desktop Dropdown
-            generateDropdownContent('premium-card-6', 'dropdown-plots');
-            setupDesktopToggle('desktop-plots-link', 'dropdown-plots', 'desktop-plots-icon');
-
-            // 2. Generate Mobile Accordion Content
-            generateDropdownContent('premium-card-1', 'mobile-rooms-dropdown');
-            generateDropdownContent('premium-card-2', 'mobile-flats-dropdown');
-            generateDropdownContent('premium-card-3', 'mobile-pg-dropdown');
-            generateDropdownContent('premium-card-4', 'mobile-hostels-dropdown');
-            generateDropdownContent('premium-card-5', 'mobile-houses-dropdown');
-            
-            // NEW: Plots Mobile Accordion
-            generateDropdownContent('premium-card-6', 'mobile-plots-dropdown');
-
-            // 3. Setup Mobile Accordion Toggles
-            setupMobileAccordion('mobile-rooms-toggle', 'mobile-rooms-dropdown', 'icon-rooms-mobile');
-            setupMobileAccordion('mobile-flats-toggle', 'mobile-flats-dropdown', 'icon-flats-mobile');
-            setupMobileAccordion('mobile-pg-toggle', 'mobile-pg-dropdown', 'icon-pg-mobile');
-            setupMobileAccordion('mobile-hostels-toggle', 'mobile-hostels-dropdown', 'icon-hostels-mobile');
-            setupMobileAccordion('mobile-houses-toggle', 'mobile-houses-dropdown', 'icon-houses-mobile');
-            
-            // NEW: Plots Mobile Accordion Toggle
-            setupMobileAccordion('mobile-plots-toggle', 'mobile-plots-dropdown', 'icon-plots-mobile');
-        }
-
-        // --- END: DROPDOWN / ACCORDION LOGIC ---
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeSlider();
-            initializeDropdowns();
-            
-            // Centralized click handlers for all premium cards (using showLocationModal)
-            document.getElementById('premium-card-1').addEventListener('click', () => showLocationModal('premium-card-1'));
-            document.getElementById('premium-card-2').addEventListener('click', () => showLocationModal('premium-card-2'));
-            document.getElementById('premium-card-3').addEventListener('click', () => showLocationModal('premium-card-3'));
-            document.getElementById('premium-card-4').addEventListener('click', () => showLocationModal('premium-card-4'));
-            document.getElementById('premium-card-5').addEventListener('click', () => showLocationModal('premium-card-5'));
-            document.getElementById('premium-card-6').addEventListener('click', () => showLocationModal('premium-card-6')); // NEW: Plots handler
-            
-            console.log("All card handlers initialized.");
-        });
-        
-        // --- START: DYNAMIC THEME COLOR CHANGER (7 THEMES, 7 SECONDS) ---
+        // --- START: DYNAMIC THEME COLOR CHANGER (unchanged) ---
         
         const themeSchemes = [
             // 0: Golden (NEW DEFAULT) - सुनहरी थीम अब डिफ़ॉल्ट है
@@ -1477,11 +1351,26 @@
             currentThemeIndex = (currentThemeIndex + 1) % themeSchemes.length;
         }
 
-        // Initial call and set interval
-        changeTheme(); 
-        setInterval(changeTheme, intervalTime);
+        // --- MAIN INITIALIZATION FUNCTION ---
+        function initializeRentistApp() {
+            // 1. Generate all dynamic UI elements based on SERVICE_DATA
+            generateServiceCards();
+            generateDesktopNav();
+            generateMobileAccordion();
+            generateBottomNav();
 
-        // --- END: DYNAMIC THEME COLOR CHANGER ---
+            // 2. Initialize Slider
+            initializeSlider();
+            
+            // 3. Start Theme Rotation
+            changeTheme(); 
+            setInterval(changeTheme, intervalTime);
+            
+            console.log("Rentist App Initialized. Dynamic content loaded.");
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeRentistApp);
+        // --- END: DYNAMIC THEME COLOR CHANGER & Initialization ---
     </script>
 </body>
 </html>
