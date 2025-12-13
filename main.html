@@ -62,15 +62,24 @@
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
         }
         
-        /* --- MOBILE SIDEBAR STYLES (मोबाइल साइडबार) */
+        /* --- MOBILE SIDEBAR STYLES (मोबाइल साइडबार) - FIX APPLIED HERE */
+        #mobile-menu-icon {
+            transition: transform 0.3s ease-in-out;
+        }
         .mobile-menu-panel {
-            top: 85px; 
-            height: calc(100vh - 165px);
+            top: 78px; /* Aligns right below the header (approx 78px) */
+            height: calc(100vh - 78px - 80px); /* 100vh - header height - bottom nav height */
             transition: transform 0.5s ease-in-out;
             background-color: rgba(28, 49, 68, 0.9); /* New dark color */
             backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px);
             border: 2px solid var(--electric-green-glow); /* Dynamic Green Glow */
+        }
+        
+        /* ADDED: Mobile Menu Overlay Styles */
+        .mobile-menu-overlay {
+            z-index: 105; /* Between fixed header (100) and menu panel (110) */
+            transition: opacity 0.3s;
         }
 
         /* --- BOTTOM NAV STYLES (बॉटम नेविगेशन) */
@@ -546,10 +555,10 @@
                   <!-- Contact Side Bar (संपर्क साइड बार) -->
                   <div class="border-l-4 border-primary/50 pl-6 text-sm flex flex-col items-start bg-primary/5 p-2 rounded-xl shadow-inner">
                     <a href="tel:8816014071" class="flex items-center font-extrabold text-white hover:text-primary transition-colors">
-                      <i class="fas fa-phone-alt mr-2 text-primary"></i> <span class="text-xl tracking-wider">8816014071</span>
+                      <i class="fas fa-phone-alt mr-2 text-primary"></i> <span class="text-xl tracking-wider">00000000</span>
                     </a>
                     <a href="mailto:care@yourtrueguide.com" class="flex items-center text-xs text-gray-400 hover:text-primary transition-colors mt-1">
-                      <i class="fas fa-envelope mr-2 text-secondary/70"></i> <b>care@rentist.com</b>
+                      <i class="fas fa-envelope mr-2 text-secondary/70"></i> <b>0000000000</b>
                     </a>
                   </div>
                 </div>
@@ -562,6 +571,7 @@
         </header>
 
         <!-- Mobile Menu Panel (मोबाइल मेन्यू पैनल) -->
+        <!-- FIX: Added default 'translate-x-full' for hidden state -->
         <div id="mobile-menu-panel" class="mobile-menu-panel fixed right-0 w-3/4 max-w-sm z-[110] translate-x-full overflow-hidden border border-primary/50 rounded-2xl shadow-lg shadow-primary/10">
             <button id="mobile-menu-close-button" class="absolute top-4 right-4 text-white hover:text-primary p-2 rounded-full bg-secondary/50 shadow-lg" aria-label="Close menu">
                 <i class="fas fa-times text-xl"></i>
@@ -583,12 +593,13 @@
                 <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50">
                   <h4 class="text-base font-bold text-primary mb-1">Need Help? (24x7)</h4>
                   <a href="tel:8816014071" class="flex items-center font-extrabold text-white text-xl p-3 rounded-full bg-primary/90 w-full justify-center">
-                     <i class="fas fa-phone-volume mr-3"></i> <span>8816014071</span>
+                     <i class="fas fa-phone-volume mr-3"></i> <span>0000000000</span>
                   </a>
                 </div>
                 <p class="text-xs text-center text-gray-500 mt-auto">© 2025 Rentist.com</p>
             </div>
         </div>
+        <!-- FIX: Added 'hidden' class to overlay to control it via JS -->
         <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/70 mobile-menu-overlay hidden"></div>
     </div>
     <!-- END HEADER & SIDEBAR -->
@@ -749,6 +760,82 @@
         }
         
         // --- END: UTILITY FUNCTIONS ---
+        
+        
+        // --- START: MOBILE MENU TOGGLE LOGIC (FIXED) ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+        function toggleMobileMenu(isOpen) {
+            if (isOpen) {
+                // Open menu
+                mobileMenuPanel.classList.remove('translate-x-full');
+                mobileMenuPanel.classList.add('translate-x-0');
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+                // Change icon to 'X' and add rotation for visual flair
+                mobileMenuIcon.classList.remove('fa-bars');
+                mobileMenuIcon.classList.add('fa-times');
+                mobileMenuIcon.classList.add('rotate-180'); 
+            } else {
+                // Close menu
+                mobileMenuPanel.classList.remove('translate-x-0');
+                mobileMenuPanel.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                // Change icon back to 'Bars'
+                mobileMenuIcon.classList.remove('fa-times');
+                mobileMenuIcon.classList.add('fa-bars');
+                mobileMenuIcon.classList.remove('rotate-180');
+                
+                // Also close any open accordions when the sidebar is closed
+                document.querySelectorAll('.mobile-accordion-toggle').forEach(btn => {
+                    const otherDropdownId = btn.id.replace('toggle', 'dropdown');
+                    const otherIconId = btn.id.replace('toggle', 'icon');
+                    const otherDropdown = document.getElementById(otherDropdownId);
+                    const otherIcon = document.getElementById(otherIconId);
+
+                    if (otherDropdown && otherDropdown.classList.contains('expanded')) {
+                        otherDropdown.classList.remove('expanded');
+                        otherDropdown.style.height = '0';
+                        otherDropdown.style.paddingTop = '0';
+                        otherDropdown.style.paddingBottom = '0';
+                        if (otherIcon) otherIcon.classList.remove('rotate-180');
+                    }
+                });
+            }
+        }
+
+        function attachMobileMenuListeners() {
+            // Toggle button listeners
+            mobileMenuButton.addEventListener('click', () => {
+                const isCurrentlyOpen = mobileMenuPanel.classList.contains('translate-x-0');
+                toggleMobileMenu(!isCurrentlyOpen);
+            });
+
+            // Close button listener
+            mobileMenuCloseButton.addEventListener('click', () => {
+                toggleMobileMenu(false);
+            });
+            
+            // Overlay listener
+            mobileMenuOverlay.addEventListener('click', () => {
+                toggleMobileMenu(false);
+            });
+            
+            // Auto-close menu if a link inside is clicked
+            document.querySelectorAll('#mobile-accordion-container a').forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleMobileMenu(false);
+                });
+            });
+        }
+        // --- END: MOBILE MENU TOGGLE LOGIC ---
 
 
         // --- START: DYNAMIC CONTENT GENERATION ---
@@ -801,6 +888,7 @@
         }
         
         // 3. Generate Mobile Accordion (Sidebar)
+        // FIX: This section already generates the required options, fulfilling the user's second request.
         function generateMobileAccordion() {
             const container = document.getElementById('mobile-accordion-container');
             if (!container) return;
@@ -808,14 +896,14 @@
             container.innerHTML = SERVICE_DATA.map(service => `
                 <div class="w-full">
                     <button id="mobile-${service.id}-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        ${service.title} <i id="icon-${service.id}-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
+                        <i class="fas ${service.icon} mr-3"></i> ${service.title} <i id="icon-${service.id}-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
                     </button>
                     <div id="mobile-${service.id}-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         ${service.menu.map(item => `<a href="${item.link}" class="mobile-dropdown-link">${item.name}</a>`).join('')}
                     </div>
                 </div>
-                <div class="border-t border-primary/30 w-full my-4"></div>
-            `).join('');
+                <div class="border-t border-primary/30 w-full my-2"></div>
+            `).join(''); // Reduced margin below divider for better spacing
 
             // Attach mobile accordion toggles
             SERVICE_DATA.forEach(service => {
@@ -833,93 +921,7 @@
             
             let navHtml = '';
 
-            navServices.forEach((service, index) => {
-                // If it's the 3rd item (index 2), insert the central FAB
-                if (index === 2) {
-                    navHtml += `
-                        <div class="central-nav-item-shs w-1/5">
-                            <a 
-                                href="main.html" 
-                                class="central-fab animate-pulse-shadow"
-                                aria-label="Go to Home"
-                            >
-                                <i class="fas fa-home central-fab-icon"></i>
-                            </a>
-                            <span class="central-fab-label">Home</span>
-                        </div>
-                    `;
-                }
-
-                navHtml += `
-                    <!-- Item: ${service.title} -->
-                    <a href="#premium-card-${service.id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${service.id}')">
-                        <i class="fas ${service.icon} nav-icon-shs"></i>
-                        <span class="font-medium">${service.mobileTitle}</span>
-                    </a>
-                `;
-            });
-            
-            // Handle cases where SERVICE_DATA is too short (less than 5)
-            if (navServices.length < 5) {
-                // To keep the layout stable, ensure the FAB is present even if the items are missing.
-                if (navServices.length <= 2) {
-                    navHtml = `
-                        ${navServices.map(s => `
-                            <a href="#premium-card-${s.id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${s.id}')">
-                                <i class="fas ${s.icon} nav-icon-shs"></i>
-                                <span class="font-medium">${s.mobileTitle}</span>
-                            </a>
-                        `).join('')}
-                        <div class="central-nav-item-shs w-1/5">
-                            <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
-                                <i class="fas fa-home central-fab-icon"></i>
-                            </a>
-                            <span class="central-fab-label">Home</span>
-                        </div>
-                        ${navServices.length === 2 ? `
-                            <div class="nav-item-shs w-1/5 opacity-0 pointer-events-none"></div>
-                            <div class="nav-item-shs w-1/5 opacity-0 pointer-events-none"></div>
-                        ` : ''}
-                    `;
-                }
-            } else if (navServices.length === 5) {
-                // Standard 5 items: 1, 2, FAB, 3, 4 -> Needs correction since my loop generates 1, 2, 3, 4, 5 and inserts FAB at index 2 (between 2 and 3).
-                // Let's force the structure for robustness: 1, 2, FAB, 3, 4
-                navHtml = `
-                    <!-- 1 -->
-                    <a href="#premium-card-${navServices[0].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[0].id}')">
-                        <i class="fas ${navServices[0].icon} nav-icon-shs"></i>
-                        <span class="font-medium">${navServices[0].mobileTitle}</span>
-                    </a>
-                    <!-- 2 -->
-                    <a href="#premium-card-${navServices[1].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[1].id}')">
-                        <i class="fas ${navServices[1].icon} nav-icon-shs"></i>
-                        <span class="font-medium">${navServices[1].mobileTitle}</span>
-                    </a>
-                    <!-- FAB -->
-                    <div class="central-nav-item-shs w-1/5">
-                        <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
-                            <i class="fas fa-home central-fab-icon"></i>
-                        </a>
-                        <span class="central-fab-label">Home</span>
-                    </div>
-                    <!-- 3 -->
-                    <a href="#premium-card-${navServices[2].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[2].id}')">
-                        <i class="fas ${navServices[2].icon} nav-icon-shs"></i>
-                        <span class="font-medium">${navServices[2].mobileTitle}</span>
-                    </a>
-                    <!-- 4 -->
-                    <a href="#premium-card-${navServices[3].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[3].id}')">
-                        <i class="fas ${navServices[3].icon} nav-icon-shs"></i>
-                        <span class="font-medium">${navServices[3].mobileTitle}</span>
-                    </a>
-                `;
-            } else if (navServices.length >= 6) {
-                 // For 6 services, we show 4 items + FAB (1, 2, FAB, 3, 4) or 1, 2, 5, 6, FAB to cover all. 
-                 // Sticking to 1, 2, FAB, 3, 4 for visual consistency. If Plots is the 6th, it won't show here.
-                 // Let's use 1, 3, FAB, 5, 6 to cover a wider range if needed. Sticking to the first 4 for now.
-                 // Reusing the 5-item logic but excluding the 5th service (index 4) and using the 6th (index 5) item's icon for a new item.
-                 
+            if (navServices.length >= 4) {
                  // Standard 5 items: 1, 2, FAB, 3, 4
                   navHtml = `
                     <!-- 1: Rooms -->
@@ -944,12 +946,38 @@
                         <i class="fas ${navServices[2].icon} nav-icon-shs"></i>
                         <span class="font-medium">${navServices[2].mobileTitle}</span>
                     </a>
-                    <!-- 4: Plots (Now using the last item for a more visible spot) -->
-                    <a href="#premium-card-${SERVICE_DATA[5].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${SERVICE_DATA[5].id}')">
-                        <i class="fas ${SERVICE_DATA[5].icon} nav-icon-shs"></i> 
-                        <span class="font-medium">${SERVICE_DATA[5].mobileTitle}</span>
+                    <!-- 4: Hostels (Using the item at index 3, or Plots at index 5 if 6 items exist) -->
+                    <a href="#premium-card-${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].id : navServices[3].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].id : navServices[3].id}')">
+                        <i class="fas ${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].icon : navServices[3].icon} nav-icon-shs"></i> 
+                        <span class="font-medium">${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].mobileTitle : navServices[3].mobileTitle}</span>
                     </a>
                   `;
+            } else {
+                 // Fallback if not enough data
+                 navHtml = `
+                    <a href="main.html" class="nav-item-shs w-1/5 active">
+                        <i class="fas fa-home nav-icon-shs"></i>
+                        <span class="font-medium">Home</span>
+                    </a>
+                    <a href="#service-cards" class="nav-item-shs w-1/5">
+                        <i class="fas fa-search nav-icon-shs"></i>
+                        <span class="font-medium">Search</span>
+                    </a>
+                    <div class="central-nav-item-shs w-1/5">
+                        <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
+                            <i class="fas fa-plus central-fab-icon"></i>
+                        </a>
+                        <span class="central-fab-label">Post</span>
+                    </div>
+                    <a href="tel:0000000000" class="nav-item-shs w-1/5">
+                        <i class="fas fa-phone-alt nav-icon-shs"></i>
+                        <span class="font-medium">Call</span>
+                    </a>
+                    <a href="#" onclick="showLocationModal('premium-card-rooms')" class="nav-item-shs w-1/5">
+                        <i class="fas fa-map-marker-alt nav-icon-shs"></i>
+                        <span class="font-medium">Locate</span>
+                    </a>
+                 `;
             }
 
             container.innerHTML = navHtml;
@@ -1068,7 +1096,7 @@
         // --- END: TILT and MODAL LOGIC ---
 
 
-        // --- START: DROPDOWN / ACCORDION LOGIC (Moved helpers outside of initialize) ---
+        // --- START: DROPDOWN / ACCORDION LOGIC ---
 
         function setupDesktopToggle(linkId, contentId, iconId) {
             const link = document.getElementById(linkId);
@@ -1141,7 +1169,9 @@
                     const isExpanded = dropdown.classList.toggle('expanded');
                     
                     if (isExpanded) {
-                        dropdown.style.height = dropdown.scrollHeight + 'px';
+                        // Calculate scroll height needed for content + padding
+                        const totalHeight = dropdown.scrollHeight;
+                        dropdown.style.height = totalHeight + 'px';
                         dropdown.style.paddingTop = '8px';
                         dropdown.style.paddingBottom = '8px';
                         icon.classList.add('rotate-180');
@@ -1365,6 +1395,9 @@
             // 3. Start Theme Rotation
             changeTheme(); 
             setInterval(changeTheme, intervalTime);
+
+            // 4. Attach Mobile Menu Listeners (FIX)
+            attachMobileMenuListeners();
             
             console.log("Rentist App Initialized. Dynamic content loaded.");
         }
