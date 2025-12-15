@@ -16,17 +16,22 @@
     
     <style>
         /* --- GLOBAL & THEME VARIABLES (थीम वेरिएबल्स) --- */
-        /* NOTE: These values are initial defaults (Golden Theme). They will be dynamically updated by JavaScript. */
+        /* Updated: Locked to Classic Light Green */
         :root {
-            --color-primary: #FFC72C; /* Bright Golden Glow (Updated Default) */
+            /* Classic Shining Light Green */
+            --color-primary: #76FF03; 
+            --color-primary-rgb: 118, 255, 3; 
+            
             --color-secondary: #00897B; /* Dark Teal (Secondary remains same) */
             --color-text-primary: #f3f4f6; /* White/Light Text */
-            --bg-main-dark: #241F0D; /* Deepest Gold-Brown (Body Background) (Updated Default) */
-            --electric-green-glow: #FFC72C; 
-            --glass-bg-dark: rgba(36, 31, 13, 0.7); /* Translucent Header/Nav (Updated Default) */
-            --premium-bg-dark: #332B10; /* Slightly darker inner card (Updated Default) */
-            --premium-outer-bg: #4D401A; /* Lighter outer card for gradient (Updated Default) */
-            --color-primary-rgb: 255, 199, 44; /* RGB for dynamic shadows/borders (Updated Default) */
+            
+            /* Backgrounds tuned for Green Theme */
+            --bg-main-dark: #1A2733; 
+            --glass-bg-dark: rgba(26, 39, 51, 0.85); 
+            --premium-bg-dark: #121e29; 
+            --premium-outer-bg: #28475c; 
+            
+            --electric-green-glow: #76FF03; 
         }
 
         /* --- BASE LAYOUT --- */
@@ -38,9 +43,7 @@
             min-height: 100vh;
             padding-top: 78px; /* Header Height */
             padding-bottom: 80px; /* Bottom Nav Height */
-            /* Add transition for smooth color change (2 seconds) */
-            transition: background-color 2s ease-in-out;
-            /* Ensure content is above fixed media */
+            /* Removed transition for color change since it's now static */
             position: relative;
             z-index: 1; 
         }
@@ -62,7 +65,7 @@
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
         }
         
-        /* --- MOBILE SIDEBAR STYLES (मोबाइल साइडबार) - FIX APPLIED HERE */
+        /* --- MOBILE SIDEBAR STYLES (मोबाइल साइडबार) - FIX APPLIED HERE --- */
         #mobile-menu-icon {
             transition: transform 0.3s ease-in-out;
         }
@@ -70,7 +73,7 @@
             top: 78px; /* Aligns right below the header (approx 78px) */
             height: calc(100vh - 78px - 80px); /* 100vh - header height - bottom nav height */
             transition: transform 0.5s ease-in-out;
-            background-color: rgba(28, 49, 68, 0.9); /* New dark color */
+            background-color: var(--glass-bg-dark); /* Updated to use variable */
             backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px);
             border: 2px solid var(--electric-green-glow); /* Dynamic Green Glow */
@@ -82,23 +85,27 @@
             transition: opacity 0.3s;
         }
 
-        /* --- BOTTOM NAV STYLES (बॉटम नेविगेशन) */
+        /* --- BOTTOM NAV STYLES (बॉटम नेविगेशन) --- */
         .bottom-nav-fixed {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background-color: var(--glass-bg-dark); /* Dynamic Glass Color */
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             z-index: 60;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.7); 
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
+            border-top: 1px solid rgba(var(--color-primary-rgb), 0.3);
         }
         .nav-item-shs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--color-text-secondary); transition: all 0.3s ease;
+            color: var(--color-text-primary); transition: all 0.3s ease;
             font-size: 0.75rem; padding-top: 10px; padding-bottom: 10px;
+            opacity: 0.7;
         }
         .nav-item-shs:hover, .nav-item-shs.active {
             color: var(--color-primary); /* Dynamic Primary Color */
             transform: scale(1.1);
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.6);
         }
         .nav-icon-shs { font-size: 1.5rem; margin-bottom: 2px; }
         .central-nav-item-shs { position: relative; height: 80px; display: flex; justify-content: center; }
@@ -119,7 +126,7 @@
             justify-content: center;
             text-decoration: none; 
         }
-        .central-fab-icon { color: var(--color-button-text); font-size: 1.8rem; }
+        .central-fab-icon { color: #000; font-size: 1.8rem; } /* Text color black for contrast on bright green */
         .central-fab-label { 
             position: absolute; 
             bottom: 5px; 
@@ -127,13 +134,14 @@
             font-weight: bold; 
             color: var(--color-primary); /* Dynamic Primary Color */
             pointer-events: none; 
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
         }
 
         /* === NEW KEYFRAMES FOR ULTRA PRO MAX EFFECTS === */
         @keyframes ultraFlicker {
-            0% { box-shadow: 0 0 40px rgba(var(--color-primary-rgb), 0.7), inset 0 0 30px rgba(var(--color-primary-rgb), 0.5); }
-            50% { box-shadow: 0 0 45px rgba(var(--color-primary-rgb), 0.9), inset 0 0 35px rgba(var(--color-primary-rgb), 0.6); }
-            100% { box-shadow: 0 0 40px rgba(var(--color-primary-rgb), 0.7), inset 0 0 30px rgba(var(--color-primary-rgb), 0.5); }
+            0% { box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.5), inset 0 0 10px rgba(var(--color-primary-rgb), 0.3); }
+            50% { box-shadow: 0 0 30px rgba(var(--color-primary-rgb), 0.7), inset 0 0 20px rgba(var(--color-primary-rgb), 0.4); }
+            100% { box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.5), inset 0 0 10px rgba(var(--color-primary-rgb), 0.3); }
         }
         
         @keyframes cardShine {
@@ -153,10 +161,10 @@
             padding: 10px; 
             border-radius: 35px; 
             /* Dynamic Border using RGB */
-            border:2px solid rgba(var(--color-primary-rgb), 0.8); 
+            border: 2px solid rgba(var(--color-primary-rgb), 0.8); 
             
             /* Enhanced Dynamic Shadow with continuous flicker */
-            box-shadow: 0 0 40px rgba(var(--color-primary-rgb), 0.7), inset 0 0 30px rgba(var(--color-primary-rgb), 0.5);
+            box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.5), inset 0 0 10px rgba(var(--color-primary-rgb), 0.2);
             animation: ultraFlicker 4s infinite alternate ease-in-out;
                 
             transition: transform 0.3s ease-out, box-shadow 0.3s ease-in-out; 
@@ -165,7 +173,7 @@
             align-items: center; 
             justify-content: start; 
             cursor: pointer; 
-            height: 260px; /* Increased height for content */
+            height: 200px; /* Increased height for content */
             position: relative; /* For Shine Effect */
             overflow: hidden; /* For Shine Effect */
         }
@@ -179,8 +187,8 @@
             /* Pause flicker animation on hover and apply intense static glow */
             animation: none;
             box-shadow: 
-                0 0 60px rgba(var(--color-primary-rgb), 1.0), /* EVEN STRONGER hover glow */
-                inset 0 0 45px rgba(var(--color-primary-rgb), 0.7); 
+                0 0 40px rgba(var(--color-primary-rgb), 0.9), /* EVEN STRONGER hover glow */
+                inset 0 0 25px rgba(var(--color-primary-rgb), 0.5); 
             
             /* Tilt transform will be handled by JS on mousemove */
             transform: translateY(-8px) scale(1.05); /* Slight lift and increased scale on hover */
@@ -194,7 +202,7 @@
             left: -150%;
             width: 50%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); /* Gradient shine */
+            background: linear-gradient(90deg, transparent, rgba(var(--color-primary-rgb), 0.4), transparent); /* Gradient shine with green tint */
             transform: skewX(-20deg);
             pointer-events: none;
         }
@@ -207,7 +215,7 @@
         /* NEW IMAGE STYLE */
         .premium-card-image {
             width: 100%; 
-            height: 130px; /* Adjusted height to fit the card better */
+            height: 100px; /* Adjusted height to fit the card better */
             object-fit: cover; 
             border-radius: 25px; /* Sharper corners like main.html */
             display: block;
@@ -216,8 +224,8 @@
             /* SHINING BORDER / SHADOW applied to the image */
             border: 1px solid var(--color-primary); 
             box-shadow: 
-                0 0 25px rgba(var(--color-primary-rgb), 0.7), /* Increased image glow */
-                inset 0 0 12px rgba(var(--color-primary-rgb), 0.4); 
+                0 0 15px rgba(var(--color-primary-rgb), 0.5), /* Increased image glow */
+                inset 0 0 8px rgba(var(--color-primary-rgb), 0.3); 
         }
         
         .premium-title {
@@ -374,7 +382,7 @@
         }
         
         /* 5 cards in a row for screens >= 1280px (to fit 5 cards elegantly) */
-        /* NOTE: Now supporting 6 cards gracefully */
+        /* NOTE: Now supporting 6-7 cards gracefully */
         @media(min-width: 1280px){
             .card-grid-container {
                 /* Dynamically adjusts based on the number of cards */
@@ -406,7 +414,7 @@
             /* SHINING BORDER applied here, matching .premium-card */
             box-shadow: 
                 0 0 30px rgba(var(--color-primary-rgb), 0.6), 
-                inset 0 0 40px rgba(var(--color-primary-rgb), 0.4); 
+                inset 0 0 20px rgba(var(--color-primary-rgb), 0.3); 
             
             /* End Card Styles */
             margin-bottom: 2rem;
@@ -438,14 +446,20 @@
             margin-bottom: 0.5rem; 
             word-wrap: break-word; 
             white-space: normal;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
         }
         
         /* --- Global Styles (Updated to reflect new primary color for glow) --- */
         .text-primary-glow { 
             color: var(--color-primary); /* Dynamic Primary Color */
             /* Dynamic Text Shadow using RGB */
-            text-shadow: 0 0 10px rgba(var(--color-primary-rgb), 1.0); /* Enhanced glow */
+            text-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.8); /* Enhanced glow */
         } 
+
+        .border-primary-glow {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.4);
+        }
         
         /* --- MODAL STYLES (लोकेशन पॉपअप स्टाइल) */
         .modal-overlay {
@@ -491,7 +505,7 @@
             border-radius: 25px;
             background: var(--premium-bg-dark); /* Dynamic Inner BG */
             border: 1.5px solid rgba(var(--color-primary-rgb), 1);
-            box-shadow: inset 0 0 35px rgba(var(--color-primary-rgb), 0.45), 0 0 25px rgba(var(--color-primary-rgb), 0.3);
+            box-shadow: inset 0 0 20px rgba(var(--color-primary-rgb), 0.2), 0 0 15px rgba(var(--color-primary-rgb), 0.1);
             overflow-y: auto; /* Enable scrolling for the location list if needed */
         }
 
@@ -514,6 +528,7 @@
             background-color: rgba(var(--color-primary-rgb), 0.1);
             transform: translateX(5px);
             color: var(--color-primary); /* Dynamic Primary Color */
+            box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.3);
         }
         
         /* Mobile adjustment for modal content to take less height */
@@ -534,14 +549,15 @@
 
     <!-- HEADER (शीर्षक) -->
     <div class="fixed-header-container">
-        <header id="main-header" class="bg-glass-bg-dark/90 backdrop-blur-xl shadow-2xl p-4 fixed top-0 left-0 right-0 z-[100] border-b-4 border-primary/50">
+        <!-- Added explicit border styling here to ensure glow matches -->
+        <header id="main-header" class="bg-glass-bg-dark/90 backdrop-blur-xl shadow-2xl p-4 fixed top-0 left-0 right-0 z-[100] border-b-4 border-primary-glow" style="border-bottom-color: var(--color-primary);">
               <div class="container mx-auto flex justify-between items-center px-2 sm:px-4" style="padding-top: env(safe-area-inset-top);">
                 <!-- Logo and Title (लोगो और शीर्षक) -->
                 <a href="main.html" class="flex items-center no-underline">
                   <!-- rentist.png इमेज का उपयोग किया गया -->
-                  <img src="rentist.png" alt="Rentist Logo" class="h-10 w-10 mr-3 rounded-full border border-primary/50 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/48x48/1C3144/FFC72C?text=R';"/>
+                  <img src="rentist.png" alt="Rentist Logo" class="h-10 w-10 mr-3 rounded-full border border-primary/50 object-cover" style="border-color: var(--color-primary);" onerror="this.onerror=null;this.src='https://placehold.co/48x48/1C3144/76FF03?text=R';"/>
                    <span class="text-xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center">
-                    <img src="skillora.png" alt="Logo" class="h-[35px] w-auto object-contain inline-block" onerror="this.onerror=null;this.src='https://placehold.co/100x35/1C3144/FFC72C?text=Rentist';" />
+                    <img src="skillora.png" alt="Logo" class="h-[35px] w-auto object-contain inline-block" onerror="this.onerror=null;this.src='https://placehold.co/100x35/1C3144/76FF03?text=Rentist';" />
                   </span>
                 </a>
 
@@ -553,9 +569,9 @@
                   </nav>
                   
                   <!-- Contact Side Bar (संपर्क साइड बार) -->
-                  <div class="border-l-4 border-primary/50 pl-6 text-sm flex flex-col items-start bg-primary/5 p-2 rounded-xl shadow-inner">
+                  <div class="border-l-4 border-primary/50 pl-6 text-sm flex flex-col items-start bg-primary/5 p-2 rounded-xl shadow-inner" style="border-color: var(--color-primary);">
                     <a href="tel:8816014071" class="flex items-center font-extrabold text-white hover:text-primary transition-colors">
-                      <i class="fas fa-phone-alt mr-2 text-primary"></i> <span class="text-xl tracking-wider">00000000</span>
+                      <i class="fas fa-phone-alt mr-2" style="color: var(--color-primary);"></i> <span class="text-xl tracking-wider">00000000</span>
                     </a>
                     <a href="mailto:care@yourtrueguide.com" class="flex items-center text-xs text-gray-400 hover:text-primary transition-colors mt-1">
                       <i class="fas fa-envelope mr-2 text-secondary/70"></i> <b>0000000000</b>
@@ -564,22 +580,21 @@
                 </div>
 
                 <!-- Mobile Menu Button (मोबाइल मेन्यू बटन) -->
-                <button id="mobile-menu-button" class="text-primary p-2 rounded-full bg-primary/10 lg:hidden" aria-label="Toggle menu" aria-expanded="false">
-                  <i class="fas fa-bars text-2xl text-primary" id="mobile-menu-icon"></i>
+                <button id="mobile-menu-button" class="text-primary p-2 rounded-full bg-primary/10 lg:hidden" aria-label="Toggle menu" aria-expanded="false" style="color: var(--color-primary);">
+                  <i class="fas fa-bars text-2xl" id="mobile-menu-icon"></i>
                 </button>
               </div>
         </header>
 
         <!-- Mobile Menu Panel (मोबाइल मेन्यू पैनल) -->
-        <!-- FIX: Added default 'translate-x-full' for hidden state -->
         <div id="mobile-menu-panel" class="mobile-menu-panel fixed right-0 w-3/4 max-w-sm z-[110] translate-x-full overflow-hidden border border-primary/50 rounded-2xl shadow-lg shadow-primary/10">
             <button id="mobile-menu-close-button" class="absolute top-4 right-4 text-white hover:text-primary p-2 rounded-full bg-secondary/50 shadow-lg" aria-label="Close menu">
                 <i class="fas fa-times text-xl"></i>
             </button>
             <div class="flex flex-col h-full space-y-4 font-extrabold text-left mt-8 p-6 overflow-y-auto">
-                <div class="mb-4 pb-4 border-b border-primary/50">
+                <div class="mb-4 pb-4 border-b border-primary/50" style="border-color: var(--color-primary);">
                     <p class="text-sm font-light text-gray-300">Welcome to</p>
-                    <h2 class="text-3xl font-black text-primary drop-shadow-md">Rentist</h2>
+                    <h2 class="text-3xl font-black text-primary drop-shadow-md" style="color: var(--color-primary);">Rentist</h2>
                     <p class="text-xs font-semibold text-gray-400">Your Rent Guide</p>
                 </div>
                 
@@ -588,11 +603,11 @@
                     <!-- Dynamic accordion items will go here -->
                 </div>
                 
-                <div class="border-t border-primary/30 w-full my-4"></div>
+                <div class="border-t border-primary/30 w-full my-4" style="border-color: rgba(var(--color-primary-rgb), 0.3);"></div>
 
-                <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50">
-                  <h4 class="text-base font-bold text-primary mb-1">Need Help? (24x7)</h4>
-                  <a href="tel:8816014071" class="flex items-center font-extrabold text-white text-xl p-3 rounded-full bg-primary/90 w-full justify-center">
+                <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50" style="border-color: var(--color-primary);">
+                  <h4 class="text-base font-bold text-primary mb-1" style="color: var(--color-primary);">Need Help? (24x7)</h4>
+                  <a href="tel:8816014071" class="flex items-center font-extrabold text-black text-xl p-3 rounded-full bg-primary/90 w-full justify-center" style="background-color: var(--color-primary);">
                      <i class="fas fa-phone-volume mr-3"></i> <span>0000000000</span>
                   </a>
                 </div>
@@ -612,7 +627,7 @@
             <section class="latest-forms">
                 <!-- Title is now placed relative to the inner section for Z-index -->
                 <div class="text-center mb-6">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-4 pb-1">Featured Listings</h2>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-4 pb-1" style="border-color: var(--color-primary);">Featured Listings</h2>
                 </div>
                 
                 <div class="slider-container relative">
@@ -620,8 +635,8 @@
                     <div id="slides-wrapper" class="relative w-full h-full"></div>
 
                     <!-- Navigation Buttons -->
-                    <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-primary p-2 rounded-full shadow-lg transition-all z-20">❮</button>
-                    <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-15 hover:bg-opacity-25 text-primary p-2 rounded-full shadow-lg transition-all z-20">❯</button>
+                    <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-primary p-2 rounded-full shadow-lg transition-all z-20" style="color: var(--color-primary);">❮</button>
+                    <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-primary p-2 rounded-full shadow-lg transition-all z-20" style="color: var(--color-primary);">❯</button>
                     
             </section>
         </div>
@@ -629,7 +644,7 @@
         
         <!-- NEW HEADING ADDED HERE -->
         <div class="text-center mb-8 mt-4">
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-6 pb-2 uppercase tracking-wide">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-6 pb-2 uppercase tracking-wide" style="border-color: var(--color-primary);">
                 Rental Services
             </h2>
         </div>
@@ -677,7 +692,7 @@
     <script>
         
         // --- CENTRALIZED DATA STRUCTURE (केंद्रीय डेटा स्ट्रक्चर) ---
-        // New services and menus can be added here easily.
+        // Added 'Shops' to the list as requested
         const SERVICE_DATA = [
             {
                 id: 'rooms', title: 'Rooms', mobileTitle: 'Rooms', desc: 'Find Single/Shared Rooms for Rent.', imgSrc: 'rooms.png', icon: 'fa-bed', modalTitle: 'Rooms Options',
@@ -697,6 +712,16 @@
                     { name: "List Your Flat (Rural)", link: "flats_list_rural.html" },
                     { name: "List Your Flat (Urban)", link: "flats_list_urban.html" },
                     { name: "View Your Listings", link: "flats_my_listings.html" } 
+                ]
+            },
+            {
+                id: 'shops', title: 'Shops', mobileTitle: 'Shops', desc: 'Prime Commercial Shops for Rent.', imgSrc: 'shops.png', icon: 'fa-store', modalTitle: 'Shop Options',
+                menu: [
+                    { name: "Search Shops in Rural", link: "shops_search_rural.html" },
+                    { name: "Search Shops in Urban", link: "shops_search_urban.html" },
+                    { name: "List Your Shop (Rural)", link: "shops_list_rural.html" },
+                    { name: "List Your Shop (Urban)", link: "shops_list_urban.html" },
+                    { name: "View Your Listings", link: "shops_my_listings.html" }
                 ]
             },
             {
@@ -730,7 +755,7 @@
                 ]
             },
             {
-                id: 'plots', title: 'Plots', mobileTitle: 'Plots', desc: 'Residential and Commercial Plots for Rent/Lease.', imgSrc: 'plots.png', icon: 'fa-map', modalTitle: 'Plots & Land',
+                id: 'plots', title: 'Plots', mobileTitle: 'Plots', desc: 'Residential and Commercial Plots for Rent.', imgSrc: 'plots.png', icon: 'fa-map', modalTitle: 'Plots & Land',
                 menu: [
                     { name: "Search Plots in Rural", link: "plots_search_rural.html" },
                     { name: "Search Plots in Urban", link: "plots_search_urban.html" },
@@ -852,7 +877,7 @@
                         src="${service.imgSrc}" 
                         alt="${service.title} Image" 
                         class="premium-card-image"
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/FFC72C?text=${service.title}';"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/76FF03?text=${service.title}';"
                     >
                     <div class="premium-title" data-mobile-title="${service.mobileTitle}"><span>${service.title}</span></div>
                     <div class="premium-desc">${service.desc}</div>
@@ -872,7 +897,7 @@
                 <div class="relative group">
                     <a href="#" id="desktop-${service.id}-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
                         ${service.title} <i id="desktop-${service.id}-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full"></span>
+                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full" style="background-color: var(--color-primary);"></span>
                     </a>
                     <!-- Dropdown Content Container -->
                     <div id="dropdown-${service.id}" class="desktop-dropdown-content">
@@ -888,7 +913,6 @@
         }
         
         // 3. Generate Mobile Accordion (Sidebar)
-        // FIX: This section already generates the required options, fulfilling the user's second request.
         function generateMobileAccordion() {
             const container = document.getElementById('mobile-accordion-container');
             if (!container) return;
@@ -902,8 +926,8 @@
                         ${service.menu.map(item => `<a href="${item.link}" class="mobile-dropdown-link">${item.name}</a>`).join('')}
                     </div>
                 </div>
-                <div class="border-t border-primary/30 w-full my-2"></div>
-            `).join(''); // Reduced margin below divider for better spacing
+                <div class="border-t border-primary/30 w-full my-2" style="border-color: rgba(var(--color-primary-rgb), 0.3);"></div>
+            `).join(''); 
 
             // Attach mobile accordion toggles
             SERVICE_DATA.forEach(service => {
@@ -917,6 +941,8 @@
             if (!container) return;
 
             // Only use the first 5 services for the fixed bottom nav (4 items + 1 central FAB)
+            // Rooms (0), Flats (1), Shops (2) -> [Reordered slightly logic-wise to fit FAB]
+            // We'll stick to first 5 items from data to keep logic simple
             const navServices = SERVICE_DATA.slice(0, 5); 
             
             let navHtml = '';
@@ -941,15 +967,15 @@
                         </a>
                         <span class="central-fab-label">Home</span>
                     </div>
-                    <!-- 3: P.G. -->
+                    <!-- 3: Shops (Newly Added) -->
                     <a href="#premium-card-${navServices[2].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[2].id}')">
                         <i class="fas ${navServices[2].icon} nav-icon-shs"></i>
                         <span class="font-medium">${navServices[2].mobileTitle}</span>
                     </a>
-                    <!-- 4: Hostels (Using the item at index 3, or Plots at index 5 if 6 items exist) -->
-                    <a href="#premium-card-${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].id : navServices[3].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].id : navServices[3].id}')">
-                        <i class="fas ${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].icon : navServices[3].icon} nav-icon-shs"></i> 
-                        <span class="font-medium">${SERVICE_DATA.length > 5 ? SERVICE_DATA[5].mobileTitle : navServices[3].mobileTitle}</span>
+                    <!-- 4: P.G. (shifted) -->
+                    <a href="#premium-card-${navServices[3].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[3].id}')">
+                        <i class="fas ${navServices[3].icon} nav-icon-shs"></i> 
+                        <span class="font-medium">${navServices[3].mobileTitle}</span>
                     </a>
                   `;
             } else {
@@ -1205,9 +1231,9 @@
             return [
                 { "title": "New Rooms Listings in Mumbai", "date": "12 Dec", "link": "rooms_search.html", "deadline": "2025-12-12", "bgImage": "rooms.png" },
                 { "title": "Affordable Flats in Noida Sector 62", "date": "", "link": "flats_search.html", "deadline": "2025-12-25", "bgImage": "flats.png" },
+                { "title": "Prime Commercial Shops in Connaught Place", "date": "", "link": "shops_search.html", "deadline": "2025-12-30", "bgImage": "shops.png" },
                 { "title": "P.G. with Meals near Delhi University", "date": "", "link": "pg_search.html", "deadline": "2026-02-05", "bgImage": "payingguest.png" },
-                { "title": "Hostels for Students in Bangalore", "date": "", "link": "hostels_search.html", "deadline": "2026-03-18", "bgImage": "hostels.png" },
-                { "title": "Independent Houses for Families in Pune", "date": "", "link": "houses_search.html", "deadline": "2026-05-07", "bgImage": "houses.png" } 
+                { "title": "Hostels for Students in Bangalore", "date": "", "link": "hostels_search.html", "deadline": "2026-03-18", "bgImage": "hostels.png" } 
             ];
         }
 
@@ -1228,7 +1254,7 @@
                     <div class="slide-content-wrapper p-8 absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm rounded-b-[35px] z-10">
                         <h3 class="post-name text-2xl sm:text-3xl">${item.title}</h3>
                         <p class="last-date text-sm font-light text-gray-300">New Listing Available!</p>
-                        <button class="mt-3 px-4 py-2 bg-primary text-black font-bold rounded-xl shadow-lg hover:bg-opacity-90 transition-colors" ${isExpired ? 'disabled' : ''}>
+                        <button class="mt-3 px-4 py-2 bg-primary text-black font-bold rounded-xl shadow-lg hover:bg-opacity-90 transition-colors" style="background-color: var(--color-primary);" ${isExpired ? 'disabled' : ''}>
                             ${buttonText}
                         </button>
                     </div>
@@ -1290,96 +1316,6 @@
         }
         // --- END: SLIDER LOGIC ---
         
-        
-        // --- START: DYNAMIC THEME COLOR CHANGER (unchanged) ---
-        
-        const themeSchemes = [
-            // 0: Golden (NEW DEFAULT) - सुनहरी थीम अब डिफ़ॉल्ट है
-            {
-                primary: '#FFC72C', rgb: '255, 199, 44',
-                outerBg: '#4D401A', innerBg: '#332B10',
-                bodyBg: '#241F0D' 
-            },
-            // 1: Green (Original/Now second theme) - हरी थीम
-            {
-                primary: '#76FF03', rgb: '118, 255, 3',
-                outerBg: '#28475c', innerBg: '#1A2733',
-                bodyBg: '#1C3144' 
-            },
-            // 2: Red-Orange (Shifted index) - लाल-नारंगी थीम
-            {
-                primary: '#FF5733', rgb: '255, 87, 51',
-                outerBg: '#5C2828', innerBg: '#331A1A',
-                bodyBg: '#241010'
-            },
-            // 3: Cyan (Shifted index) - सियान थीम
-            {
-                primary: '#33D1FF', rgb: '51, 209, 255',
-                outerBg: '#283C5C', innerBg: '#1A2433',
-                bodyBg: '#101524'
-            },
-            // 4: Magenta (Shifted index) - मैजेंटा थीम
-            {
-                primary: '#FF33FF', rgb: '255, 51, 255',
-                outerBg: '#4D285C', innerBg: '#331A33',
-                bodyBg: '#241024'
-            },
-            // 5: Amber/Orange (Shifted index) - एम्बर/नारंगी थीम
-            {
-                primary: '#FFB433', rgb: '255, 180, 51',
-                outerBg: '#5C4E28', innerBg: '#332D1A',
-                bodyBg: '#242010'
-            },
-            // 6: Purple (Shifted index) - बैंगनी थीम
-            {
-                primary: '#A233FF', rgb: '162, 51, 255',
-                outerBg: '#3B285C', innerBg: '#221A33',
-                bodyBg: '#1D1024'
-            },
-            // 7: Mint Green (Shifted index) - पुदीना हरा थीम
-            {
-                primary: '#33FFB4', rgb: '51, 255, 180',
-                outerBg: '#285C4E', innerBg: '#1A332D',
-                bodyBg: '#10241D'
-            }
-        ];
-
-        let currentThemeIndex = 0;
-        const intervalTime = 7000; // 7 seconds
-
-        function changeTheme() {
-            const theme = themeSchemes[currentThemeIndex];
-            const root = document.documentElement.style;
-            const bodyStyle = document.body.style;
-
-            // 1. Update Primary Glow/Accent Colors (Header, Borders, Text Glows, FAB, Slider Accents)
-            root.setProperty('--color-primary', theme.primary);
-            root.setProperty('--electric-green-glow', theme.primary);
-            root.setProperty('--color-primary-rgb', theme.rgb);
-            
-            // 2. Update Card Backgrounds (Cards, Modal, Sidebar)
-            root.setProperty('--premium-outer-bg', theme.outerBg);
-            root.setProperty('--premium-bg-dark', theme.innerBg);
-            
-            // 3. Update Base Background (Body)
-            bodyStyle.backgroundColor = theme.bodyBg;
-            root.setProperty('--bg-main-dark', theme.bodyBg);
-            
-            // 4. Update the translucent glass effect for Header/Bottom Nav
-            // Extract RGB from the Body BG to create the translucent effect
-            const bodyRgbMatch = theme.bodyBg.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
-            if (bodyRgbMatch) {
-                let r = parseInt(bodyRgbMatch[1], 16);
-                let g = parseInt(bodyRgbMatch[2], 16);
-                let b = parseInt(bodyRgbMatch[3], 16);
-                // Set opacity to 0.7 for glass effect
-                const glassBg = `rgba(${r}, ${g}, ${b}, 0.7)`;
-                root.setProperty('--glass-bg-dark', glassBg);
-            }
-            
-            // Move to the next theme index
-            currentThemeIndex = (currentThemeIndex + 1) % themeSchemes.length;
-        }
 
         // --- MAIN INITIALIZATION FUNCTION ---
         function initializeRentistApp() {
@@ -1392,18 +1328,13 @@
             // 2. Initialize Slider
             initializeSlider();
             
-            // 3. Start Theme Rotation
-            changeTheme(); 
-            setInterval(changeTheme, intervalTime);
-
-            // 4. Attach Mobile Menu Listeners (FIX)
+            // 3. Attach Mobile Menu Listeners
             attachMobileMenuListeners();
             
-            console.log("Rentist App Initialized. Dynamic content loaded.");
+            console.log("Rentist App Initialized. Theme locked to Classic Light Green.");
         }
 
         document.addEventListener('DOMContentLoaded', initializeRentistApp);
-        // --- END: DYNAMIC THEME COLOR CHANGER & Initialization ---
     </script>
 </body>
 </html>
