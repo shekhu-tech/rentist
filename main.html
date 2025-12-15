@@ -100,6 +100,7 @@
             color: var(--color-text-primary); transition: all 0.3s ease;
             font-size: 0.75rem; padding-top: 10px; padding-bottom: 10px;
             opacity: 0.7;
+            text-decoration: none; /* Ensure no underline */
         }
         .nav-item-shs:hover, .nav-item-shs.active {
             color: var(--color-primary); /* Dynamic Primary Color */
@@ -697,71 +698,64 @@
             {
                 id: 'rooms', title: 'Rooms', mobileTitle: 'Rooms', desc: 'Find Single/Shared Rooms for Rent.', imgSrc: 'rooms.png', icon: 'fa-bed', modalTitle: 'Rooms Options',
                 menu: [
-                    { name: "Search Rooms in Rural", link: "rooms_search_rural.html" },
-                    { name: "Search Rooms in Urban", link: "rooms_search_urban.html" },
-                    { name: "List Your Room (Rural)", link: "rooms_list_rural.html" },
-                    { name: "List Your Room (Urban)", link: "rooms_list_urban.html" },
-                    { name: "View Your Listings", link: "rooms_my_listings.html" } 
+                    { name: "Rooms in Rural", link: "rooms_search_rural.html" },
+                    { name: "Rooms in Urban", link: "rooms_search_urban.html" },
+                    { name: "List Your Room", link: "list_Your_property.html" },
+                    { name: "View Your Listings", link: "see_my_listings.html" } 
                 ]
             },
             {
                 id: 'flats', title: 'Flats', mobileTitle: 'Flats', desc: 'Search for 1BHK, 2BHK, 3BHK Flats.', imgSrc: 'flats.png', icon: 'fa-building', modalTitle: 'Flats & Apartments',
                 menu: [
-                    { name: "Search Flats in Rural", link: "flats_search_rural.html" },
-                    { name: "Search Flats in Urban", link: "flats_search_urban.html" },
-                    { name: "List Your Flat (Rural)", link: "flats_list_rural.html" },
-                    { name: "List Your Flat (Urban)", link: "flats_list_urban.html" },
-                    { name: "View Your Listings", link: "flats_my_listings.html" } 
+                    { name: "Flats in Rural", link: "flats_search_rural.html" },
+                    { name: "Flats in Urban", link: "flats_search_urban.html" },
+                    { name: "List Your Flat", link: "list_Your_property.html" },
+                    { name: "View Your Listings", link: "see_my_listings.html" } 
                 ]
             },
             {
                 id: 'shops', title: 'Shops', mobileTitle: 'Shops', desc: 'Prime Commercial Shops for Rent.', imgSrc: 'shops.png', icon: 'fa-store', modalTitle: 'Shop Options',
                 menu: [
-                    { name: "Search Shops in Rural", link: "shops_search_rural.html" },
-                    { name: "Search Shops in Urban", link: "shops_search_urban.html" },
-                    { name: "List Your Shop (Rural)", link: "shops_list_rural.html" },
-                    { name: "List Your Shop (Urban)", link: "shops_list_urban.html" },
-                    { name: "View Your Listings", link: "shops_my_listings.html" }
+                    { name: "Shops in Rural", link: "shops_search_rural.html" },
+                    { name: "Shops in Urban", link: "shops_search_urban.html" },
+                    { name: "List Your Shop", link: "list_Your_property.html" },
+                    { name: "View Your Listings", link: "see_my_listings.html" }
                 ]
             },
             {
                 id: 'pg', title: 'P.G.', mobileTitle: 'P.G.', desc: 'Comfortable P.G. with Food Options.', imgSrc: 'payingguest.png', icon: 'fa-user-friends', modalTitle: 'Paying Guest Options',
                 menu: [
-                    { name: "Search P.G. in Rural", link: "pg_search_rural.html" },
-                    { name: "Search P.G. in Urban", link: "pg_search_urban.html" },
-                    { name: "List Your P.G. (Rural)", link: "pg_list_rural.html" },
-                    { name: "List Your P.G. (Urban)", link: "pg_list_urban.html" },
-                    { name: "View Your Listings", link: "pg_my_listings.html" } 
+                    { name: "P.G. in Rural", link: "pg_search_rural.html" },
+                    { name: "P.G. in Urban", link: "pg_search_urban.html" },
+                    { name: "List Your P.G.", link: "list_Your_property.html" },
+                    { name: "View Your Listings", link: "see_my_listings.html" } 
                 ]
             },
             {
                 id: 'hostels', title: 'Hostels', mobileTitle: 'Hostels', desc: 'Affordable Hostels for Students/Workers.', imgSrc: 'hostels.png', icon: 'fa-school', modalTitle: 'Hostels & Accommodations',
                 menu: [
-                    { name: "Search Hostels in Rural", link: "hostels_search_rural.html" },
-                    { name: "Search Hostels in Urban", link: "hostels_search_urban.html" },
-                    { name: "List Your Hostel (Rural)", link: "hostels_list_rural.html" },
-                    { name: "List Your Hostel (Urban)", link: "hostels_list_urban.html" },
-                    { name: "View Your Listings", link: "hostels_my_listings.html" } 
+                    { name: "Hostels in Rural", link: "hostels_search_rural.html" },
+                    { name: "Hostels in Urban", link: "hostels_search_urban.html" },
+                    { name: "List Your Hostel", link: "list_Your_property.html" },
+                    { name: "View Your Listings", link: "see_my_listings.html" } 
                 ]
             },
             {
                 id: 'houses', title: 'Houses', mobileTitle: 'Houses', desc: 'Independent Houses and Villas for Rent.', imgSrc: 'houses.png', icon: 'fa-home', modalTitle: 'Houses & Villas',
                 menu: [
-                    { name: "Search Houses in Rural", link: "houses_search_rural.html" },
-                    { name: "Search Houses in Urban", link: "houses_search_urban.html" },
-                    { name: "List Your House (Rural)", link: "houses_list_rural.html" },
-                    { name: "List Your House (Urban)", link: "houses_list_urban.html" },
-                    { name: "View Your Listings", link: "houses_my_listings.html" } 
+                    { name: "Houses in Rural", link: "houses_search_rural.html" },
+                    { name: "Houses in Urban", link: "houses_search_urban.html" },
+                    { name: "List Your House", link: "list_Your_property.html" },
+                    { name: "View Your Listings", link: "see_my_listings.html" } 
                 ]
             },
             {
                 id: 'plots', title: 'Plots', mobileTitle: 'Plots', desc: 'Residential and Commercial Plots for Rent.', imgSrc: 'plots.png', icon: 'fa-map', modalTitle: 'Plots & Land',
                 menu: [
-                    { name: "Search Plots in Rural", link: "plots_search_rural.html" },
-                    { name: "Search Plots in Urban", link: "plots_search_urban.html" },
-                    { name: "List Your Plot (Rural)", link: "plots_list_rural.html" },
-                    { name: "List Your Plot (Urban)", link: "plots_list_urban.html" },
-                    { name: "View Your Listings", link: "plots_my_listings.html" } 
+                    { name: "Plots in Rural", link: "plots_search_rural.html" },
+                    { name: "Plots in Urban", link: "plots_search_urban.html" },
+                    { name: "List Your Plot", link: "list_Your_property.html" },
+                    { name: "View Your Listings", link: "see_my_listings.html" } 
                 ]
             }
         ];
@@ -935,76 +929,45 @@
             });
         }
         
-        // 4. Generate Bottom Navigation
+        // 4. Generate Bottom Navigation (UPDATED AS REQUESTED)
         function generateBottomNav() {
             const container = document.getElementById('bottom-nav-items-container');
             if (!container) return;
 
-            // Only use the first 5 services for the fixed bottom nav (4 items + 1 central FAB)
-            // Rooms (0), Flats (1), Shops (2) -> [Reordered slightly logic-wise to fit FAB]
-            // We'll stick to first 5 items from data to keep logic simple
-            const navServices = SERVICE_DATA.slice(0, 5); 
-            
-            let navHtml = '';
-
-            if (navServices.length >= 4) {
-                 // Standard 5 items: 1, 2, FAB, 3, 4
-                  navHtml = `
-                    <!-- 1: Rooms -->
-                    <a href="#premium-card-${navServices[0].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[0].id}')">
-                        <i class="fas ${navServices[0].icon} nav-icon-shs"></i>
-                        <span class="font-medium">${navServices[0].mobileTitle}</span>
+            // Defined hardcoded logic for Register, Suggestion, Home, Learn, Profile
+            const navHtml = `
+                <!-- 1: Register -->
+                <a href="register.html" class="nav-item-shs w-1/5">
+                    <i class="fas fa-user-plus nav-icon-shs"></i>
+                    <span class="font-medium">Register</span>
+                </a>
+                
+                <!-- 2: Suggestion -->
+                <a href="suggestion.html" class="nav-item-shs w-1/5">
+                    <i class="fas fa-lightbulb nav-icon-shs"></i>
+                    <span class="font-medium">Suggestion</span>
+                </a>
+                
+                <!-- 3 (Center): Home -->
+                <div class="central-nav-item-shs w-1/5">
+                    <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
+                        <i class="fas fa-home central-fab-icon"></i>
                     </a>
-                    <!-- 2: Flats -->
-                    <a href="#premium-card-${navServices[1].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[1].id}')">
-                        <i class="fas ${navServices[1].icon} nav-icon-shs"></i>
-                        <span class="font-medium">${navServices[1].mobileTitle}</span>
-                    </a>
-                    <!-- Central FAB Button -->
-                    <div class="central-nav-item-shs w-1/5">
-                        <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
-                            <i class="fas fa-home central-fab-icon"></i>
-                        </a>
-                        <span class="central-fab-label">Home</span>
-                    </div>
-                    <!-- 3: Shops (Newly Added) -->
-                    <a href="#premium-card-${navServices[2].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[2].id}')">
-                        <i class="fas ${navServices[2].icon} nav-icon-shs"></i>
-                        <span class="font-medium">${navServices[2].mobileTitle}</span>
-                    </a>
-                    <!-- 4: P.G. (shifted) -->
-                    <a href="#premium-card-${navServices[3].id}" class="nav-item-shs w-1/5" onclick="scrollToSection('premium-card-${navServices[3].id}')">
-                        <i class="fas ${navServices[3].icon} nav-icon-shs"></i> 
-                        <span class="font-medium">${navServices[3].mobileTitle}</span>
-                    </a>
-                  `;
-            } else {
-                 // Fallback if not enough data
-                 navHtml = `
-                    <a href="main.html" class="nav-item-shs w-1/5 active">
-                        <i class="fas fa-home nav-icon-shs"></i>
-                        <span class="font-medium">Home</span>
-                    </a>
-                    <a href="#service-cards" class="nav-item-shs w-1/5">
-                        <i class="fas fa-search nav-icon-shs"></i>
-                        <span class="font-medium">Search</span>
-                    </a>
-                    <div class="central-nav-item-shs w-1/5">
-                        <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
-                            <i class="fas fa-plus central-fab-icon"></i>
-                        </a>
-                        <span class="central-fab-label">Post</span>
-                    </div>
-                    <a href="tel:0000000000" class="nav-item-shs w-1/5">
-                        <i class="fas fa-phone-alt nav-icon-shs"></i>
-                        <span class="font-medium">Call</span>
-                    </a>
-                    <a href="#" onclick="showLocationModal('premium-card-rooms')" class="nav-item-shs w-1/5">
-                        <i class="fas fa-map-marker-alt nav-icon-shs"></i>
-                        <span class="font-medium">Locate</span>
-                    </a>
-                 `;
-            }
+                    <span class="central-fab-label">Home</span>
+                </div>
+                
+                <!-- 4: Learn -->
+                <a href="learn.html" class="nav-item-shs w-1/5">
+                    <i class="fas fa-book-open nav-icon-shs"></i>
+                    <span class="font-medium">Learn</span>
+                </a>
+                
+                <!-- 5: Profile -->
+                <a href="profile.html" class="nav-item-shs w-1/5">
+                    <i class="fas fa-user nav-icon-shs"></i> 
+                    <span class="font-medium">Profile</span>
+                </a>
+            `;
 
             container.innerHTML = navHtml;
         }
