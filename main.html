@@ -33,6 +33,18 @@
             padding-bottom: 140px; 
         }
 
+        /* --- FIXED BACKGROUND IMAGE (Texture Retained) --- */
+        .fixed-bg-image {
+            position: fixed;
+            inset: 0;
+            background-image: url('flats.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15; /* Subtle and premium visibility */
+            z-index: -10;
+            pointer-events: none;
+        }
+
         /* --- ADVANCED ANIMATIONS --- */
         @keyframes blob-float {
             0%, 100% { transform: translate(0, 0) scale(1); }
@@ -45,7 +57,7 @@
             width: 250px;
             height: 250px;
             filter: blur(100px);
-            z-index: -1;
+            z-index: -5;
             opacity: 0.12;
             animation: blob-float 15s infinite alternate linear;
         }
@@ -205,6 +217,9 @@
     </style>
 </head>
 <body class="pt-28 sm:pt-24">
+
+    <!-- FIXED BACKGROUND IMAGE -->
+    <div class="fixed-bg-image"></div>
 
     <!-- AMBIENT DESIGN BLOBS -->
     <div class="bg-blob bg-[#CCFF00]" style="top: 15%; right: -10%;"></div>
