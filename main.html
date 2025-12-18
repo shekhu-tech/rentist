@@ -3,1302 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Rentist - Your Ultimate Rental Guide</title>
-    <!-- Tailwind CSS CDN (Self-contained styling) -->
+    <title>Rentist - Next-Gen Rental Ecosystem</title>
+    
+    <!-- Tailwind CSS & Advanced Typography -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome (for icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Fonts (Inter/Noto Sans Devanagari for readability) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+Devanagari:wght400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- GLOBAL & THEME VARIABLES (थीम वेरिएबल्स) --- */
-        /* Updated: Locked to Classic Light Green */
+        /* --- DESIGN TOKENS (Modern Tech Palette) --- */
         :root {
-            /* Classic Shining Light Green */
-            --color-primary: #76FF03; 
-            --color-primary-rgb: 118, 255, 3; 
-            
-            --color-secondary: #00897B; /* Dark Teal (Secondary remains same) */
-            --color-text-primary: #f3f4f6; /* White/Light Text */
-            
-            /* Backgrounds tuned for Green Theme */
-            --bg-main-dark: #1A2733; 
-            --glass-bg-dark: rgba(26, 39, 51, 0.85); 
-            --premium-bg-dark: #121e29; 
-            --premium-outer-bg: #28475c; 
-            
-            --electric-green-glow: #76FF03; 
+            --primary: #CCFF00; /* Electric Lime */
+            --primary-rgb: 204, 255, 0;
+            --secondary: #121212; /* Obsidian Black */
+            --accent: #2A2A2A; /* Slate Gray */
+            --bg-deep: #080808; /* Pure Black Background */
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-glow: 0 0 25px rgba(204, 255, 0, 0.25);
         }
 
-        /* --- BASE LAYOUT --- */
-        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Inter', 'Noto Sans Devangari', sans-serif;
-            background-color: var(--bg-main-dark); 
-            color: var(--color-text-primary); 
-            min-height: 100vh;
-            padding-top: 78px; /* Header Height */
-            padding-bottom: 80px; /* Bottom Nav Height */
-            /* Removed transition for color change since it's now static */
-            position: relative;
-            z-index: 1; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: white;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: 110px; 
         }
 
-        /* --- FIXED BACKGROUND MEDIA CONTAINER (Image retained) --- */
-        #fixed-media-background {
+        /* --- ADVANCED ANIMATIONS --- */
+        @keyframes blob-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(20px, -40px) scale(1.1); }
+            66% { transform: translate(-15px, 15px) scale(0.95); }
+        }
+
+        .bg-blob {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: -10; /* Ensure it's behind everything */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.5; /* Subtle visibility */
-            /* Using a generic rental image placeholder */
-            background-image: url('flats.png');
+            width: 250px;
+            height: 250px;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.12;
+            animation: blob-float 15s infinite alternate linear;
         }
 
-        .fixed-header-container {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-        }
-        
-        /* --- MOBILE SIDEBAR STYLES (मोबाइल साइडबार) - FIX APPLIED HERE --- */
-        #mobile-menu-icon {
-            transition: transform 0.3s ease-in-out;
-        }
-        .mobile-menu-panel {
-            top: 78px; /* Aligns right below the header (approx 78px) */
-            height: calc(100vh - 78px - 80px); /* 100vh - header height - bottom nav height */
-            transition: transform 0.5s ease-in-out;
-            background-color: var(--glass-bg-dark); /* Updated to use variable */
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px);
-            border: 2px solid var(--electric-green-glow); /* Dynamic Green Glow */
-        }
-        
-        /* ADDED: Mobile Menu Overlay Styles */
-        .mobile-menu-overlay {
-            z-index: 105; /* Between fixed header (100) and menu panel (110) */
-            transition: opacity 0.3s;
+        /* --- GLASSMORPHISM COMPONENTS --- */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- BOTTOM NAV STYLES (बॉटम नेविगेशन) --- */
-        .bottom-nav-fixed {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background-color: var(--glass-bg-dark); /* Dynamic Glass Color */
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 60;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
-            border-top: 1px solid rgba(var(--color-primary-rgb), 0.3);
+        /* --- BENTO GRID STYLE (Responsive Fix) --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            grid-auto-rows: 155px;
+            gap: 0.85rem;
         }
-        .nav-item-shs {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--color-text-primary); transition: all 0.3s ease;
-            font-size: 0.75rem; padding-top: 10px; padding-bottom: 10px;
-            opacity: 0.7;
-            text-decoration: none; /* Ensure no underline */
+
+        @media (min-width: 768px) {
+            .bento-grid { 
+                grid-template-columns: repeat(4, 1fr); 
+                grid-auto-rows: minmax(160px, auto);
+                gap: 1.5rem;
+            }
         }
-        .nav-item-shs:hover, .nav-item-shs.active {
-            color: var(--color-primary); /* Dynamic Primary Color */
-            transform: scale(1.1);
-            opacity: 1;
-            text-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.6);
+
+        /* --- BOTTOM NAV FLOATING (True Haptic Style) --- */
+        .floating-nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 440px;
+            height: 70px;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 35px;
+            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
         }
-        .nav-icon-shs { font-size: 1.5rem; margin-bottom: 2px; }
-        .central-nav-item-shs { position: relative; height: 80px; display: flex; justify-content: center; }
-        
-        /* FAB Button Pulse - Uses Dynamic RGB */
-        @keyframes pulseShadow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(var(--color-primary-rgb), 0); }
+
+        .nav-link {
+            color: #666;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
         }
-        .animate-pulse-shadow { animation: pulseShadow 2s infinite; }
-        .central-fab {
-            position: absolute; top: -28px; width: 64px; height: 64px; border-radius: 50%;
-            background-color: var(--color-primary); /* Dynamic Primary Color */
-            border: 4px solid var(--bg-main-dark); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); transform: scale(1.0);
-            display: flex; 
+
+        .nav-link.active {
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px rgba(var(--primary-rgb), 0.6));
+        }
+
+        .center-fab {
+            width: 58px;
+            height: 58px;
+            background: var(--primary);
+            color: black;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none; 
-        }
-        .central-fab-icon { color: #000; font-size: 1.8rem; } /* Text color black for contrast on bright green */
-        .central-fab-label { 
-            position: absolute; 
-            bottom: 5px; 
-            font-size: 0.75rem; 
-            font-weight: bold; 
-            color: var(--color-primary); /* Dynamic Primary Color */
-            pointer-events: none; 
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+            transform: translateY(-22px);
+            box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.4);
+            border: 4px solid var(--bg-deep);
+            transition: all 0.3s ease;
         }
 
-        /* === NEW KEYFRAMES FOR ULTRA PRO MAX EFFECTS === */
-        @keyframes ultraFlicker {
-            0% { box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.5), inset 0 0 10px rgba(var(--color-primary-rgb), 0.3); }
-            50% { box-shadow: 0 0 30px rgba(var(--color-primary-rgb), 0.7), inset 0 0 20px rgba(var(--color-primary-rgb), 0.4); }
-            100% { box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.5), inset 0 0 10px rgba(var(--color-primary-rgb), 0.3); }
-        }
-        
-        @keyframes cardShine {
-            0% { left: -150%; }
-            100% { left: 200%; }
-        }
-        /* === END NEW KEYFRAMES === */
-
-
-        /* --- PREMIUM CARD STYLES --- */
-        .premium-card {
-            /* Enable 3D transforms */
-            perspective: 1000px;
-            transform-style: preserve-3d;
-            
-            background: linear-gradient(145deg, var(--premium-outer-bg), var(--bg-main-dark)); /* Dynamic Gradient */
-            padding: 10px; 
-            border-radius: 35px; 
-            /* Dynamic Border using RGB */
-            border: 2px solid rgba(var(--color-primary-rgb), 0.8); 
-            
-            /* Enhanced Dynamic Shadow with continuous flicker */
-            box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.5), inset 0 0 10px rgba(var(--color-primary-rgb), 0.2);
-            animation: ultraFlicker 4s infinite alternate ease-in-out;
-                
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-in-out; 
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-            justify-content: start; 
-            cursor: pointer; 
-            height: 200px; /* Increased height for content */
-            position: relative; /* For Shine Effect */
-            overflow: hidden; /* For Shine Effect */
-        }
-        
-        /* 3D Tilt Effect Base State */
-        .premium-card:not(:hover) {
-            transform: scale(1.0) rotateX(0deg) rotateY(0deg);
+        /* --- SIDEBAR UPGRADE --- */
+        #sidebar {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(180deg, rgba(15,15,15,0.98) 0%, rgba(5,5,5,1) 100%);
+            box-shadow: -20px 0 50px rgba(0,0,0,0.8);
         }
 
-        .premium-card:hover {
-            /* Pause flicker animation on hover and apply intense static glow */
-            animation: none;
-            box-shadow: 
-                0 0 40px rgba(var(--color-primary-rgb), 0.9), /* EVEN STRONGER hover glow */
-                inset 0 0 25px rgba(var(--color-primary-rgb), 0.5); 
-            
-            /* Tilt transform will be handled by JS on mousemove */
-            transform: translateY(-8px) scale(1.05); /* Slight lift and increased scale on hover */
+        .sidebar-item-new {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.75rem;
+            padding: 1.25rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
         }
 
-        /* === ULTRA PRO MAX SHINE EFFECT (चमकदार लाइटिंग) === */
-        .premium-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(var(--color-primary-rgb), 0.4), transparent); /* Gradient shine with green tint */
-            transform: skewX(-20deg);
-            pointer-events: none;
-        }
-        
-        /* Apply shine animation on hover for a dramatic effect */
-        .premium-card:hover::after {
-            animation: cardShine 1.5s infinite linear; /* Faster shine on hover */
-        }
-        
-        /* NEW IMAGE STYLE */
-        .premium-card-image {
-            width: 100%; 
-            height: 100px; /* Adjusted height to fit the card better */
-            object-fit: cover; 
-            border-radius: 25px; /* Sharper corners like main.html */
-            display: block;
-            margin-bottom: 10px; 
-            
-            /* SHINING BORDER / SHADOW applied to the image */
-            border: 1px solid var(--color-primary); 
-            box-shadow: 
-                0 0 15px rgba(var(--color-primary-rgb), 0.5), /* Increased image glow */
-                inset 0 0 8px rgba(var(--color-primary-rgb), 0.3); 
-        }
-        
-        .premium-title {
-            margin-top:10px; /* Reduced margin */
-            font-size:19px; 
-            font-weight:700; 
-            color:var(--color-primary); 
-            /* Dynamic Text Shadow using RGB */
-            text-shadow:0 0 10px rgba(var(--color-primary-rgb), 0.8); 
-            text-align: center;
-        }
-        .premium-desc {
-            margin-top:5px; /* Reduced margin */
-            font-size:14px; /* Slightly smaller font for desc to fit */
-            line-height:1.3; 
-            color:#e9e9e9;
-            opacity:0.95; 
-            text-align: center; 
-            margin-bottom: 5px;
-        }
-
-        /* --- CUSTOM CSS FOR RESPONSIVE HEADINGS --- */
-        /* Default (Mobile First): Use data-mobile-title for smaller text */
-        .premium-card .premium-title[data-mobile-title]:before {
-            content: attr(data-mobile-title);
-            display: block;
-            font-size: 1.1rem; 
-            font-weight: 800;
-        }
-        /* Hide the long title on mobile */
-        .premium-card .premium-title > span {
-            display: none;
-        }
-
-        /* Medium/PC View: Show the long title, hide the short title */
-        @media (min-width: 768px) {
-            .premium-card .premium-title[data-mobile-title]:before {
-                content: none;
-            }
-            .premium-card .premium-title > span {
-                display: inline;
-                font-size: 1.1rem; 
-                font-weight: 700;
-            }
-        }
-        /* ------------------------------------------- */
-
-        /* Custom Styles for Desktop Dropdown */
-        .dropdown-link {
-            display: block;
-            padding: 8px 12px;
-            margin: 4px 0;
-            border-radius: 8px;
-            color: var(--color-text-primary);
-            font-weight: 500;
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .dropdown-link:hover {
-            background-color: rgba(var(--color-primary-rgb), 0.1);
-            color: var(--color-primary);
-        }
-
-        /* New CSS for JS-controlled desktop dropdown content */
-        .desktop-dropdown-content {
-            position: absolute; 
-            top: 100%; /* Position below the link */
-            left: 0;
-            width: 256px; /* w-64 equivalent */
-            margin-top: 8px; /* mt-2 equivalent */
-            background: var(--premium-bg-dark); 
-            border: 1px solid var(--color-primary); /* Adjusted border from primary/50 for clarity */
-            border-radius: 0.75rem; /* rounded-xl equivalent */
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5), 0 10px 10px -5px rgba(0,0,0,0.2); /* shadow-2xl equivalent */
-            z-index: 50; 
-            padding: 8px; /* p-2 equivalent */
-            
-            /* Transition properties for smooth toggle */
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s;
-            
-            /* Default Hidden State */
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-        }
-
-        .desktop-dropdown-content.open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-
-        /* === MOBILE DROPDOWN STYLING FIX === */
-        /* Custom Styles for Mobile Accordion Link Items (Sub-links in sidebar) */
-        .mobile-dropdown-link {
-            display: block;
-            /* PADDING FIX: Indent the sub-items to make them look like a dropdown */
-            padding: 8px 0px 8px 15px; 
-            margin: 2px 0;
-            color: #e0e0e0;
-            font-size: 0.9rem;
-            font-weight: 500;
-            /* Border to clearly indicate structure */
-            border-left: 3px solid rgba(var(--color-primary-rgb), 0.3);
-            
-            background-color: transparent;
-            transition: all 0.3s ease-in-out;
-            text-shadow: none;
-        }
-        .mobile-dropdown-link:hover {
-            color: var(--color-primary);
-            border-left-color: var(--color-primary);
-            background-color: rgba(var(--color-primary-rgb), 0.1);
-            /* ADDED: Subtle glow on hover */
-            text-shadow: 0 0 5px rgba(var(--color-primary-rgb), 0.5);
-            transform: translateX(5px);
-        }
-        /* ADDED: Accordion Toggle Button Glow (Main links in sidebar) */
-        .mobile-accordion-toggle {
-            font-weight: 700;
-            position: relative;
-            z-index: 10;
-            /* ADDED: Slight glow/shadow on the button itself */
-            transition: all 0.3s ease-in-out;
-        }
-        .mobile-accordion-toggle:hover {
-            color: var(--color-primary);
-            /* ADDED: Text glow for ultra pro max effect */
-            text-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.8);
+        .sidebar-item-new:hover, .sidebar-item-new.active {
+            background: rgba(var(--primary-rgb), 0.08);
+            border-color: rgba(var(--primary-rgb), 0.3);
             transform: scale(1.02);
         }
-        /* === END MOBILE DROPDOWN STYLING FIX === */
 
-
-        /* --- GRID AND RESPONSIVENESS (ग्रिड और प्रतिक्रियाशीलता) --- */
-        .card-grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adaptive grid for 5 cards */
-            gap: 1.5rem; 
-        }
-        
-        /* 2 cards in a row for screens >= 768px (Tablet/Small PC) */
-        @media(min-width: 768px){
-            .card-grid-container {
-                grid-template-columns: repeat(2, 1fr); 
+        /* --- MODAL MOBILE BOTTOM SHEET --- */
+        @media (max-width: 640px) {
+            #location-modal .glass-card {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                border-radius: 40px 40px 0 0;
+                max-height: 85vh;
             }
         }
-        
-        /* 3 cards in a row for screens >= 900px */
-        @media(min-width: 900px){
-            .card-grid-container {
-                grid-template-columns: repeat(3, 1fr); 
-            }
-        }
-        
-        /* 5 cards in a row for screens >= 1280px (to fit 5 cards elegantly) */
-        /* NOTE: Now supporting 6-7 cards gracefully */
-        @media(min-width: 1280px){
-            .card-grid-container {
-                /* Dynamically adjusts based on the number of cards */
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            }
-        }
-        
-        /* --- SLIDER SPECIFIC STYLES --- */
-        .slider-container {
-            position: relative; 
-            height: 100%; 
-            width: 100%; 
-            overflow: hidden;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            align-items: center;
-            padding: 0; 
-        }
-
-        /* --- LATEST RECRUITMENT SLIDER STYLES (UPDATED FOR SHINING BORDER) --- */
-        #slider-bg {
-            position: relative;
-            height: 210px; /* Mobile height */
-            /* Dynamic Card Styles - uses RGB */
-            border-radius: 35px; 
-            border: 2px solid rgba(var(--color-primary-rgb), 0.8); /* Stronger border */
-            
-            /* SHINING BORDER applied here, matching .premium-card */
-            box-shadow: 
-                0 0 30px rgba(var(--color-primary-rgb), 0.6), 
-                inset 0 0 20px rgba(var(--color-primary-rgb), 0.3); 
-            
-            /* End Card Styles */
-            margin-bottom: 2rem;
-            overflow: hidden;
-            background-color: var(--premium-bg-dark); /* Dynamic Inner BG */
-            transition: background-image 0.8s ease-in-out, box-shadow 0.3s ease-in-out; 
-            background-size: cover;
-            background-position: center;
-            margin-top: 1rem; 
-        }
-        
-        /* Added a subtle hover effect to slider for consistency */
-        #slider-bg:hover {
-             box-shadow: 
-                0 0 45px rgba(var(--color-primary-rgb), 1.0), 
-                inset 0 0 35px rgba(var(--color-primary-rgb), 0.5); 
-        }
-
-        @media (min-width: 1024px) {
-            #slider-bg {
-                height: 350px; 
-            }
-        }
-
-        .slide-content-wrapper .post-name {
-            font-weight: 1000;
-            line-height: 1.2;
-            color: var(--color-primary); /* Dynamic Primary Color */
-            margin-bottom: 0.5rem; 
-            word-wrap: break-word; 
-            white-space: normal;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
-        }
-        
-        /* --- Global Styles (Updated to reflect new primary color for glow) --- */
-        .text-primary-glow { 
-            color: var(--color-primary); /* Dynamic Primary Color */
-            /* Dynamic Text Shadow using RGB */
-            text-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.8); /* Enhanced glow */
-        } 
-
-        .border-primary-glow {
-            border-color: var(--color-primary);
-            box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.4);
-        }
-        
-        /* --- MODAL STYLES (लोकेशन पॉपअप स्टाइल) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 200; 
-            display: none; 
-            justify-content: center; 
-            align-items: center; /* Vertically center the modal content */
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            padding: 20px; /* Add padding for small screens */
-        }
-
-        .modal-content {
-            position: relative; 
-            transform: none; 
-            
-            width: 95%; 
-            max-width: 600px;
-            max-height: calc(100vh - 160px); 
-            
-            /* Dynamic Card Styles - uses RGB */
-            background: linear-gradient(145deg, var(--premium-outer-bg), var(--bg-main-dark));
-            padding: 10px; 
-            border-radius: 35px; 
-            border: 2px solid rgba(var(--color-primary-rgb), 0.7); 
-            box-shadow: 0 0 35px rgba(var(--color-primary-rgb), 0.9), inset 0 0 30px rgba(var(--color-primary-rgb), 0.45);
-            
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Inner scrollable area for locations, matching inner-box style */
-        .location-list-container {
-            padding: 15px;
-            border-radius: 25px;
-            background: var(--premium-bg-dark); /* Dynamic Inner BG */
-            border: 1.5px solid rgba(var(--color-primary-rgb), 1);
-            box-shadow: inset 0 0 20px rgba(var(--color-primary-rgb), 0.2), 0 0 15px rgba(var(--color-primary-rgb), 0.1);
-            overflow-y: auto; /* Enable scrolling for the location list if needed */
-        }
-
-        .location-item {
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            border-left: 5px solid var(--color-primary); /* Dynamic Primary Color */
-            transition: background-color 0.2s, transform 0.2s;
-            font-weight: 500;
-            color: var(--color-text-primary);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .location-item:hover {
-            /* Dynamic Hover BG using RGB */
-            background-color: rgba(var(--color-primary-rgb), 0.1);
-            transform: translateX(5px);
-            color: var(--color-primary); /* Dynamic Primary Color */
-            box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.3);
-        }
-        
-        /* Mobile adjustment for modal content to take less height */
-        @media (max-height: 600px) and (max-width: 768px) {
-            .modal-content {
-                /* If screen is short, use a tighter max height */
-                max-height: calc(100vh - 80px); 
-            }
-        }
-        
     </style>
 </head>
-<body class="leading-relaxed">
-    
-    <!-- BACKGROUND MEDIA ELEMENTS -->
-    <div id="fixed-media-background"></div>
-    <!-- END BACKGROUND MEDIA ELEMENTS -->
+<body class="pt-24">
 
-    <!-- HEADER (शीर्षक) -->
-    <div class="fixed-header-container">
-        <!-- Added explicit border styling here to ensure glow matches -->
-        <header id="main-header" class="bg-glass-bg-dark/90 backdrop-blur-xl shadow-2xl p-4 fixed top-0 left-0 right-0 z-[100] border-b-4 border-primary-glow" style="border-bottom-color: var(--color-primary);">
-              <div class="container mx-auto flex justify-between items-center px-2 sm:px-4" style="padding-top: env(safe-area-inset-top);">
-                <!-- Logo and Title (लोगो और शीर्षक) -->
-                <a href="main.html" class="flex items-center no-underline">
-                  <!-- rentist.png इमेज का उपयोग किया गया -->
-                  <img src="rentist.png" alt="Rentist Logo" class="h-10 w-10 mr-3 rounded-full border border-primary/50 object-cover" style="border-color: var(--color-primary);" onerror="this.onerror=null;this.src='https://placehold.co/48x48/1C3144/76FF03?text=R';"/>
-                   <span class="text-xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center">
-                    <img src="skillora.png" alt="Logo" class="h-[35px] w-auto object-contain inline-block" onerror="this.onerror=null;this.src='https://placehold.co/100x35/1C3144/76FF03?text=Rentist';" />
-                  </span>
+    <!-- AMBIENT DESIGN BLOBS -->
+    <div class="bg-blob bg-[#CCFF00]" style="top: 15%; right: -10%;"></div>
+    <div class="bg-blob bg-[#3D3D3D]" style="bottom: 10%; left: -15%;"></div>
+
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 right-0 z-[100] px-4 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass-card px-5 py-3.5 rounded-[28px] shadow-2xl">
+            <a href="main.html" class="flex items-center space-x-3">
+                <img src="rentist.png" alt="Rentist" class="w-9 h-9 sm:w-11 sm:h-11 rounded-[14px] object-cover border border-primary/20 rotate-6" style="border-color: var(--primary);" onerror="this.src='https://placehold.co/44/000/CCFF00?text=R'">
+                <div class="flex flex-col leading-none">
+                    <img src="skillora.png" alt="Rentist" class="h-6 sm:h-9 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block'">
+                    <span id="alt-logo" class="hidden text-xl font-black italic tracking-tighter uppercase">RENT<span class="text-primary" style="color: var(--primary);">IST</span></span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden lg:flex items-center space-x-12 font-bold text-[11px] tracking-[3px] uppercase opacity-70">
+                <a href="#" class="hover:text-primary hover:opacity-100 transition-all">Market</a>
+                <a href="#" class="hover:text-primary hover:opacity-100 transition-all">VIP Docs</a>
+                <a href="#" class="hover:text-primary hover:opacity-100 transition-all">Support</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="tel:8816014071" class="hidden md:flex items-center bg-white/5 px-4 py-2.5 rounded-full border border-white/10 hover:border-primary transition-all">
+                    <i class="fas fa-headset text-primary mr-2" style="color: var(--primary);"></i>
+                    <span class="text-[10px] font-black uppercase">Help Line</span>
                 </a>
-
-                <!-- Desktop Navigation Container (डेस्कटॉप नेविगेशन कंटेनर) -->
-                <!-- The JS will dynamically inject the dropdowns here -->
-                <div class="desktop-nav-area hidden lg:flex items-center space-x-8">
-                  <nav id="desktop-nav-links" class="flex space-x-6 font-extrabold">
-                    <!-- Dropdown links will be generated here by JS -->
-                  </nav>
-                  
-                  <!-- Contact Side Bar (संपर्क साइड बार) -->
-                  <div class="border-l-4 border-primary/50 pl-6 text-sm flex flex-col items-start bg-primary/5 p-2 rounded-xl shadow-inner" style="border-color: var(--color-primary);">
-                    <a href="tel:8816014071" class="flex items-center font-extrabold text-white hover:text-primary transition-colors">
-                      <i class="fas fa-phone-alt mr-2" style="color: var(--color-primary);"></i> <span class="text-xl tracking-wider">00000000</span>
-                    </a>
-                    <a href="mailto:care@yourtrueguide.com" class="flex items-center text-xs text-gray-400 hover:text-primary transition-colors mt-1">
-                      <i class="fas fa-envelope mr-2 text-secondary/70"></i> <b>0000000000</b>
-                    </a>
-                  </div>
-                </div>
-
-                <!-- Mobile Menu Button (मोबाइल मेन्यू बटन) -->
-                <button id="mobile-menu-button" class="text-primary p-2 rounded-full bg-primary/10 lg:hidden" aria-label="Toggle menu" aria-expanded="false" style="color: var(--color-primary);">
-                  <i class="fas fa-bars text-2xl" id="mobile-menu-icon"></i>
+                <button id="sidebar-toggle" class="w-11 h-11 flex items-center justify-center rounded-[18px] bg-primary group hover:scale-105 transition-all shadow-lg" style="background-color: var(--primary);">
+                    <i class="fas fa-bars-staggered text-black text-lg group-hover:rotate-12 transition-transform"></i>
                 </button>
-              </div>
-        </header>
-
-        <!-- Mobile Menu Panel (मोबाइल मेन्यू पैनल) -->
-        <div id="mobile-menu-panel" class="mobile-menu-panel fixed right-0 w-3/4 max-w-sm z-[110] translate-x-full overflow-hidden border border-primary/50 rounded-2xl shadow-lg shadow-primary/10">
-            <button id="mobile-menu-close-button" class="absolute top-4 right-4 text-white hover:text-primary p-2 rounded-full bg-secondary/50 shadow-lg" aria-label="Close menu">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="flex flex-col h-full space-y-4 font-extrabold text-left mt-8 p-6 overflow-y-auto">
-                <div class="mb-4 pb-4 border-b border-primary/50" style="border-color: var(--color-primary);">
-                    <p class="text-sm font-light text-gray-300">Welcome to</p>
-                    <h2 class="text-3xl font-black text-primary drop-shadow-md" style="color: var(--color-primary);">Rentist</h2>
-                    <p class="text-xs font-semibold text-gray-400">Your Rent Guide</p>
-                </div>
-                
-                <!-- Sidebar Accordion Container - The accordion links will be generated here by JS -->
-                <div id="mobile-accordion-container" class="w-full">
-                    <!-- Dynamic accordion items will go here -->
-                </div>
-                
-                <div class="border-t border-primary/30 w-full my-4" style="border-color: rgba(var(--color-primary-rgb), 0.3);"></div>
-
-                <div class="flex flex-col items-start space-y-3 pt-4 bg-black/30 p-4 rounded-xl shadow-2xl border border-primary/50" style="border-color: var(--color-primary);">
-                  <h4 class="text-base font-bold text-primary mb-1" style="color: var(--color-primary);">Need Help? (24x7)</h4>
-                  <a href="tel:8816014071" class="flex items-center font-extrabold text-black text-xl p-3 rounded-full bg-primary/90 w-full justify-center" style="background-color: var(--color-primary);">
-                     <i class="fas fa-phone-volume mr-3"></i> <span>0000000000</span>
-                  </a>
-                </div>
-                <p class="text-xs text-center text-gray-500 mt-auto">© 2025 Rentist.com</p>
             </div>
         </div>
-        <!-- FIX: Added 'hidden' class to overlay to control it via JS -->
-        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/70 mobile-menu-overlay hidden"></div>
-    </div>
-    <!-- END HEADER & SIDEBAR -->
+    </header>
 
-
-    <!-- MAIN CONTENT AREA (मुख्य सामग्री क्षेत्र) --><br>
-    <main class="container mx-auto p-4 md:p-8 lg:p-12" style="min-height: calc(100vh - 160px);">
+    <!-- SIDEBAR (ADVANCED RE-DESIGN) -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[110] hidden opacity-0 transition-opacity duration-500"></div>
+    <aside id="sidebar" class="fixed top-0 right-0 h-full w-[85%] max-w-[340px] z-[120] translate-x-full p-8 border-l border-white/5 flex flex-col">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 bg-primary rounded-full animate-pulse" style="background-color: var(--primary);"></div>
+                <span class="text-xs font-black tracking-[4px] uppercase text-gray-500">Navigation</span>
+            </div>
+            <button id="sidebar-close" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-white"><i class="fas fa-times"></i></button>
+        </div>
         
-        <div id="slider-bg"> 
-            <section class="latest-forms">
-                <!-- Title is now placed relative to the inner section for Z-index -->
-                <div class="text-center mb-6">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-4 pb-1" style="border-color: var(--color-primary);">Featured Listings</h2>
-                </div>
-                
-                <div class="slider-container relative">
-                    <!-- Slides Wrapper will contain the dynamic content over the image -->
-                    <div id="slides-wrapper" class="relative w-full h-full"></div>
+        <!-- Sidebar Brand/Profile Section -->
+        <div class="mb-10 p-6 rounded-[28px] glass-card border-primary/20 flex flex-col items-center text-center">
+            <div class="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mb-4 border border-primary/40">
+                <i class="fas fa-user-astronaut text-primary text-2xl" style="color: var(--primary);"></i>
+            </div>
+            <h4 class="text-lg font-black tracking-tight italic">Welcome to <span class="text-primary" style="color: var(--primary);">Rentist</span></h4>
+            <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-widest">Digital Rental Ecosystem</p>
+        </div>
 
-                    <!-- Navigation Buttons -->
-                    <button id="prev-btn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-primary p-2 rounded-full shadow-lg transition-all z-20" style="color: var(--color-primary);">❮</button>
-                    <button id="next-btn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-primary p-2 rounded-full shadow-lg transition-all z-20" style="color: var(--color-primary);">❯</button>
+        <nav id="sidebar-links" class="space-y-1 flex-grow overflow-y-auto pr-2">
+            <!-- Dynamic Sidebar links -->
+        </nav>
+
+        <div class="pt-8 mt-auto">
+            <div class="p-6 rounded-[30px] bg-primary text-black flex items-center justify-between group cursor-pointer" style="background-color: var(--primary);" onclick="window.location.href='list_Your_property.html'">
+                <div>
+                    <p class="text-[9px] font-black uppercase tracking-widest opacity-70">List Property</p>
+                    <h5 class="text-lg font-black leading-none">Start Earning</h5>
+                </div>
+                <i class="fas fa-plus-circle text-2xl group-hover:rotate-90 transition-transform"></i>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-5">
+        
+        <!-- HERO SLIDER -->
+        <div id="hero-section" class="mb-12">
+            <div class="relative h-[340px] sm:h-[480px] lg:h-[580px] rounded-[40px] sm:rounded-[60px] overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)]">
+                <div id="hero-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-100"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                
+                <div class="absolute bottom-10 left-8 sm:bottom-16 sm:left-16 max-w-2xl pr-8">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="w-2 h-2 bg-primary rounded-full animate-ping" style="background-color: var(--primary);"></span>
+                        <span class="text-[10px] sm:text-xs font-black uppercase tracking-[3px] text-primary" style="color: var(--primary);">Exclusive Listings</span>
+                    </div>
+                    <h1 id="hero-title" class="text-3xl sm:text-6xl font-black mb-4 tracking-tighter leading-[1.1] italic uppercase">Upgrade Your<br>Lifestyle Today.</h1>
+                    <p id="hero-subtitle" class="text-gray-400 text-sm sm:text-xl mb-8 font-medium max-w-md">Find the perfect room, flat, or shop with AI-powered search efficiency.</p>
                     
-            </section>
-        </div>
-        <!-- END SLIDE SECTION WRAPPER -->
-        
-        <!-- NEW HEADING ADDED HERE -->
-        <div class="text-center mb-8 mt-4">
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-primary-glow border-b-4 border-primary/50 inline-block px-6 pb-2 uppercase tracking-wide" style="border-color: var(--color-primary);">
-                Rental Services
-            </h2>
-        </div>
-        <!-- END NEW HEADING -->
+                    <div class="flex items-center space-x-3">
+                        <a href="#bento-container" class="inline-flex items-center px-7 py-3.5 sm:px-10 sm:py-5 bg-primary text-black font-black rounded-full hover:scale-105 transition-all text-xs sm:text-sm shadow-xl shadow-primary/20" style="background-color: var(--primary);">
+                            EXPLORE ALL
+                        </a>
+                        <button class="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-full border border-white/20 backdrop-blur-md hover:bg-white/10"><i class="fas fa-play text-[10px]"></i></button>
+                    </div>
+                </div>
 
-        <section id="service-cards">
-            <!-- All Cards will be dynamically inserted into this container by JS -->
-            <div id="card-grid-container-dynamic" class="card-grid-container">
-                <!-- Cards injected here -->
+                <!-- Slider Controls -->
+                <div class="absolute bottom-10 right-8 sm:bottom-16 sm:right-16 flex space-x-2">
+                    <button id="slide-prev" class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center border border-white/10 rounded-2xl hover:bg-primary hover:text-black transition-all backdrop-blur-xl"><i class="fas fa-chevron-left text-xs"></i></button>
+                    <button id="slide-next" class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center bg-white text-black rounded-2xl hover:bg-primary transition-all shadow-xl"><i class="fas fa-chevron-right text-xs"></i></button>
+                </div>
             </div>
-        </section>
+        </div>
+
+        <!-- CATEGORY TITLE -->
+        <div class="mb-10 flex items-end justify-between px-2">
+            <div>
+                <h2 class="text-4xl font-black tracking-tighter italic uppercase leading-none">Smart <span class="text-primary" style="color: var(--primary);">Rent</span></h2>
+                <p class="text-gray-500 font-bold uppercase text-[9px] tracking-[4px] mt-2 opacity-60">Curated rental categories</p>
+            </div>
+            <div class="hidden sm:block h-px flex-1 mx-12 bg-white/5 mb-2"></div>
+        </div>
+
+        <!-- BENTO GRID -->
+        <div id="bento-container" class="bento-grid mb-32">
+            <!-- Dynamic Items -->
+        </div>
+
     </main>
-    <!-- END MAIN CONTENT AREA -->
-    
-    <!-- === FIXED BOTTOM NAVIGATION (निश्चित बॉटम नेविगेशन) === -->
-    <nav 
-        class="bottom-nav-fixed" 
-        style="padding-bottom: env(safe-area-inset-bottom);" 
-        id="bottom-nav-shs"
-    >
-        <div id="bottom-nav-items-container" class="flex justify-around items-end h-20 relative px-2">
-            <!-- Dynamic Nav Items will be inserted here, along with the central FAB -->
-        </div>
-    </nav>
-    <!-- ================================================= -->
 
-    <!-- LOCATION SELECTION MODAL (लोकेशन चयन पॉपअप) -->
-    <div id="location-modal-overlay" class="modal-overlay">
-        <div id="location-modal-content" class="modal-content">
-            <div class="flex justify-between items-center mb-4 p-2">
-                <h3 id="modal-title" class="text-xl font-bold text-primary-glow">Available Options</h3>
-                <button id="modal-close-button" class="text-white hover:text-primary transition-colors p-2 rounded-full hover:bg-white/10" aria-label="Close modal">
-                    <i class="fas fa-times text-2xl"></i>
-                </button>
+    <!-- FLOATING BOTTOM NAV (PREMIUM APP STYLE) -->
+    <nav class="floating-nav">
+        <a href="main.html" class="nav-link active">
+            <i class="fas fa-house-chimney-window"></i>
+            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">Home</span>
+        </a>
+        <a href="suggestion.html" class="nav-link">
+            <i class="fas fa-sparkles"></i>
+            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">AI Suggest</span>
+        </a>
+        <a href="list_Your_property.html" class="center-fab" style="background-color: var(--primary);">
+            <i class="fas fa-plus text-xl"></i>
+        </a>
+        <a href="learn.html" class="nav-link">
+            <i class="fas fa-rocket"></i>
+            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">Learn</span>
+        </a>
+        <a href="see_my_listings.html" class="nav-link">
+            <i class="fas fa-circle-user"></i>
+            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">Space</span>
+        </a>
+    </nav>
+
+    <!-- LOCATION MODAL -->
+    <div id="location-modal" class="fixed inset-0 z-[200] flex items-center justify-center px-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-2xl"></div>
+        <div class="relative glass-card w-full max-w-xl rounded-[40px] p-8 sm:p-12 overflow-hidden shadow-[0_0_100px_rgba(var(--primary-rgb),0.1)]">
+            <div class="flex justify-between items-center mb-10">
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-black uppercase tracking-[3px] text-gray-500 mb-1">Navigation Path</span>
+                    <h3 id="modal-title" class="text-3xl font-black tracking-tighter uppercase italic">Select <span class="text-primary" style="color: var(--primary);">Region</span></h3>
+                </div>
+                <button id="modal-close" class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 transition-all flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
             </div>
-            
-            <div id="location-list" class="location-list-container">
-                <!-- Location list will be dynamically populated here (लोकेशन लिस्ट यहाँ डायनामिक रूप से लोड होगी) -->
+            <div id="modal-list" class="space-y-3 max-h-[55vh] overflow-y-auto pr-2 custom-scroll">
+                <!-- Dynamic Content -->
             </div>
         </div>
     </div>
-    <br><br>
-    <!-- END MODAL -->
 
-    
+    <!-- SCRIPTS -->
     <script>
+        // --- DATA WITH ORIGINAL IMAGES ---
+        const RENT_DATA = [
+            { id: 'rooms', title: 'Rooms', icon: 'fa-bed', size: 'col-span-1 row-span-2', img: 'rooms.png', menu: [{n:'Rooms in Rural', l:'rooms_search_rural.html'}, {n:'Rooms in Urban', l:'rooms_search_urban.html'}] },
+            { id: 'flats', title: 'Flats', icon: 'fa-building', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-2', img: 'flats.png', menu: [{n:'Flats in Rural', l:'flats_search_rural.html'}, {n:'Flats in Urban', l:'flats_search_urban.html'}] },
+            { id: 'pg', title: 'P.G.', icon: 'fa-user-group', size: 'col-span-1 row-span-1', img: 'payingguest.png', menu: [{n:'P.G. in Rural', l:'pg_search_rural.html'}, {n:'P.G. in Urban', l:'pg_search_urban.html'}] },
+            { id: 'shops', title: 'Shops', icon: 'fa-store', size: 'col-span-1 row-span-1', img: 'shops.png', menu: [{n:'Shops in Rural', l:'shops_search_rural.html'}, {n:'Shops in Urban', l:'shops_search_urban.html'}] },
+            { id: 'hostels', title: 'Hostels', icon: 'fa-school', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-1', img: 'hostels.png', menu: [{n:'Hostels in Rural', l:'hostels_search_rural.html'}, {n:'Hostels in Urban', l:'hostels_search_urban.html'}] },
+            { id: 'houses', title: 'Houses', icon: 'fa-home', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-1', img: 'houses.png', menu: [{n:'Houses in Rural', l:'houses_search_rural.html'}, {n:'Houses in Urban', l:'houses_search_urban.html'}] },
+            { id: 'plots', title: 'Plots', icon: 'fa-map', size: 'col-span-1 row-span-1', img: 'plots.png', menu: [{n:'Plots in Rural', l:'plots_search_rural.html'}, {n:'Plots in Urban', l:'plots_search_urban.html'}] }
+        ];
+
+        const HERO_SLIDES = [
+            { title: "Smarter Spaces.<br>Faster Renting.", subtitle: "Top locations par premium flats aur rooms ka sabse bada collection.", bg: "flats.png" },
+            { title: "Business Hubs.<br>Prime Shops.", subtitle: "Commercial properties jo aapke brand ko naya makaam dein.", bg: "shops.png" }
+        ];
+
+        // --- UI CORE LOGIC ---
         
-        // --- CENTRALIZED DATA STRUCTURE (केंद्रीय डेटा स्ट्रक्चर) ---
-        // Added 'Shops' to the list as requested
-        const SERVICE_DATA = [
-            {
-                id: 'rooms', title: 'Rooms', mobileTitle: 'Rooms', desc: 'Find Single/Shared Rooms for Rent.', imgSrc: 'rooms.png', icon: 'fa-bed', modalTitle: 'Rooms Options',
-                menu: [
-                    { name: "Rooms in Rural", link: "rooms_search_rural.html" },
-                    { name: "Rooms in Urban", link: "rooms_search_urban.html" },
-                    { name: "List Your Room", link: "list_Your_property.html" },
-                    { name: "View Your Listings", link: "see_my_listings.html" } 
-                ]
-            },
-            {
-                id: 'flats', title: 'Flats', mobileTitle: 'Flats', desc: 'Search for 1BHK, 2BHK, 3BHK Flats.', imgSrc: 'flats.png', icon: 'fa-building', modalTitle: 'Flats & Apartments',
-                menu: [
-                    { name: "Flats in Rural", link: "flats_search_rural.html" },
-                    { name: "Flats in Urban", link: "flats_search_urban.html" },
-                    { name: "List Your Flat", link: "list_Your_property.html" },
-                    { name: "View Your Listings", link: "see_my_listings.html" } 
-                ]
-            },
-            {
-                id: 'shops', title: 'Shops', mobileTitle: 'Shops', desc: 'Prime Commercial Shops for Rent.', imgSrc: 'shops.png', icon: 'fa-store', modalTitle: 'Shop Options',
-                menu: [
-                    { name: "Shops in Rural", link: "shops_search_rural.html" },
-                    { name: "Shops in Urban", link: "shops_search_urban.html" },
-                    { name: "List Your Shop", link: "list_Your_property.html" },
-                    { name: "View Your Listings", link: "see_my_listings.html" }
-                ]
-            },
-            {
-                id: 'pg', title: 'P.G.', mobileTitle: 'P.G.', desc: 'Comfortable P.G. with Food Options.', imgSrc: 'payingguest.png', icon: 'fa-user-friends', modalTitle: 'Paying Guest Options',
-                menu: [
-                    { name: "P.G. in Rural", link: "pg_search_rural.html" },
-                    { name: "P.G. in Urban", link: "pg_search_urban.html" },
-                    { name: "List Your P.G.", link: "list_Your_property.html" },
-                    { name: "View Your Listings", link: "see_my_listings.html" } 
-                ]
-            },
-            {
-                id: 'hostels', title: 'Hostels', mobileTitle: 'Hostels', desc: 'Affordable Hostels for Students/Workers.', imgSrc: 'hostels.png', icon: 'fa-school', modalTitle: 'Hostels & Accommodations',
-                menu: [
-                    { name: "Hostels in Rural", link: "hostels_search_rural.html" },
-                    { name: "Hostels in Urban", link: "hostels_search_urban.html" },
-                    { name: "List Your Hostel", link: "list_Your_property.html" },
-                    { name: "View Your Listings", link: "see_my_listings.html" } 
-                ]
-            },
-            {
-                id: 'houses', title: 'Houses', mobileTitle: 'Houses', desc: 'Independent Houses and Villas for Rent.', imgSrc: 'houses.png', icon: 'fa-home', modalTitle: 'Houses & Villas',
-                menu: [
-                    { name: "Houses in Rural", link: "houses_search_rural.html" },
-                    { name: "Houses in Urban", link: "houses_search_urban.html" },
-                    { name: "List Your House", link: "list_Your_property.html" },
-                    { name: "View Your Listings", link: "see_my_listings.html" } 
-                ]
-            },
-            {
-                id: 'plots', title: 'Plots', mobileTitle: 'Plots', desc: 'Residential and Commercial Plots for Rent.', imgSrc: 'plots.png', icon: 'fa-map', modalTitle: 'Plots & Land',
-                menu: [
-                    { name: "Plots in Rural", link: "plots_search_rural.html" },
-                    { name: "Plots in Urban", link: "plots_search_urban.html" },
-                    { name: "List Your Plot", link: "list_Your_property.html" },
-                    { name: "View Your Listings", link: "see_my_listings.html" } 
-                ]
-            }
-        ];   
-        // --- END CENTRALIZED DATA STRUCTURE ---
-
-
-        // --- START: UTILITY FUNCTIONS ---
-        
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                const headerHeight = 78; 
-                const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-                const offsetPosition = elementPosition - headerHeight;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
-            }
-        }
-        
-        // --- END: UTILITY FUNCTIONS ---
-        
-        
-        // --- START: MOBILE MENU TOGGLE LOGIC (FIXED) ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
-        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
-        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
-
-        function toggleMobileMenu(isOpen) {
-            if (isOpen) {
-                // Open menu
-                mobileMenuPanel.classList.remove('translate-x-full');
-                mobileMenuPanel.classList.add('translate-x-0');
-                mobileMenuOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                mobileMenuButton.setAttribute('aria-expanded', 'true');
-                // Change icon to 'X' and add rotation for visual flair
-                mobileMenuIcon.classList.remove('fa-bars');
-                mobileMenuIcon.classList.add('fa-times');
-                mobileMenuIcon.classList.add('rotate-180'); 
-            } else {
-                // Close menu
-                mobileMenuPanel.classList.remove('translate-x-0');
-                mobileMenuPanel.classList.add('translate-x-full');
-                mobileMenuOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
-                mobileMenuButton.setAttribute('aria-expanded', 'false');
-                // Change icon back to 'Bars'
-                mobileMenuIcon.classList.remove('fa-times');
-                mobileMenuIcon.classList.add('fa-bars');
-                mobileMenuIcon.classList.remove('rotate-180');
-                
-                // Also close any open accordions when the sidebar is closed
-                document.querySelectorAll('.mobile-accordion-toggle').forEach(btn => {
-                    const otherDropdownId = btn.id.replace('toggle', 'dropdown');
-                    const otherIconId = btn.id.replace('toggle', 'icon');
-                    const otherDropdown = document.getElementById(otherDropdownId);
-                    const otherIcon = document.getElementById(otherIconId);
-
-                    if (otherDropdown && otherDropdown.classList.contains('expanded')) {
-                        otherDropdown.classList.remove('expanded');
-                        otherDropdown.style.height = '0';
-                        otherDropdown.style.paddingTop = '0';
-                        otherDropdown.style.paddingBottom = '0';
-                        if (otherIcon) otherIcon.classList.remove('rotate-180');
-                    }
-                });
-            }
-        }
-
-        function attachMobileMenuListeners() {
-            // Toggle button listeners
-            mobileMenuButton.addEventListener('click', () => {
-                const isCurrentlyOpen = mobileMenuPanel.classList.contains('translate-x-0');
-                toggleMobileMenu(!isCurrentlyOpen);
-            });
-
-            // Close button listener
-            mobileMenuCloseButton.addEventListener('click', () => {
-                toggleMobileMenu(false);
-            });
-            
-            // Overlay listener
-            mobileMenuOverlay.addEventListener('click', () => {
-                toggleMobileMenu(false);
-            });
-            
-            // Auto-close menu if a link inside is clicked
-            document.querySelectorAll('#mobile-accordion-container a').forEach(link => {
-                link.addEventListener('click', () => {
-                    toggleMobileMenu(false);
-                });
-            });
-        }
-        // --- END: MOBILE MENU TOGGLE LOGIC ---
-
-
-        // --- START: DYNAMIC CONTENT GENERATION ---
-
-        // 1. Generate Cards
-        function generateServiceCards() {
-            const container = document.getElementById('card-grid-container-dynamic');
-            if (!container) return;
-
-            container.innerHTML = SERVICE_DATA.map((service, index) => `
-                <!-- CARD: ${service.title} -->
-                <div class="premium-card" id="premium-card-${service.id}">
-                    <img 
-                        src="${service.imgSrc}" 
-                        alt="${service.title} Image" 
-                        class="premium-card-image"
-                        onerror="this.onerror=null;this.src='https://placehold.co/400x200/241F0D/76FF03?text=${service.title}';"
-                    >
-                    <div class="premium-title" data-mobile-title="${service.mobileTitle}"><span>${service.title}</span></div>
-                    <div class="premium-desc">${service.desc}</div>
-                </div>
-            `).join('');
-            
-            // Re-attach card interaction handlers after generation
-            attachCardInteractionHandlers();
-        }
-
-        // 2. Generate Desktop Navigation (Header)
-        function generateDesktopNav() {
-            const container = document.getElementById('desktop-nav-links');
-            if (!container) return;
-            
-            container.innerHTML = SERVICE_DATA.map(service => `
-                <div class="relative group">
-                    <a href="#" id="desktop-${service.id}-link" class="text-white text-lg relative py-1 hover:text-primary flex items-center">
-                        ${service.title} <i id="desktop-${service.id}-icon" class="fas fa-caret-down ml-1 text-xs transition-transform duration-300"></i>
-                        <span class="absolute left-0 bottom-0 h-1 w-0 bg-primary/70 group-hover:w-full transition-all duration-300 rounded-full" style="background-color: var(--color-primary);"></span>
-                    </a>
-                    <!-- Dropdown Content Container -->
-                    <div id="dropdown-${service.id}" class="desktop-dropdown-content">
-                        ${service.menu.map(item => `<a href="${item.link}" class="dropdown-link">${item.name}</a>`).join('')}
+        function renderBento() {
+            const container = document.getElementById('bento-container');
+            container.innerHTML = RENT_DATA.map(item => `
+                <div class="glass-card rounded-[30px] sm:rounded-[40px] overflow-hidden p-5 sm:p-8 relative flex flex-col justify-end ${item.size} cursor-pointer group" onclick="openModal('${item.id}')">
+                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-110 group-hover:opacity-40 transition-all duration-1000" alt="${item.title}" onerror="this.src='https://placehold.co/400x400/111/CCFF00?text=${item.title}'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+                    <div class="relative z-10">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 bg-primary/10 rounded-2xl flex items-center justify-center mb-3 sm:mb-5 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all" style="--tw-primary: var(--primary);">
+                            <i class="fas ${item.icon} text-sm sm:text-base"></i>
+                        </div>
+                        <h3 class="text-sm sm:text-2xl font-black italic tracking-tighter uppercase leading-tight">${item.title}</h3>
+                        <p class="text-[7px] sm:text-[9px] uppercase font-black text-gray-500 mt-1 tracking-[2px] group-hover:text-primary transition-colors">Start Search <i class="fas fa-chevron-right ml-1"></i></p>
                     </div>
                 </div>
             `).join('');
-            
-            // Attach desktop dropdown toggles
-            SERVICE_DATA.forEach(service => {
-                setupDesktopToggle(`desktop-${service.id}-link`, `dropdown-${service.id}`, `desktop-${service.id}-icon`);
-            });
         }
-        
-        // 3. Generate Mobile Accordion (Sidebar)
-        function generateMobileAccordion() {
-            const container = document.getElementById('mobile-accordion-container');
-            if (!container) return;
+
+        function openModal(id) {
+            const item = RENT_DATA.find(x => x.id === id);
+            const modal = document.getElementById('location-modal');
+            const list = document.getElementById('modal-list');
+            document.getElementById('modal-title').innerHTML = `Rental <span class="text-primary" style="color: var(--primary);">${item.title}</span>`;
             
-            container.innerHTML = SERVICE_DATA.map(service => `
-                <div class="w-full">
-                    <button id="mobile-${service.id}-toggle" class="mobile-accordion-toggle w-full text-white text-lg relative py-1 hover:text-primary flex justify-between items-center pr-2">
-                        <i class="fas ${service.icon} mr-3"></i> ${service.title} <i id="icon-${service.id}-mobile" class="fas fa-chevron-down text-sm transition-transform duration-300"></i>
-                    </button>
-                    <div id="mobile-${service.id}-dropdown" class="h-0 overflow-hidden transition-all duration-300 ease-in-out">
-                        ${service.menu.map(item => `<a href="${item.link}" class="mobile-dropdown-link">${item.name}</a>`).join('')}
+            list.innerHTML = item.menu.map(m => `
+                <div class="p-5 sm:p-7 rounded-[24px] bg-white/[0.03] border border-white/[0.05] hover:bg-primary hover:text-black hover:scale-[1.03] transition-all cursor-pointer flex justify-between items-center group shadow-lg" onclick="window.location.href='${m.l}'">
+                    <div class="flex flex-col">
+                        <span class="text-[8px] uppercase font-bold tracking-[2px] opacity-60 mb-1">Available Listing</span>
+                        <span class="text-base sm:text-xl font-black tracking-tight uppercase italic">${m.n}</span>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-black group-hover:text-primary">
+                        <i class="fas fa-arrow-right-long transition-transform group-hover:translate-x-1"></i>
                     </div>
                 </div>
-                <div class="border-t border-primary/30 w-full my-2" style="border-color: rgba(var(--color-primary-rgb), 0.3);"></div>
-            `).join(''); 
+            `).join('');
 
-            // Attach mobile accordion toggles
-            SERVICE_DATA.forEach(service => {
-                setupMobileAccordion(`mobile-${service.id}-toggle`, `mobile-${service.id}-dropdown`, `icon-${service.id}-mobile`);
-            });
-        }
-        
-        // 4. Generate Bottom Navigation (UPDATED AS REQUESTED)
-        function generateBottomNav() {
-            const container = document.getElementById('bottom-nav-items-container');
-            if (!container) return;
-
-            // Defined hardcoded logic for Register, Suggestion, Home, Learn, Profile
-            const navHtml = `
-                <!-- 1: Register -->
-                <a href="list_Your_property.html" class="nav-item-shs w-1/5">
-                    <i class="fas fa-user-plus nav-icon-shs"></i>
-                    <span class="font-medium">Register</span>
-                </a>
-                
-                <!-- 2: Suggestion -->
-                <a href="suggestion.html" class="nav-item-shs w-1/5">
-                    <i class="fas fa-lightbulb nav-icon-shs"></i>
-                    <span class="font-medium">Suggestion</span>
-                </a>
-                
-                <!-- 3 (Center): Home -->
-                <div class="central-nav-item-shs w-1/5">
-                    <a href="main.html" class="central-fab animate-pulse-shadow" aria-label="Go to Home">
-                        <i class="fas fa-home central-fab-icon"></i>
-                    </a>
-                    <span class="central-fab-label">Home</span>
-                </div>
-                
-                <!-- 4: Learn -->
-                <a href="learn.html" class="nav-item-shs w-1/5">
-                    <i class="fas fa-book-open nav-icon-shs"></i>
-                    <span class="font-medium">Learn</span>
-                </a>
-                
-                <!-- 5: Profile -->
-                <a href="see_my_listings.html" class="nav-item-shs w-1/5">
-                    <i class="fas fa-user nav-icon-shs"></i> 
-                    <span class="font-medium">Profile</span>
-                </a>
-            `;
-
-            container.innerHTML = navHtml;
-        }
-
-        // --- END: DYNAMIC CONTENT GENERATION ---
-
-        
-        // --- START: TILT and MODAL LOGIC (event handling) ---
-
-        // Function to attach 3D tilt and click handlers
-        function attachCardInteractionHandlers() {
-            const tiltCards = document.querySelectorAll('.premium-card');
-            const TILT_STRENGTH = 10; 
-
-            tiltCards.forEach(card => {
-                const cardId = card.id;
-                
-                // Remove existing handlers to prevent duplicates after DOM regeneration
-                card.onclick = null;
-                card.onmousemove = null;
-                card.onmouseleave = null;
-                card.ontouchstart = null;
-                card.ontouchend = null;
-                card.ontouchcancel = null;
-                
-                // 1. Click Handler (Modal)
-                card.addEventListener('click', () => showLocationModal(cardId));
-
-                // 2. 3D Tilt Effect
-                const resetTilt = () => {
-                    card.style.transform = 'translateY(0px) rotateX(0deg) rotateY(0deg) scale(1.0)';
-                };
-
-                if (!('ontouchstart' in window)) { 
-                    card.addEventListener('mousemove', (e) => {
-                        const rect = card.getBoundingClientRect();
-                        const centerX = rect.left + rect.width / 2;
-                        const centerY = rect.top + rect.height / 2;
-                        const x = (e.clientX - centerX) / (rect.width / 2);
-                        const y = (e.clientY - centerY) / (rect.height / 2);
-                        const rotateX = -y * TILT_STRENGTH; 
-                        const rotateY = x * TILT_STRENGTH; 
-                        card.style.transform = `translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`; 
-                    });
-
-                    card.addEventListener('mouseleave', resetTilt);
-                }
-                
-                // 3. Touch support
-                card.addEventListener('touchstart', () => {
-                    card.style.transform = 'translateY(-8px) scale(1.05)';
-                });
-                card.addEventListener('touchend', resetTilt);
-                card.addEventListener('touchcancel', resetTilt);
-            });
-        }
-        
-        const modalOverlay = document.getElementById('location-modal-overlay');
-        const modalCloseButton = document.getElementById('modal-close-button');
-        const modalTitle = document.getElementById('modal-title');
-        const locationList = document.getElementById('location-list');
-
-        function showLocationModal(cardId) {
-            // Extract the service ID from the full card ID (e.g., 'premium-card-rooms' -> 'rooms')
-            const serviceId = cardId.replace('premium-card-', '');
-            const service = SERVICE_DATA.find(s => s.id === serviceId);
-
-            if (!service || !service.menu || service.menu.length === 0) {
-                 console.error("No service or menu data found for card ID:", cardId);
-                 closeLocationModal(); 
-                 return;
-            }
-
-            // Set Modal Content 
-            modalTitle.textContent = service.modalTitle;
-            locationList.innerHTML = ''; 
-
-            service.menu.forEach(item => {
-                const elementId = `${service.id}-link-${item.name.replace(/\s/g, '-')}`;
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'location-item';
-                itemDiv.id = elementId; // Add ID for potential future tracking/styling
-                itemDiv.innerHTML = `<span>${item.name}</span> <i class="fas fa-arrow-right text-sm"></i>`;
-                
-                itemDiv.onclick = () => {
-                    window.location.href = item.link;
-                };
-                locationList.appendChild(itemDiv);
-            });
-
-            // Show Modal
-            modalOverlay.style.display = 'flex';
-            setTimeout(() => {
-                modalOverlay.style.opacity = 1;
-            }, 10);
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 10);
             document.body.style.overflow = 'hidden';
         }
 
-        function closeLocationModal() {
-            modalOverlay.style.opacity = 0;
+        function closeModal() {
+            const modal = document.getElementById('location-modal');
+            modal.classList.remove('opacity-100');
             setTimeout(() => {
-                modalOverlay.style.display = 'none';
-                document.body.style.overflow = ''; 
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
             }, 300);
         }
 
-        // Attach static modal listeners once
-        modalCloseButton.addEventListener('click', closeLocationModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                closeLocationModal();
-            }
-        });
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
         
-        // --- END: TILT and MODAL LOGIC ---
-
-
-        // --- START: DROPDOWN / ACCORDION LOGIC ---
-
-        function setupDesktopToggle(linkId, contentId, iconId) {
-            const link = document.getElementById(linkId);
-            const content = document.getElementById(contentId);
-            const icon = document.getElementById(iconId);
-
-            if (link && content) {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    document.querySelectorAll('.desktop-dropdown-content.open').forEach(openContent => {
-                        const openContentId = openContent.id;
-                        if (openContentId !== contentId) {
-                            openContent.classList.remove('open');
-                            const otherIcon = document.getElementById(openContentId.replace('dropdown', 'desktop') + '-icon');
-                            if (otherIcon) {
-                                otherIcon.classList.remove('rotate-180');
-                            }
-                        }
-                    });
-
-                    const isOpen = content.classList.toggle('open');
-                    if (icon) {
-                        if (isOpen) {
-                            icon.classList.add('rotate-180');
-                        } else {
-                            icon.classList.remove('rotate-180');
-                        }
-                    }
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (content.classList.contains('open') && 
-                        !link.contains(e.target) && 
-                        !content.contains(e.target)) {
-                        
-                        content.classList.remove('open');
-                        if (icon) {
-                            icon.classList.remove('rotate-180');
-                        }
-                    }
-                });
-            }
-        }
-        
-        function setupMobileAccordion(toggleId, dropdownId, iconId) {
-            const toggleButton = document.getElementById(toggleId);
-            const dropdown = document.getElementById(dropdownId);
-            const icon = document.getElementById(iconId);
-
-            if (toggleButton && dropdown) {
-                toggleButton.addEventListener('click', () => {
-                    // Close all other open accordions
-                    document.querySelectorAll('.mobile-accordion-toggle').forEach(btn => {
-                        const otherDropdownId = btn.id.replace('toggle', 'dropdown');
-                        const otherIconId = btn.id.replace('toggle', 'icon');
-                        const otherDropdown = document.getElementById(otherDropdownId);
-                        const otherIcon = document.getElementById(otherIconId);
-
-                        if (otherDropdownId !== dropdownId && otherDropdown && otherDropdown.classList.contains('expanded')) {
-                            otherDropdown.classList.remove('expanded');
-                            otherDropdown.style.height = '0';
-                            otherDropdown.style.paddingTop = '0';
-                            otherDropdown.style.paddingBottom = '0';
-                            if (otherIcon) otherIcon.classList.remove('rotate-180');
-                        }
-                    });
-
-                    // Toggle current accordion
-                    const isExpanded = dropdown.classList.toggle('expanded');
-                    
-                    if (isExpanded) {
-                        // Calculate scroll height needed for content + padding
-                        const totalHeight = dropdown.scrollHeight;
-                        dropdown.style.height = totalHeight + 'px';
-                        dropdown.style.paddingTop = '8px';
-                        dropdown.style.paddingBottom = '8px';
-                        icon.classList.add('rotate-180');
-                    } else {
-                        dropdown.style.height = '0';
-                        dropdown.style.paddingTop = '0';
-                        dropdown.style.paddingBottom = '0';
-                        icon.classList.remove('rotate-180');
-                    }
-                });
+        function toggleSidebar(open) {
+            if(open) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+                sidebar.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.classList.remove('opacity-100');
+                sidebar.classList.add('translate-x-full');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 500);
             }
         }
 
-        // --- END: DROPDOWN / ACCORDION LOGIC ---
-
-
-        // --- START: SLIDER LOGIC (unchanged) ---
-        
-        const sliderBg = document.getElementById('slider-bg');
-        const slidesWrapper = document.getElementById('slides-wrapper');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        
-        let slidesData = [];
         let currentSlide = 0;
-        let slideInterval;
-        const slideDuration = 5000;
-
-        async function fetchSlidesData() {
-            // Hardcoded data source - updated links to point to generic rental service pages
-            return [
-                { "title": "New Rooms Listings in Mumbai", "date": "12 Dec", "link": "rooms_search.html", "deadline": "2025-12-12", "bgImage": "rooms.png" },
-                { "title": "Affordable Flats in Noida Sector 62", "date": "", "link": "flats_search.html", "deadline": "2025-12-25", "bgImage": "flats.png" },
-                { "title": "Prime Commercial Shops in Connaught Place", "date": "", "link": "shops_search.html", "deadline": "2025-12-30", "bgImage": "shops.png" },
-                { "title": "P.G. with Meals near Delhi University", "date": "", "link": "pg_search.html", "deadline": "2026-02-05", "bgImage": "payingguest.png" },
-                { "title": "Hostels for Students in Bangalore", "date": "", "link": "hostels_search.html", "deadline": "2026-03-18", "bgImage": "hostels.png" } 
-            ];
+        function updateHero() {
+            const slide = HERO_SLIDES[currentSlide];
+            const el = document.getElementById('hero-slider');
+            el.style.backgroundImage = `url('${slide.bg}')`;
+            document.getElementById('hero-title').innerHTML = slide.title;
+            document.getElementById('hero-subtitle').innerText = slide.subtitle;
         }
 
-        function createSlides(data) {
-            slidesWrapper.innerHTML = '';
-            data.forEach((item, index) => {
-                const slide = document.createElement('a');
-                const deadline = new Date(item.deadline);
-                const now = new Date();
-                const isExpired = deadline < now;
-                const buttonText = isExpired ? 'Check Previous Listings' : 'View Details';
-                
-                slide.href = item.link; 
-                slide.className = `slide absolute top-0 left-0 w-full h-full opacity-0 transition-opacity duration-1000`;
-                slide.style.zIndex = index === 0 ? 1 : 0;
-                
-                let contentHTML = `
-                    <div class="slide-content-wrapper p-8 absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm rounded-b-[35px] z-10">
-                        <h3 class="post-name text-2xl sm:text-3xl">${item.title}</h3>
-                        <p class="last-date text-sm font-light text-gray-300">New Listing Available!</p>
-                        <button class="mt-3 px-4 py-2 bg-primary text-black font-bold rounded-xl shadow-lg hover:bg-opacity-90 transition-colors" style="background-color: var(--color-primary);" ${isExpired ? 'disabled' : ''}>
-                            ${buttonText}
-                        </button>
+        window.onload = () => {
+            renderBento();
+            updateHero();
+            
+            // Sidebar render
+            document.getElementById('sidebar-links').innerHTML = [
+                {n:'My Activity', i:'fa-bolt-lightning', l:'see_my_listings.html'}, 
+                {n:'Property Docs', i:'fa-file-shield', l:'learn.html'},
+                {n:'Saved Spaces', i:'fa-heart', l:'#'}, 
+                {n:'Feedback Hub', i:'fa-comment-dots', l:'suggestion.html'}, 
+                {n:'Security Settings', i:'fa-shield-halved', l:'#'}
+            ].map(l => `
+                <div class="sidebar-item-new group cursor-pointer" onclick="window.location.href='${l.l}'">
+                    <div class="w-10 h-10 rounded-[14px] bg-white/5 flex items-center justify-center mr-4 group-hover:bg-primary group-hover:text-black transition-all">
+                        <i class="fas ${l.i} text-sm"></i>
                     </div>
-                `;
-                
-                slide.innerHTML = contentHTML;
-                slidesWrapper.appendChild(slide);
-            });
-        }
+                    <span class="font-black tracking-tight uppercase italic text-sm text-gray-400 group-hover:text-white">${l.n}</span>
+                </div>
+            `).join('');
 
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                slide.style.opacity = 0;
-                slide.style.zIndex = 0;
-            });
+            document.getElementById('sidebar-toggle').onclick = () => toggleSidebar(true);
+            document.getElementById('sidebar-close').onclick = () => toggleSidebar(false);
+            overlay.onclick = () => toggleSidebar(false);
+            document.getElementById('modal-close').onclick = closeModal;
             
-            if (slides[index]) {
-                slides[index].classList.add('active');
-                slides[index].style.opacity = 1;
-                slides[index].style.zIndex = 1;
-                
-                if (slidesData[index] && slidesData[index].bgImage) {
-                     sliderBg.style.backgroundImage = `url('${slidesData[index].bgImage}')`;
-                }
-            }
-        }
+            document.getElementById('slide-next').onclick = () => {
+                currentSlide = (currentSlide + 1) % HERO_SLIDES.length;
+                updateHero();
+            };
+            document.getElementById('slide-prev').onclick = () => {
+                currentSlide = (currentSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+                updateHero();
+            };
 
-        function startAutoSlide() {
-            clearInterval(slideInterval);
-            slideInterval = setInterval(() => {
-                currentSlide = (currentSlide + 1) % slidesData.length;
-                showSlide(currentSlide);
-            }, slideDuration);
-        }
-
-        async function initializeSlider() {
-            slidesData = await fetchSlidesData();
-            createSlides(slidesData);
-            showSlide(currentSlide);
-            startAutoSlide();
-
-            if (prevBtn) {
-                prevBtn.addEventListener('click', () => {
-                    currentSlide = (currentSlide - 1 + slidesData.length) % slidesData.length;
-                    showSlide(currentSlide);
-                    startAutoSlide();
-                });
-            }
-
-            if (nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    currentSlide = (currentSlide + 1) % slidesData.length;
-                    showSlide(currentSlide);
-                    startAutoSlide();
-                });
-            }
-        }
-        // --- END: SLIDER LOGIC ---
-        
-
-        // --- MAIN INITIALIZATION FUNCTION ---
-        function initializeRentistApp() {
-            // 1. Generate all dynamic UI elements based on SERVICE_DATA
-            generateServiceCards();
-            generateDesktopNav();
-            generateMobileAccordion();
-            generateBottomNav();
-
-            // 2. Initialize Slider
-            initializeSlider();
-            
-            // 3. Attach Mobile Menu Listeners
-            attachMobileMenuListeners();
-            
-            console.log("Rentist App Initialized. Theme locked to Classic Light Green.");
-        }
-
-        document.addEventListener('DOMContentLoaded', initializeRentistApp);
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % HERO_SLIDES.length;
+                updateHero();
+            }, 8000);
+        };
     </script>
 </body>
 </html>
