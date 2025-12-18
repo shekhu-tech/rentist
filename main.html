@@ -11,16 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- DESIGN TOKENS (Modern Tech Palette) --- */
+        /* --- DESIGN TOKENS --- */
         :root {
-            --primary: #CCFF00; /* Electric Lime */
+            --primary: #CCFF00;
             --primary-rgb: 204, 255, 0;
-            --secondary: #121212; /* Obsidian Black */
-            --accent: #2A2A2A; /* Slate Gray */
-            --bg-deep: #080808; /* Pure Black Background */
+            --secondary: #121212;
+            --accent: #2A2A2A;
+            --bg-deep: #080808;
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --neon-glow: 0 0 25px rgba(204, 255, 0, 0.25);
         }
 
         body {
@@ -29,27 +28,20 @@
             color: white;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
-            /* Raised padding to prevent bottom nav overlay issues */
+            /* Fix for overlapping: Space for Top Header and Bottom Nav */
+            padding-top: 90px;
             padding-bottom: 140px; 
         }
 
-        /* --- FIXED BACKGROUND IMAGE (Texture Retained) --- */
         .fixed-bg-image {
             position: fixed;
             inset: 0;
             background-image: url('flats.png');
             background-size: cover;
             background-position: center;
-            opacity: 0.15; /* Subtle and premium visibility */
+            opacity: 0.15;
             z-index: -10;
             pointer-events: none;
-        }
-
-        /* --- ADVANCED ANIMATIONS --- */
-        @keyframes blob-float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(20px, -40px) scale(1.1); }
-            66% { transform: translate(-15px, 15px) scale(0.95); }
         }
 
         .bg-blob {
@@ -62,20 +54,22 @@
             animation: blob-float 15s infinite alternate linear;
         }
 
-        /* --- GLASSMORPHISM COMPONENTS --- */
+        @keyframes blob-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(20px, -40px) scale(1.1); }
+            66% { transform: translate(-15px, 15px) scale(0.95); }
+        }
+
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- BENTO GRID STYLE (Compact for Mobile) --- */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr); 
-            /* Shorter rows for compact look */
             grid-auto-rows: 125px; 
             gap: 0.75rem;
         }
@@ -88,17 +82,16 @@
             }
         }
 
-        /* --- BOTTOM NAV FLOATING (Raised for Visibility) --- */
+        /* --- NAVIGATION --- */
         .floating-nav {
             position: fixed;
-            /* Raised from bottom to avoid system bars and overlay issues */
-            bottom: 45px; 
+            bottom: 30px; /* Reduced for better Android WebView fit */
             left: 50%;
             transform: translateX(-50%);
             width: 92%;
             max-width: 440px;
             height: 70px;
-            background: rgba(15, 15, 15, 0.85);
+            background: rgba(15, 15, 15, 0.9);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border-radius: 35px;
@@ -107,14 +100,12 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 0 8px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.9);
         }
 
         .nav-link {
             color: #666;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
+            font-size: 1.1rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -123,7 +114,6 @@
 
         .nav-link.active {
             color: var(--primary);
-            filter: drop-shadow(0 0 8px rgba(var(--primary-rgb), 0.6));
         }
 
         .center-fab {
@@ -138,95 +128,92 @@
             transform: translateY(-22px);
             box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.4);
             border: 4px solid var(--bg-deep);
-            transition: all 0.3s ease;
         }
 
-        /* --- SIDEBAR RE-DESIGN (PREMIUM GLASS) --- */
+        /* --- SIDEBAR MOBILE OPTIMIZATION --- */
         #sidebar {
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             background: linear-gradient(180deg, rgba(15,15,15,0.98) 0%, rgba(5,5,5,1) 100%);
             box-shadow: -20px 0 50px rgba(0,0,0,0.8);
+            /* Phone layout: sidebar stays between header and bottom nav */
+            position: fixed;
+            top: 85px; /* Matches Header end */
+            bottom: 110px; /* Matches Bottom Nav start */
+            right: 0;
+            width: 85%;
+            max-width: 340px;
+            z-index: 110;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
+
+        @media (min-width: 768px) {
+            #sidebar {
+                top: 0;
+                bottom: 0;
+                border-radius: 0;
+            }
+        }
+
+        #sidebar-links {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0 20px;
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        #sidebar-links::-webkit-scrollbar { width: 3px; }
+        #sidebar-links::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
         .sidebar-item-new {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             margin-bottom: 0.75rem;
-            padding: 1.15rem;
-            border-radius: 20px;
+            padding: 1rem;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             transition: all 0.3s;
         }
 
-        .sidebar-item-new:hover, .sidebar-item-new.active {
-            background: rgba(var(--primary-rgb), 0.08);
-            border-color: rgba(var(--primary-rgb), 0.3);
-            transform: scale(1.02);
-        }
-
-        .sidebar-icon-wrap {
-            width: 42px;
-            height: 42px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.03);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-item-new:hover .sidebar-icon-wrap {
-            background: var(--primary);
-            color: black;
-        }
-
-        /* --- MODAL CENTERING (Horizontal & Vertical) --- */
+        /* --- MODAL --- */
         #location-modal {
-            display: none; /* Controlled by JS flex */
+            display: none;
             position: fixed;
             inset: 0;
             z-index: 2000;
             padding: 20px;
-            align-items: center; /* Vertical Center */
-            justify-content: center; /* Horizontal Center */
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-card {
             width: 100%;
             max-width: 420px;
-            max-height: 80vh;
+            max-height: 75vh;
             border-radius: 32px;
-            position: relative;
             background: rgba(18,18,18,0.95);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* Compact Scrollbar for Modal */
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
     </style>
 </head>
-<body class="pt-28 sm:pt-24">
+<body>
 
-    <!-- FIXED BACKGROUND IMAGE -->
     <div class="fixed-bg-image"></div>
-
-    <!-- AMBIENT DESIGN BLOBS -->
     <div class="bg-blob bg-[#CCFF00]" style="top: 15%; right: -10%;"></div>
     <div class="bg-blob bg-[#3D3D3D]" style="bottom: 10%; left: -15%;"></div>
 
-    <!-- HEADER (Slightly Raised) -->
-    <header class="fixed top-2 left-0 right-0 z-[100] px-4">
+    <!-- HEADER -->
+    <header class="fixed top-2 left-0 right-0 z-[120] px-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between glass-card px-4 py-3 rounded-[24px] shadow-2xl">
             <a href="main.html" class="flex items-center space-x-2.5">
                 <img src="rentist.png" alt="Rentist" class="w-8 h-8 sm:w-11 sm:h-11 rounded-[12px] object-cover border border-primary/20 rotate-6" style="border-color: var(--primary);" onerror="this.src='https://placehold.co/44/000/CCFF00?text=R'">
@@ -248,37 +235,34 @@
         </div>
     </header>
 
-    <!-- SIDEBAR (ADVANCED RE-DESIGN) -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[110] hidden opacity-0 transition-opacity duration-500"></div>
-    <aside id="sidebar" class="fixed top-0 right-0 h-full w-[85%] max-w-[340px] z-[120] translate-x-full p-6 border-l border-white/5 flex flex-col">
-        <div class="flex justify-between items-center mb-10">
-            <div class="flex items-center space-x-2">
-                <div class="w-2 h-2 bg-primary rounded-full" style="background-color: var(--primary);"></div>
-                <span class="text-[10px] font-black tracking-[4px] uppercase text-gray-500">Navigation</span>
-            </div>
-            <button id="sidebar-close" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-white"><i class="fas fa-times"></i></button>
+    <!-- SIDEBAR (Phone Optimized between Header & Bottom Nav) -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[105] hidden opacity-0 transition-opacity duration-500"></div>
+    <aside id="sidebar" class="translate-x-full">
+        <div class="p-6 pb-2 flex justify-between items-center">
+            <span class="text-[10px] font-black tracking-[4px] uppercase text-gray-500">Navigation</span>
+            <button id="sidebar-close" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 text-white"><i class="fas fa-times"></i></button>
         </div>
         
-        <!-- Sidebar Brand/Profile Section -->
-        <div class="mb-8 p-5 rounded-[24px] glass-card border-primary/20 flex flex-col items-center text-center">
-            <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-3 border border-primary/30">
-                <i class="fas fa-user-astronaut text-primary text-xl" style="color: var(--primary);"></i>
+        <div class="px-6 mb-4">
+            <div class="p-4 rounded-[20px] glass-card border-primary/20 flex items-center space-x-4">
+                <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/30">
+                    <i class="fas fa-user-astronaut text-primary text-sm" style="color: var(--primary);"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black italic uppercase">Elite <span class="text-primary" style="color: var(--primary);">User</span></h4>
+                    <p class="text-[8px] text-gray-500 uppercase font-bold tracking-widest">Digital Ecosystem</p>
+                </div>
             </div>
-            <h4 class="text-base font-black tracking-tight italic">Elite Space <span class="text-primary" style="color: var(--primary);">Rentist</span></h4>
-            <p class="text-[9px] text-gray-500 mt-0.5 uppercase font-bold tracking-widest">Digital Ecosystem</p>
         </div>
 
-        <nav id="sidebar-links" class="space-y-1 flex-grow overflow-y-auto pr-1">
+        <nav id="sidebar-links">
             <!-- Dynamic Sidebar links -->
         </nav>
 
-        <div class="pt-6 mt-auto">
-            <div class="p-5 rounded-[24px] bg-primary text-black flex items-center justify-between group cursor-pointer" style="background-color: var(--primary);" onclick="window.location.href='list_Your_property.html'">
-                <div>
-                    <p class="text-[8px] font-black uppercase tracking-widest opacity-70">List Property</p>
-                    <h5 class="text-base font-black leading-none uppercase">Post Ad Now</h5>
-                </div>
-                <i class="fas fa-plus-circle text-xl group-hover:rotate-90 transition-transform"></i>
+        <div class="p-6 pt-2">
+            <div class="p-4 rounded-[20px] bg-primary text-black flex items-center justify-between group cursor-pointer" style="background-color: var(--primary);" onclick="window.location.href='list_Your_property.html'">
+                <h5 class="text-xs font-black uppercase">Post Property Ad</h5>
+                <i class="fas fa-plus-circle text-lg"></i>
             </div>
         </div>
     </aside>
@@ -286,46 +270,37 @@
     <!-- MAIN CONTENT -->
     <main class="max-w-7xl mx-auto px-4">
         
-        <!-- HERO SLIDER (Lowered height on phones) -->
         <div id="hero-section" class="mb-10">
-            <div class="relative h-[260px] sm:h-[480px] lg:h-[580px] rounded-[35px] sm:rounded-[60px] overflow-hidden border border-white/10 shadow-2xl">
-                <div id="hero-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-100"></div>
+            <div class="relative h-[240px] sm:h-[480px] rounded-[35px] sm:rounded-[60px] overflow-hidden border border-white/10 shadow-2xl">
+                <div id="hero-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
                 
-                <div class="absolute bottom-6 left-6 sm:bottom-16 sm:left-16 max-w-2xl pr-8">
-                    <h1 id="hero-title" class="text-2xl sm:text-6xl font-black mb-3 tracking-tighter leading-tight italic uppercase">Explore Your<br>Dream Space.</h1>
-                    <p id="hero-subtitle" class="text-gray-400 text-[10px] sm:text-xl mb-6 font-medium max-w-xs sm:max-w-md">Find top rooms, flats, and shops with AI-efficiency.</p>
-                    
-                    <a href="#bento-container" class="inline-flex items-center px-6 py-3 sm:px-10 sm:py-5 bg-primary text-black font-black rounded-full text-[10px] sm:text-sm uppercase tracking-widest" style="background-color: var(--primary);">
+                <div class="absolute bottom-6 left-6 max-w-2xl pr-8">
+                    <h1 id="hero-title" class="text-xl sm:text-6xl font-black mb-2 tracking-tighter leading-tight italic uppercase">Explore Your<br>Dream Space.</h1>
+                    <p id="hero-subtitle" class="text-gray-400 text-[9px] sm:text-xl mb-4 font-medium">Find top rooms, flats, and shops with AI-efficiency.</p>
+                    <a href="#bento-container" class="inline-flex items-center px-6 py-3 bg-primary text-black font-black rounded-full text-[9px] sm:text-sm uppercase tracking-widest" style="background-color: var(--primary);">
                         EXPLORE NOW
                     </a>
                 </div>
 
-                <!-- Slider Controls -->
-                <div class="absolute bottom-6 right-6 sm:bottom-16 sm:right-16 flex space-x-1.5">
-                    <button id="slide-prev" class="w-8 h-8 sm:w-14 sm:h-14 flex items-center justify-center border border-white/10 rounded-xl hover:bg-primary transition-all backdrop-blur-xl"><i class="fas fa-chevron-left text-[10px]"></i></button>
-                    <button id="slide-next" class="w-8 h-8 sm:w-14 sm:h-14 flex items-center justify-center bg-white text-black rounded-xl hover:bg-primary transition-all"><i class="fas fa-chevron-right text-[10px]"></i></button>
+                <div class="absolute bottom-6 right-6 flex space-x-1.5">
+                    <button id="slide-prev" class="w-8 h-8 sm:w-14 sm:h-14 flex items-center justify-center border border-white/10 rounded-xl backdrop-blur-xl"><i class="fas fa-chevron-left text-[10px]"></i></button>
+                    <button id="slide-next" class="w-8 h-8 sm:w-14 sm:h-14 flex items-center justify-center bg-white text-black rounded-xl"><i class="fas fa-chevron-right text-[10px]"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- CATEGORY TITLE -->
-        <div class="mb-8 flex items-end justify-between px-1">
-            <div>
-                <h2 class="text-3xl font-black tracking-tighter italic uppercase leading-none">Smart <span class="text-primary" style="color: var(--primary);">Rent</span></h2>
-                <p class="text-gray-500 font-bold uppercase text-[8px] tracking-[4px] mt-1.5 opacity-60">Handpicked categories</p>
-            </div>
-            <div class="hidden sm:block h-px flex-1 mx-12 bg-white/5 mb-2"></div>
+        <div class="mb-6 px-1">
+            <h2 class="text-2xl font-black tracking-tighter italic uppercase leading-none">Smart <span class="text-primary" style="color: var(--primary);">Rent</span></h2>
+            <p class="text-gray-500 font-bold uppercase text-[7px] tracking-[4px] mt-1.5 opacity-60">Handpicked categories</p>
         </div>
 
-        <!-- BENTO GRID -->
-        <div id="bento-container" class="bento-grid mb-32">
+        <div id="bento-container" class="bento-grid mb-10">
             <!-- Dynamic Items -->
         </div>
-
     </main>
 
-    <!-- FLOATING BOTTOM NAV (RAISED) -->
+    <!-- FLOATING BOTTOM NAV -->
     <nav class="floating-nav">
         <a href="main.html" class="nav-link active">
             <i class="fas fa-house-chimney-window"></i>
@@ -348,26 +323,24 @@
         </a>
     </nav>
 
-    <!-- LOCATION MODAL (Perfect Centering) -->
+    <!-- LOCATION MODAL -->
     <div id="location-modal">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-2xl" id="modal-backdrop"></div>
-        <div class="modal-card p-6 sm:p-10">
+        <div class="modal-card p-6">
             <div class="flex justify-between items-center mb-6">
                 <div class="flex flex-col">
                     <span class="text-[8px] font-black uppercase tracking-[3px] text-gray-500 mb-0.5">Quick Menu</span>
-                    <h3 id="modal-title" class="text-xl sm:text-3xl font-black tracking-tighter uppercase italic">Select <span class="text-primary" style="color: var(--primary);">Region</span></h3>
+                    <h3 id="modal-title" class="text-lg font-black tracking-tighter uppercase italic">Select <span class="text-primary" style="color: var(--primary);">Region</span></h3>
                 </div>
-                <button id="modal-close" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 transition-all flex items-center justify-center"><i class="fas fa-times"></i></button>
+                <button id="modal-close" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center"><i class="fas fa-times"></i></button>
             </div>
-            <div id="modal-list" class="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1 custom-scroll">
+            <div id="modal-list" class="space-y-2 overflow-y-auto pr-1">
                 <!-- Dynamic Content -->
             </div>
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script>
-        // --- DATA WITH ORIGINAL IMAGES ---
         const RENT_DATA = [
             { id: 'rooms', title: 'Rooms', icon: 'fa-bed', size: 'col-span-1 row-span-2', img: 'rooms.png', menu: [{n:'Rooms in Rural', l:'rooms_search_rural.html'}, {n:'Rooms in Urban', l:'rooms_search_urban.html'}] },
             { id: 'flats', title: 'Flats', icon: 'fa-building', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-2', img: 'flats.png', menu: [{n:'Flats in Rural', l:'flats_search_rural.html'}, {n:'Flats in Urban', l:'flats_search_urban.html'}] },
@@ -383,20 +356,17 @@
             { title: "Business Hubs.<br>Prime Shops.", subtitle: "Commercial properties jo aapke brand ko boost dein.", bg: "shops.png" }
         ];
 
-        // --- UI CORE LOGIC ---
-        
         function renderBento() {
             const container = document.getElementById('bento-container');
             container.innerHTML = RENT_DATA.map(item => `
                 <div class="glass-card rounded-[24px] sm:rounded-[40px] overflow-hidden p-4 sm:p-8 relative flex flex-col justify-end ${item.size} cursor-pointer group" onclick="openModal('${item.id}')">
-                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-all duration-1000" alt="${item.title}" onerror="this.src='https://placehold.co/400x400/111/CCFF00?text=${item.title}'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-60" alt="${item.title}" onerror="this.src='https://placehold.co/400x400/111/CCFF00?text=${item.title}'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent"></div>
                     <div class="relative z-10">
-                        <div class="w-8 h-8 sm:w-11 sm:h-11 bg-primary/20 rounded-xl flex items-center justify-center mb-2.5 sm:mb-5 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all" style="--tw-primary: var(--primary);">
-                            <i class="fas ${item.icon} text-xs sm:text-base"></i>
+                        <div class="w-8 h-8 bg-primary/20 rounded-xl flex items-center justify-center mb-2 border border-primary/20">
+                            <i class="fas ${item.icon} text-xs"></i>
                         </div>
                         <h3 class="text-[12px] sm:text-2xl font-black italic tracking-tighter uppercase leading-tight">${item.title}</h3>
-                        <p class="text-[6px] sm:text-[9px] uppercase font-black text-gray-400 mt-0.5 tracking-[1px] group-hover:text-primary transition-colors">Select <i class="fas fa-chevron-right ml-0.5"></i></p>
                     </div>
                 </div>
             `).join('');
@@ -409,14 +379,9 @@
             document.getElementById('modal-title').innerHTML = `Select <span class="text-primary" style="color: var(--primary);">${item.title}</span>`;
             
             list.innerHTML = item.menu.map(m => `
-                <div class="p-3.5 sm:p-7 rounded-[18px] bg-white/[0.04] border border-white/[0.06] hover:bg-primary hover:text-black hover:scale-[1.02] transition-all cursor-pointer flex justify-between items-center group" onclick="window.location.href='${m.l}'">
-                    <div class="flex flex-col">
-                        <span class="text-[7px] uppercase font-bold tracking-[1px] opacity-60">Verified Link</span>
-                        <span class="text-sm sm:text-xl font-black tracking-tight uppercase italic">${m.n}</span>
-                    </div>
-                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-black group-hover:text-primary">
-                        <i class="fas fa-arrow-right-long transition-transform group-hover:translate-x-1 text-xs"></i>
-                    </div>
+                <div class="p-4 rounded-[18px] bg-white/[0.04] border border-white/[0.06] hover:bg-primary hover:text-black transition-all cursor-pointer flex justify-between items-center" onclick="window.location.href='${m.l}'">
+                    <span class="text-sm font-black uppercase italic">${m.n}</span>
+                    <i class="fas fa-arrow-right text-xs"></i>
                 </div>
             `).join('');
 
@@ -466,7 +431,6 @@
             renderBento();
             updateHero();
             
-            // Sidebar render
             document.getElementById('sidebar-links').innerHTML = [
                 {n:'My Activity', i:'fa-bolt-lightning', l:'see_my_listings.html'}, 
                 {n:'Property Docs', i:'fa-file-shield', l:'learn.html'},
@@ -474,10 +438,10 @@
                 {n:'Feedback Hub', i:'fa-comment-dots', l:'suggestion.html'}
             ].map(l => `
                 <div class="sidebar-item-new group cursor-pointer" onclick="window.location.href='${l.l}'">
-                    <div class="sidebar-icon-wrap">
-                        <i class="fas ${l.i} text-sm"></i>
+                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mr-4 group-hover:bg-primary group-hover:text-black transition-all">
+                        <i class="fas ${l.i} text-xs"></i>
                     </div>
-                    <span class="font-black tracking-tight uppercase italic text-[13px] text-gray-400 group-hover:text-white">${l.n}</span>
+                    <span class="font-black italic text-[12px] text-gray-400 group-hover:text-white uppercase">${l.n}</span>
                 </div>
             `).join('');
 
