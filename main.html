@@ -29,7 +29,8 @@
             color: white;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
-            padding-bottom: 110px; 
+            /* Raised padding to prevent bottom nav overlay issues */
+            padding-bottom: 140px; 
         }
 
         /* --- ADVANCED ANIMATIONS --- */
@@ -58,12 +59,13 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- BENTO GRID STYLE (Responsive Fix) --- */
+        /* --- BENTO GRID STYLE (Compact for Mobile) --- */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr); 
-            grid-auto-rows: 155px;
-            gap: 0.85rem;
+            /* Shorter rows for compact look */
+            grid-auto-rows: 125px; 
+            gap: 0.75rem;
         }
 
         @media (min-width: 768px) {
@@ -74,16 +76,17 @@
             }
         }
 
-        /* --- BOTTOM NAV FLOATING (True Haptic Style) --- */
+        /* --- BOTTOM NAV FLOATING (Raised for Visibility) --- */
         .floating-nav {
             position: fixed;
-            bottom: 24px;
+            /* Raised from bottom to avoid system bars and overlay issues */
+            bottom: 45px; 
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
+            width: 92%;
             max-width: 440px;
             height: 70px;
-            background: rgba(15, 15, 15, 0.8);
+            background: rgba(15, 15, 15, 0.85);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border-radius: 35px;
@@ -126,7 +129,7 @@
             transition: all 0.3s ease;
         }
 
-        /* --- SIDEBAR UPGRADE --- */
+        /* --- SIDEBAR RE-DESIGN (PREMIUM GLASS) --- */
         #sidebar {
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             background: linear-gradient(180deg, rgba(15,15,15,0.98) 0%, rgba(5,5,5,1) 100%);
@@ -137,7 +140,7 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             margin-bottom: 0.75rem;
-            padding: 1.25rem;
+            padding: 1.15rem;
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -150,127 +153,152 @@
             transform: scale(1.02);
         }
 
-        /* --- MODAL MOBILE BOTTOM SHEET --- */
-        @media (max-width: 640px) {
-            #location-modal .glass-card {
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                border-radius: 40px 40px 0 0;
-                max-height: 85vh;
-            }
+        .sidebar-icon-wrap {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            transition: all 0.3s;
         }
+
+        .sidebar-item-new:hover .sidebar-icon-wrap {
+            background: var(--primary);
+            color: black;
+        }
+
+        /* --- MODAL CENTERING (Horizontal & Vertical) --- */
+        #location-modal {
+            display: none; /* Controlled by JS flex */
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            padding: 20px;
+            align-items: center; /* Vertical Center */
+            justify-content: center; /* Horizontal Center */
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 420px;
+            max-height: 80vh;
+            border-radius: 32px;
+            position: relative;
+            background: rgba(18,18,18,0.95);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Compact Scrollbar for Modal */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
     </style>
 </head>
-<body class="pt-24">
+<body class="pt-28 sm:pt-24">
 
     <!-- AMBIENT DESIGN BLOBS -->
     <div class="bg-blob bg-[#CCFF00]" style="top: 15%; right: -10%;"></div>
     <div class="bg-blob bg-[#3D3D3D]" style="bottom: 10%; left: -15%;"></div>
 
-    <!-- HEADER -->
-    <header class="fixed top-0 left-0 right-0 z-[100] px-4 py-4">
-        <div class="max-w-7xl mx-auto flex items-center justify-between glass-card px-5 py-3.5 rounded-[28px] shadow-2xl">
-            <a href="main.html" class="flex items-center space-x-3">
-                <img src="rentist.png" alt="Rentist" class="w-9 h-9 sm:w-11 sm:h-11 rounded-[14px] object-cover border border-primary/20 rotate-6" style="border-color: var(--primary);" onerror="this.src='https://placehold.co/44/000/CCFF00?text=R'">
+    <!-- HEADER (Slightly Raised) -->
+    <header class="fixed top-2 left-0 right-0 z-[100] px-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass-card px-4 py-3 rounded-[24px] shadow-2xl">
+            <a href="main.html" class="flex items-center space-x-2.5">
+                <img src="rentist.png" alt="Rentist" class="w-8 h-8 sm:w-11 sm:h-11 rounded-[12px] object-cover border border-primary/20 rotate-6" style="border-color: var(--primary);" onerror="this.src='https://placehold.co/44/000/CCFF00?text=R'">
                 <div class="flex flex-col leading-none">
-                    <img src="skillora.png" alt="Rentist" class="h-6 sm:h-9 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block'">
+                    <img src="skillora.png" alt="Rentist" class="h-5 sm:h-9 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block'">
                     <span id="alt-logo" class="hidden text-xl font-black italic tracking-tighter uppercase">RENT<span class="text-primary" style="color: var(--primary);">IST</span></span>
                 </div>
             </a>
 
-            <!-- Desktop Links -->
-            <div class="hidden lg:flex items-center space-x-12 font-bold text-[11px] tracking-[3px] uppercase opacity-70">
-                <a href="#" class="hover:text-primary hover:opacity-100 transition-all">Market</a>
-                <a href="#" class="hover:text-primary hover:opacity-100 transition-all">VIP Docs</a>
-                <a href="#" class="hover:text-primary hover:opacity-100 transition-all">Support</a>
-            </div>
-
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-2">
                 <a href="tel:8816014071" class="hidden md:flex items-center bg-white/5 px-4 py-2.5 rounded-full border border-white/10 hover:border-primary transition-all">
                     <i class="fas fa-headset text-primary mr-2" style="color: var(--primary);"></i>
                     <span class="text-[10px] font-black uppercase">Help Line</span>
                 </a>
-                <button id="sidebar-toggle" class="w-11 h-11 flex items-center justify-center rounded-[18px] bg-primary group hover:scale-105 transition-all shadow-lg" style="background-color: var(--primary);">
-                    <i class="fas fa-bars-staggered text-black text-lg group-hover:rotate-12 transition-transform"></i>
+                <button id="sidebar-toggle" class="w-10 h-10 flex items-center justify-center rounded-[16px] bg-primary group shadow-lg" style="background-color: var(--primary);">
+                    <i class="fas fa-bars-staggered text-black text-base group-hover:rotate-12 transition-transform"></i>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- SIDEBAR (ADVANCED RE-DESIGN) -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[110] hidden opacity-0 transition-opacity duration-500"></div>
-    <aside id="sidebar" class="fixed top-0 right-0 h-full w-[85%] max-w-[340px] z-[120] translate-x-full p-8 border-l border-white/5 flex flex-col">
-        <div class="flex justify-between items-center mb-12">
-            <div class="flex items-center space-x-3">
-                <div class="w-3 h-3 bg-primary rounded-full animate-pulse" style="background-color: var(--primary);"></div>
-                <span class="text-xs font-black tracking-[4px] uppercase text-gray-500">Navigation</span>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/95 backdrop-blur-md z-[110] hidden opacity-0 transition-opacity duration-500"></div>
+    <aside id="sidebar" class="fixed top-0 right-0 h-full w-[85%] max-w-[340px] z-[120] translate-x-full p-6 border-l border-white/5 flex flex-col">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-primary rounded-full" style="background-color: var(--primary);"></div>
+                <span class="text-[10px] font-black tracking-[4px] uppercase text-gray-500">Navigation</span>
             </div>
             <button id="sidebar-close" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 text-white"><i class="fas fa-times"></i></button>
         </div>
         
         <!-- Sidebar Brand/Profile Section -->
-        <div class="mb-10 p-6 rounded-[28px] glass-card border-primary/20 flex flex-col items-center text-center">
-            <div class="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mb-4 border border-primary/40">
-                <i class="fas fa-user-astronaut text-primary text-2xl" style="color: var(--primary);"></i>
+        <div class="mb-8 p-5 rounded-[24px] glass-card border-primary/20 flex flex-col items-center text-center">
+            <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-3 border border-primary/30">
+                <i class="fas fa-user-astronaut text-primary text-xl" style="color: var(--primary);"></i>
             </div>
-            <h4 class="text-lg font-black tracking-tight italic">Welcome to <span class="text-primary" style="color: var(--primary);">Rentist</span></h4>
-            <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-widest">Digital Rental Ecosystem</p>
+            <h4 class="text-base font-black tracking-tight italic">Elite Space <span class="text-primary" style="color: var(--primary);">Rentist</span></h4>
+            <p class="text-[9px] text-gray-500 mt-0.5 uppercase font-bold tracking-widest">Digital Ecosystem</p>
         </div>
 
-        <nav id="sidebar-links" class="space-y-1 flex-grow overflow-y-auto pr-2">
+        <nav id="sidebar-links" class="space-y-1 flex-grow overflow-y-auto pr-1">
             <!-- Dynamic Sidebar links -->
         </nav>
 
-        <div class="pt-8 mt-auto">
-            <div class="p-6 rounded-[30px] bg-primary text-black flex items-center justify-between group cursor-pointer" style="background-color: var(--primary);" onclick="window.location.href='list_Your_property.html'">
+        <div class="pt-6 mt-auto">
+            <div class="p-5 rounded-[24px] bg-primary text-black flex items-center justify-between group cursor-pointer" style="background-color: var(--primary);" onclick="window.location.href='list_Your_property.html'">
                 <div>
-                    <p class="text-[9px] font-black uppercase tracking-widest opacity-70">List Property</p>
-                    <h5 class="text-lg font-black leading-none">Start Earning</h5>
+                    <p class="text-[8px] font-black uppercase tracking-widest opacity-70">List Property</p>
+                    <h5 class="text-base font-black leading-none uppercase">Post Ad Now</h5>
                 </div>
-                <i class="fas fa-plus-circle text-2xl group-hover:rotate-90 transition-transform"></i>
+                <i class="fas fa-plus-circle text-xl group-hover:rotate-90 transition-transform"></i>
             </div>
         </div>
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-5">
+    <main class="max-w-7xl mx-auto px-4">
         
-        <!-- HERO SLIDER -->
-        <div id="hero-section" class="mb-12">
-            <div class="relative h-[340px] sm:h-[480px] lg:h-[580px] rounded-[40px] sm:rounded-[60px] overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)]">
+        <!-- HERO SLIDER (Lowered height on phones) -->
+        <div id="hero-section" class="mb-10">
+            <div class="relative h-[260px] sm:h-[480px] lg:h-[580px] rounded-[35px] sm:rounded-[60px] overflow-hidden border border-white/10 shadow-2xl">
                 <div id="hero-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 transform scale-100"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
                 
-                <div class="absolute bottom-10 left-8 sm:bottom-16 sm:left-16 max-w-2xl pr-8">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <span class="w-2 h-2 bg-primary rounded-full animate-ping" style="background-color: var(--primary);"></span>
-                        <span class="text-[10px] sm:text-xs font-black uppercase tracking-[3px] text-primary" style="color: var(--primary);">Exclusive Listings</span>
-                    </div>
-                    <h1 id="hero-title" class="text-3xl sm:text-6xl font-black mb-4 tracking-tighter leading-[1.1] italic uppercase">Upgrade Your<br>Lifestyle Today.</h1>
-                    <p id="hero-subtitle" class="text-gray-400 text-sm sm:text-xl mb-8 font-medium max-w-md">Find the perfect room, flat, or shop with AI-powered search efficiency.</p>
+                <div class="absolute bottom-6 left-6 sm:bottom-16 sm:left-16 max-w-2xl pr-8">
+                    <h1 id="hero-title" class="text-2xl sm:text-6xl font-black mb-3 tracking-tighter leading-tight italic uppercase">Explore Your<br>Dream Space.</h1>
+                    <p id="hero-subtitle" class="text-gray-400 text-[10px] sm:text-xl mb-6 font-medium max-w-xs sm:max-w-md">Find top rooms, flats, and shops with AI-efficiency.</p>
                     
-                    <div class="flex items-center space-x-3">
-                        <a href="#bento-container" class="inline-flex items-center px-7 py-3.5 sm:px-10 sm:py-5 bg-primary text-black font-black rounded-full hover:scale-105 transition-all text-xs sm:text-sm shadow-xl shadow-primary/20" style="background-color: var(--primary);">
-                            EXPLORE ALL
-                        </a>
-                        <button class="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-full border border-white/20 backdrop-blur-md hover:bg-white/10"><i class="fas fa-play text-[10px]"></i></button>
-                    </div>
+                    <a href="#bento-container" class="inline-flex items-center px-6 py-3 sm:px-10 sm:py-5 bg-primary text-black font-black rounded-full text-[10px] sm:text-sm uppercase tracking-widest" style="background-color: var(--primary);">
+                        EXPLORE NOW
+                    </a>
                 </div>
 
                 <!-- Slider Controls -->
-                <div class="absolute bottom-10 right-8 sm:bottom-16 sm:right-16 flex space-x-2">
-                    <button id="slide-prev" class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center border border-white/10 rounded-2xl hover:bg-primary hover:text-black transition-all backdrop-blur-xl"><i class="fas fa-chevron-left text-xs"></i></button>
-                    <button id="slide-next" class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center bg-white text-black rounded-2xl hover:bg-primary transition-all shadow-xl"><i class="fas fa-chevron-right text-xs"></i></button>
+                <div class="absolute bottom-6 right-6 sm:bottom-16 sm:right-16 flex space-x-1.5">
+                    <button id="slide-prev" class="w-8 h-8 sm:w-14 sm:h-14 flex items-center justify-center border border-white/10 rounded-xl hover:bg-primary transition-all backdrop-blur-xl"><i class="fas fa-chevron-left text-[10px]"></i></button>
+                    <button id="slide-next" class="w-8 h-8 sm:w-14 sm:h-14 flex items-center justify-center bg-white text-black rounded-xl hover:bg-primary transition-all"><i class="fas fa-chevron-right text-[10px]"></i></button>
                 </div>
             </div>
         </div>
 
         <!-- CATEGORY TITLE -->
-        <div class="mb-10 flex items-end justify-between px-2">
+        <div class="mb-8 flex items-end justify-between px-1">
             <div>
-                <h2 class="text-4xl font-black tracking-tighter italic uppercase leading-none">Smart <span class="text-primary" style="color: var(--primary);">Rent</span></h2>
-                <p class="text-gray-500 font-bold uppercase text-[9px] tracking-[4px] mt-2 opacity-60">Curated rental categories</p>
+                <h2 class="text-3xl font-black tracking-tighter italic uppercase leading-none">Smart <span class="text-primary" style="color: var(--primary);">Rent</span></h2>
+                <p class="text-gray-500 font-bold uppercase text-[8px] tracking-[4px] mt-1.5 opacity-60">Handpicked categories</p>
             </div>
             <div class="hidden sm:block h-px flex-1 mx-12 bg-white/5 mb-2"></div>
         </div>
@@ -282,41 +310,41 @@
 
     </main>
 
-    <!-- FLOATING BOTTOM NAV (PREMIUM APP STYLE) -->
+    <!-- FLOATING BOTTOM NAV (RAISED) -->
     <nav class="floating-nav">
         <a href="main.html" class="nav-link active">
             <i class="fas fa-house-chimney-window"></i>
-            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">Home</span>
+            <span class="text-[7px] mt-1.5 font-black uppercase tracking-widest">Home</span>
         </a>
         <a href="suggestion.html" class="nav-link">
             <i class="fas fa-sparkles"></i>
-            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">AI Suggest</span>
+            <span class="text-[7px] mt-1.5 font-black uppercase tracking-widest">AI Hub</span>
         </a>
         <a href="list_Your_property.html" class="center-fab" style="background-color: var(--primary);">
-            <i class="fas fa-plus text-xl"></i>
+            <i class="fas fa-plus text-lg"></i>
         </a>
         <a href="learn.html" class="nav-link">
             <i class="fas fa-rocket"></i>
-            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">Learn</span>
+            <span class="text-[7px] mt-1.5 font-black uppercase tracking-widest">Learn</span>
         </a>
         <a href="see_my_listings.html" class="nav-link">
             <i class="fas fa-circle-user"></i>
-            <span class="text-[8px] mt-1.5 font-black uppercase tracking-widest">Space</span>
+            <span class="text-[7px] mt-1.5 font-black uppercase tracking-widest">Space</span>
         </a>
     </nav>
 
-    <!-- LOCATION MODAL -->
-    <div id="location-modal" class="fixed inset-0 z-[200] flex items-center justify-center px-4 hidden opacity-0 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-black/95 backdrop-blur-2xl"></div>
-        <div class="relative glass-card w-full max-w-xl rounded-[40px] p-8 sm:p-12 overflow-hidden shadow-[0_0_100px_rgba(var(--primary-rgb),0.1)]">
-            <div class="flex justify-between items-center mb-10">
+    <!-- LOCATION MODAL (Perfect Centering) -->
+    <div id="location-modal">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-2xl" id="modal-backdrop"></div>
+        <div class="modal-card p-6 sm:p-10">
+            <div class="flex justify-between items-center mb-6">
                 <div class="flex flex-col">
-                    <span class="text-[10px] font-black uppercase tracking-[3px] text-gray-500 mb-1">Navigation Path</span>
-                    <h3 id="modal-title" class="text-3xl font-black tracking-tighter uppercase italic">Select <span class="text-primary" style="color: var(--primary);">Region</span></h3>
+                    <span class="text-[8px] font-black uppercase tracking-[3px] text-gray-500 mb-0.5">Quick Menu</span>
+                    <h3 id="modal-title" class="text-xl sm:text-3xl font-black tracking-tighter uppercase italic">Select <span class="text-primary" style="color: var(--primary);">Region</span></h3>
                 </div>
-                <button id="modal-close" class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 transition-all flex items-center justify-center"><i class="fas fa-times text-xl"></i></button>
+                <button id="modal-close" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 transition-all flex items-center justify-center"><i class="fas fa-times"></i></button>
             </div>
-            <div id="modal-list" class="space-y-3 max-h-[55vh] overflow-y-auto pr-2 custom-scroll">
+            <div id="modal-list" class="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1 custom-scroll">
                 <!-- Dynamic Content -->
             </div>
         </div>
@@ -336,8 +364,8 @@
         ];
 
         const HERO_SLIDES = [
-            { title: "Smarter Spaces.<br>Faster Renting.", subtitle: "Top locations par premium flats aur rooms ka sabse bada collection.", bg: "flats.png" },
-            { title: "Business Hubs.<br>Prime Shops.", subtitle: "Commercial properties jo aapke brand ko naya makaam dein.", bg: "shops.png" }
+            { title: "Smarter Spaces.<br>Faster Renting.", subtitle: "Urban locations par premium flats aur rooms ka collection.", bg: "flats.png" },
+            { title: "Business Hubs.<br>Prime Shops.", subtitle: "Commercial properties jo aapke brand ko boost dein.", bg: "shops.png" }
         ];
 
         // --- UI CORE LOGIC ---
@@ -345,15 +373,15 @@
         function renderBento() {
             const container = document.getElementById('bento-container');
             container.innerHTML = RENT_DATA.map(item => `
-                <div class="glass-card rounded-[30px] sm:rounded-[40px] overflow-hidden p-5 sm:p-8 relative flex flex-col justify-end ${item.size} cursor-pointer group" onclick="openModal('${item.id}')">
-                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-110 group-hover:opacity-40 transition-all duration-1000" alt="${item.title}" onerror="this.src='https://placehold.co/400x400/111/CCFF00?text=${item.title}'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+                <div class="glass-card rounded-[24px] sm:rounded-[40px] overflow-hidden p-4 sm:p-8 relative flex flex-col justify-end ${item.size} cursor-pointer group" onclick="openModal('${item.id}')">
+                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-all duration-1000" alt="${item.title}" onerror="this.src='https://placehold.co/400x400/111/CCFF00?text=${item.title}'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                     <div class="relative z-10">
-                        <div class="w-9 h-9 sm:w-11 sm:h-11 bg-primary/10 rounded-2xl flex items-center justify-center mb-3 sm:mb-5 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all" style="--tw-primary: var(--primary);">
-                            <i class="fas ${item.icon} text-sm sm:text-base"></i>
+                        <div class="w-8 h-8 sm:w-11 sm:h-11 bg-primary/20 rounded-xl flex items-center justify-center mb-2.5 sm:mb-5 border border-primary/20 group-hover:bg-primary group-hover:text-black transition-all" style="--tw-primary: var(--primary);">
+                            <i class="fas ${item.icon} text-xs sm:text-base"></i>
                         </div>
-                        <h3 class="text-sm sm:text-2xl font-black italic tracking-tighter uppercase leading-tight">${item.title}</h3>
-                        <p class="text-[7px] sm:text-[9px] uppercase font-black text-gray-500 mt-1 tracking-[2px] group-hover:text-primary transition-colors">Start Search <i class="fas fa-chevron-right ml-1"></i></p>
+                        <h3 class="text-[12px] sm:text-2xl font-black italic tracking-tighter uppercase leading-tight">${item.title}</h3>
+                        <p class="text-[6px] sm:text-[9px] uppercase font-black text-gray-400 mt-0.5 tracking-[1px] group-hover:text-primary transition-colors">Select <i class="fas fa-chevron-right ml-0.5"></i></p>
                     </div>
                 </div>
             `).join('');
@@ -363,21 +391,21 @@
             const item = RENT_DATA.find(x => x.id === id);
             const modal = document.getElementById('location-modal');
             const list = document.getElementById('modal-list');
-            document.getElementById('modal-title').innerHTML = `Rental <span class="text-primary" style="color: var(--primary);">${item.title}</span>`;
+            document.getElementById('modal-title').innerHTML = `Select <span class="text-primary" style="color: var(--primary);">${item.title}</span>`;
             
             list.innerHTML = item.menu.map(m => `
-                <div class="p-5 sm:p-7 rounded-[24px] bg-white/[0.03] border border-white/[0.05] hover:bg-primary hover:text-black hover:scale-[1.03] transition-all cursor-pointer flex justify-between items-center group shadow-lg" onclick="window.location.href='${m.l}'">
+                <div class="p-3.5 sm:p-7 rounded-[18px] bg-white/[0.04] border border-white/[0.06] hover:bg-primary hover:text-black hover:scale-[1.02] transition-all cursor-pointer flex justify-between items-center group" onclick="window.location.href='${m.l}'">
                     <div class="flex flex-col">
-                        <span class="text-[8px] uppercase font-bold tracking-[2px] opacity-60 mb-1">Available Listing</span>
-                        <span class="text-base sm:text-xl font-black tracking-tight uppercase italic">${m.n}</span>
+                        <span class="text-[7px] uppercase font-bold tracking-[1px] opacity-60">Verified Link</span>
+                        <span class="text-sm sm:text-xl font-black tracking-tight uppercase italic">${m.n}</span>
                     </div>
-                    <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-black group-hover:text-primary">
-                        <i class="fas fa-arrow-right-long transition-transform group-hover:translate-x-1"></i>
+                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-black group-hover:text-primary">
+                        <i class="fas fa-arrow-right-long transition-transform group-hover:translate-x-1 text-xs"></i>
                     </div>
                 </div>
             `).join('');
 
-            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('opacity-100'), 10);
             document.body.style.overflow = 'hidden';
         }
@@ -386,7 +414,7 @@
             const modal = document.getElementById('location-modal');
             modal.classList.remove('opacity-100');
             setTimeout(() => {
-                modal.classList.add('hidden');
+                modal.style.display = 'none';
                 document.body.style.overflow = '';
             }, 300);
         }
@@ -428,14 +456,13 @@
                 {n:'My Activity', i:'fa-bolt-lightning', l:'see_my_listings.html'}, 
                 {n:'Property Docs', i:'fa-file-shield', l:'learn.html'},
                 {n:'Saved Spaces', i:'fa-heart', l:'#'}, 
-                {n:'Feedback Hub', i:'fa-comment-dots', l:'suggestion.html'}, 
-                {n:'Security Settings', i:'fa-shield-halved', l:'#'}
+                {n:'Feedback Hub', i:'fa-comment-dots', l:'suggestion.html'}
             ].map(l => `
                 <div class="sidebar-item-new group cursor-pointer" onclick="window.location.href='${l.l}'">
-                    <div class="w-10 h-10 rounded-[14px] bg-white/5 flex items-center justify-center mr-4 group-hover:bg-primary group-hover:text-black transition-all">
+                    <div class="sidebar-icon-wrap">
                         <i class="fas ${l.i} text-sm"></i>
                     </div>
-                    <span class="font-black tracking-tight uppercase italic text-sm text-gray-400 group-hover:text-white">${l.n}</span>
+                    <span class="font-black tracking-tight uppercase italic text-[13px] text-gray-400 group-hover:text-white">${l.n}</span>
                 </div>
             `).join('');
 
@@ -443,6 +470,7 @@
             document.getElementById('sidebar-close').onclick = () => toggleSidebar(false);
             overlay.onclick = () => toggleSidebar(false);
             document.getElementById('modal-close').onclick = closeModal;
+            document.getElementById('modal-backdrop').onclick = closeModal;
             
             document.getElementById('slide-next').onclick = () => {
                 currentSlide = (currentSlide + 1) % HERO_SLIDES.length;
