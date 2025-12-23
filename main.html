@@ -1,351 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Rentist - Your Ultimate Rental Guide</title>
+    <title>Tamanna Sharma - Your Mehndi Partner</title>
     
-    <!-- Tailwind CSS aur Icons -->
+    <!-- Tailwind CSS aur Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- SHINING GREEN DARK THEME --- */
         :root {
-            --primary: #76FF03; 
-            --primary-rgb: 118, 255, 3; 
-            --gold-dark: #B8860B; /* Golden Dark Color */
-            --bg-dark: #050505; 
+            --primary: #FFD700; 
+            --primary-rgb: 255, 215, 0; 
+            --bg-dark: #050401; 
+            --card-glass: rgba(15, 12, 5, 0.95);
             --header-offset: calc(15px + env(safe-area-inset-top));
             --header-height: 64px;
             --footer-offset: calc(25px + env(safe-area-inset-bottom));
             --footer-height: 76px;
             --text-light: #ffffff;
-            --premium-bg-dark: #0a1208;
         }
 
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-light);
             padding-top: calc(var(--header-offset) + var(--header-height) + 20px);
             padding-bottom: calc(var(--footer-offset) + var(--footer-height) + 40px);
             margin: 0;
             font-weight: 900; 
+            overflow-x: hidden;
         }
 
         /* --- BACKGROUND --- */
         #fixed-media-background {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             z-index: -10; background-size: cover; background-position: center;
-            opacity: 0.12; background-image: url('flats.png');
+            opacity: 0.7; background-image: url('bridal.png');
+            filter: contrast(125%) brightness(50%) sepia(40%);
         }
 
-        /* --- SHINING GREEN HEADER --- */
+        /* --- GOLDEN FLOATING HEADER (MAIN.HTML STYLE) --- */
         .iphone-header {
             position: fixed; top: var(--header-offset); left: 50%; transform: translateX(-50%);
             width: 92%; max-width: 600px; height: var(--header-height);
-            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(25px);
-            border: 2px solid rgba(118, 255, 3, 0.4); border-radius: 24px;
+            background: rgba(5, 4, 1, 0.96); backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 215, 0, 0.4); border-radius: 24px;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 20px; z-index: 2000; box-shadow: 0 0 25px rgba(118, 255, 3, 0.15);
+            padding: 0 20px; z-index: 2000; box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
         }
 
-        /* --- SIDEBAR PANEL --- */
+        /* --- ULTRA DECORATIVE SIDEBAR (SAME AS ORIGINAL ROLL.HTML) --- */
         .mobile-panel {
             position: fixed; 
             top: calc(var(--header-offset) + var(--header-height) + 10px); 
             bottom: calc(var(--footer-offset) + var(--footer-height) + 10px);
             right: 15px; width: 85%; max-width: 340px;
-            background: linear-gradient(165deg, #0a1505 0%, #050505 100%);
-            backdrop-filter: blur(45px); z-index: 1500; 
+            background: rgba(8, 7, 2, 0.98); backdrop-filter: blur(45px); z-index: 1500; 
             transform: translateX(120%); transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            border: 2px solid var(--primary); border-radius: 35px; overflow: hidden;
-            box-shadow: -15px 0 40px rgba(0,0,0,0.9);
+            border: 2.5px solid var(--primary); border-radius: 35px; overflow: hidden;
+            box-shadow: -30px 0 80px rgba(0,0,0,1);
         }
         .mobile-panel.open { transform: translateX(0); }
-        .sidebar-inner { height: 100%; overflow-y: auto; padding: 25px 20px; }
-        .sidebar-close-btn { position: absolute; top: 15px; right: 15px; width: 35px; height: 35px; border-radius: 50%; background: var(--primary); color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; }
+        .sidebar-bg-image { position: absolute; inset: 0; background-image: url('bridal.png'); background-size: cover; background-position: center; opacity: 0.55; z-index: 0; filter: grayscale(40%) brightness(30%); }
+        .mandala-bg { position: absolute; top: 50%; left: 50%; width: 500px; height: 500px; margin-top: -250px; margin-left: -250px; opacity: 0.1; pointer-events: none; animation: spin 100s linear infinite; z-index: 1; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .sidebar-inner { height: 100%; overflow-y: auto; padding: 40px 20px; position: relative; z-index: 10; }
+        .sidebar-close-btn { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; border: 2px solid #000; box-shadow: 0 0 20px var(--primary); }
+        
+        .accordion-btn { width: 100%; padding: 18px 22px; margin-bottom: 10px; border-radius: 18px; background: rgba(0, 0, 0, 0.5); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #fff; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 215, 0, 0.2); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+        .side-sub-link { display: block; padding: 14px 35px; font-size: 0.8rem; color: #eee; background: rgba(0,0,0,0.4); border-left: 2px solid rgba(255, 215, 0, 0.15); text-decoration: none; border-bottom: 1px solid rgba(255,215,0,0.05); }
 
-        /* --- BENTO GRID CARDS --- */
-        .bento-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); 
-            grid-auto-rows: 140px; gap: 0.75rem;
-        }
-        @media (min-width: 768px) {
-            .bento-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(180px, auto); gap: 1.5rem; }
-        }
-        .glass-card {
-            background: rgba(10, 20, 10, 0.6); backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
-            transition: all 0.3s ease; position: relative; overflow: hidden;
-        }
-        .glass-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 0 20px rgba(118, 255, 3, 0.3); }
-
-        /* --- DOCK NAVIGATION --- */
+        /* --- GOLDEN DOCK (MAIN.HTML STYLE) --- */
         .iphone-dock-wrapper { 
             position: fixed; bottom: var(--footer-offset); 
             left: 0; width: 100%; display: flex; justify-content: center; z-index: 2000; padding: 0 15px; 
         }
-        .iphone-dock { width: 100%; max-width: 500px; height: var(--footer-height); background: rgba(5, 10, 5, 0.9); backdrop-filter: blur(30px); border-radius: 32px; border: 2px solid rgba(118, 255, 3, 0.2); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
-        .dock-item { display: flex; flex-direction: column; align-items: center; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 1.1rem; font-weight: 900; }
-        .dock-item span { font-size: 0.65rem; margin-top: 4px; font-weight: 900; text-transform: uppercase; }
-        .dock-item.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
-        .dock-fab { width: 60px; height: 60px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.5rem; transform: translateY(-25px); border: 4px solid var(--bg-dark); box-shadow: 0 0 25px rgba(118, 255, 3, 0.4); }
+        .iphone-dock { width: 100%; max-width: 500px; height: var(--footer-height); background: rgba(5, 4, 1, 0.98); backdrop-filter: blur(35px); border-radius: 32px; border: 2px solid rgba(255, 215, 0, 0.2); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
+        .nav-link { color: #8892a0; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; transition: 0.4s; padding: 10px; }
+        .nav-link i { font-size: 1.3rem; margin-bottom: 4px; }
+        .nav-link.active { color: var(--primary); }
+        .dock-fab { width: 70px; height: 70px; background: radial-gradient(circle at center, #fff 0%, var(--primary) 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.8rem; transform: translateY(-30px); border: 5px solid #050401; box-shadow: 0 12px 35px rgba(0,0,0,0.8), 0 0 45px rgba(var(--primary-rgb), 0.7); }
 
-        /* --- MODAL --- */
-        .modal-overlay {
-            position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.96);
-            backdrop-filter: blur(15px); z-index: 2500; display: none; 
-            justify-content: center; align-items: center;
+        /* --- MAIN CONTENT (RESPONSIVE SLIDER UPDATED) --- */
+        .hero-slider { height: 360px; border-radius: 40px; overflow: hidden; position: relative; border: 2.5px solid var(--primary); margin-bottom: 40px; box-shadow: 0 25px 60px rgba(0,0,0,1); }
+        @media (max-width: 640px) { .hero-slider { height: 200px; } }
+        .slide-img-layer { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 6s ease-out, opacity 1s ease; transform: scale(1.05); }
+        
+        .slide-content { 
+            position: absolute; bottom: 0; left: 0; width: 100%; 
+            padding: 45px 30px; 
+            background: linear-gradient(to top, rgba(5,4,1,1) 30%, transparent); 
+            z-index: 5; 
         }
-        .modal-content {
-            width: 95%; max-width: 450px; background: #080a08; border-radius: 30px;
-            border: 2px solid var(--primary); padding: 25px; box-shadow: 0 0 40px rgba(118, 255, 3, 0.2);
-        }
-        .modal-item {
-            padding: 14px 18px; background: rgba(255,255,255,0.05); border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: #fff; border-left: 5px solid var(--primary); font-weight: 900;
-        }
+        @media (max-width: 640px) { .slide-content { padding: 20px 15px; } }
 
-        /* --- SIDEBAR BUTTONS --- */
-        .sidebar-card-btn { background: rgba(118, 255, 3, 0.05); border: 2px solid rgba(118, 255, 3, 0.2); border-radius: 18px; margin-bottom: 8px; padding: 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-        .dropdown-container { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 10px; }
-        .dropdown-container.open { max-height: 350px; }
-        .dropdown-item-shs { padding: 12px 15px; margin: 5px 0; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border-left: 4px solid var(--primary); font-size: 13px; font-weight: 900; display: block; color: #eee; text-decoration: none; }
-
-        /* --- GOLDEN DARK BUTTON STYLE --- */
-        .gold-dark-btn {
-            background: var(--gold-dark) !important;
-            color: #000 !important;
-            box-shadow: 0 0 20px rgba(184, 134, 11, 0.5) !important;
-            border: none !important;
+        .slide-btn { 
+            background: var(--primary); color: #000; 
+            padding: 12px 30px; border-radius: 50px; 
+            font-weight: 900; text-transform: uppercase; 
+            letter-spacing: 2px; font-size: 0.75rem; 
+            box-shadow: 0 0 30px rgba(255,215,0,0.5); 
+            display: inline-block; margin-top: 15px; 
+            border: 2px solid #000; cursor: pointer; 
+        }
+        @media (max-width: 640px) { 
+            .slide-btn { padding: 8px 18px; font-size: 0.6rem; margin-top: 8px; letter-spacing: 1px; } 
         }
 
-        /* --- SLIDER HIGHLIGHTED BUTTONS --- */
-        .slide-nav-btn {
-            background-color: var(--primary) !important;
-            color: #000 !important;
-            box-shadow: 0 0 15px rgba(118, 255, 3, 0.5) !important;
-            border: none !important;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-        .slide-nav-btn:hover {
-            transform: scale(1.1);
-            opacity: 0.9;
-        }
+        .card-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 640px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 1280px) { .card-grid { grid-template-columns: repeat(5, 1fr); } }
 
-        /* --- TEXT BOLD NO ITALIC (MANDATORY) --- */
+        .premium-card { background: var(--card-glass); border-radius: 28px; border: 1.5px solid rgba(255,215,0,0.3); padding: 14px; transition: 0.4s; cursor: pointer; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.6); overflow: hidden; }
+        .premium-card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 0 45px rgba(var(--primary-rgb), 0.5); }
+        .card-img { width: 100%; height: 100px; border-radius: 16px; object-fit: cover; transition: 0.6s; }
+
+        .floral-divider { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 20px 0; opacity: 0.8; }
+        .floral-line { height: 1.5px; width: 60px; background: linear-gradient(90deg, transparent, var(--primary)); }
+        .floral-line.rev { background: linear-gradient(270deg, transparent, var(--primary)); }
+
+        /* MODAL (WITH BACKGROUND IMAGE RESTORED) */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); backdrop-filter: blur(25px); display: none; z-index: 2500; align-items: center; justify-content: center; padding: 25px; }
+        .modal-box { background: #0a0802; border: 2.5px solid var(--primary); border-radius: 40px; width: 100%; max-width: 440px; padding: 35px; box-shadow: 0 0 90px rgba(var(--primary-rgb), 0.7); position: relative; overflow: hidden; }
+        .modal-bg-img { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0.4; z-index: 0; filter: brightness(25%); }
+        .list-item { background: rgba(255, 215, 0, 0.05); border: 1.5px solid rgba(255, 215, 0, 0.2); padding: 18px; border-radius: 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; position: relative; z-index: 5; }
+        .list-item:hover { background: rgba(255, 215, 0, 0.2); border-color: var(--primary); }
+
         * { font-style: normal !important; }
-        h1, h2, h3, h4, h5, span, p, a, button, div { font-weight: 900 !important; font-style: normal !important; }
-        i { font-style: normal !important; }
+        h1, h2, h3, span, p, a, button { font-weight: 900 !important; }
     </style>
 </head>
 <body>
     
     <div id="fixed-media-background"></div>
 
-    <!-- HEADER (GREEN SHINING) -->
+    <!-- FLOATING HEADER -->
     <header class="iphone-header">
         <div class="flex items-center gap-3">
-            <img src="rentist.png" alt="Logo" class="w-9 h-9 rounded-xl border-2 border-primary shadow-lg">
-            <img src="skillora.png" alt="Rentist" class="h-[22px]">
+            <img src="blessingsssl.png" alt="Icon" class="w-9 h-9 rounded-xl border-2 border-primary shadow-lg">
+            <img src="blessingsss.png" alt="Blessingsss" class="h-[18px]">
         </div>
-        <button id="menuBtn" class="w-11 h-11 rounded-2xl bg-primary/10 border-2 border-primary/30 flex items-center justify-center text-primary text-xl shadow-lg">
+        <button id="menuBtn" class="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary text-xl shadow-lg">
             <i class="fas fa-bars-staggered"></i>
         </button>
     </header>
 
-    <!-- SIDEBAR (GREEN DARK) -->
+    <!-- ULTRA DECORATIVE SIDEBAR (RESTORED DATA) -->
     <div id="sidebar" class="mobile-panel">
+        <div class="sidebar-bg-image"></div>
+        <svg class="mandala-bg" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+            <circle cx="50" cy="50" r="45" stroke-width="0.2" stroke-dasharray="1 1" />
+            <path d="M50 0 L53 47 L100 50 L53 53 L50 100 L47 53 L0 50 L47 47 Z" stroke-width="0.2" />
+        </svg>
+
         <div class="sidebar-inner">
             <div class="sidebar-close-btn" id="closeSidebar"><i class="fas fa-times"></i></div>
-            
-            <!-- GOLDEN DARK LIST PROPERTY BUTTON AT TOP -->
-            <div class="mb-8 pt-6">
-                <a href="list_Your_property.html" class="gold-dark-btn block p-4 rounded-2xl font-black text-center uppercase text-sm tracking-wider hover:scale-[1.02] transition-transform">
-                    <i class="fas fa-plus-circle mr-2"></i> LIST PROPERTY ADD
-                </a>
+            <div class="text-center mb-8 border-b border-primary/20 pb-6">
+                <img src="blessingsssl.png" alt="Icon" class="w-10 h-10 mx-auto rounded-full border border-primary mb-3">
+                <img src="blessingsss.png" alt="Blessingsss" class="h-[20px] mx-auto">
+                <p class="text-[9px] text-gray-400 uppercase tracking-[4px] mt-3">Your Mehndi Partner</p>
             </div>
 
-            <div class="mb-6 border-b border-primary/20 pb-4">
-                <h2 class="text-xl font-black uppercase text-white">Ren<span class="text-primary">Tist</span></h2>
-                <p class="text-[9px] text-gray-500 uppercase tracking-[4px] font-black">Categories</p>
-            </div>
+            <div class="space-y-4 relative z-10">
+                <div>
+                    <button class="accordion-btn" onclick="toggleAccordion('side-bridal')">
+                        <span>BRIDAL STUDIO</span> <i class="fas fa-chevron-down text-[10px]" id="icon-side-bridal"></i>
+                    </button>
+                    <div id="side-bridal" class="accordion-content">
+                        <a href="bridal_traditional.html" class="side-sub-link">Royal Traditional</a>
+                        <a href="bridal_arabic.html" class="side-sub-link">Modern Arabic</a>
+                        <a href="bridal_indowestern.html" class="side-sub-link">Fusion Luxe</a>
+                    </div>
+                </div>
 
-            <nav id="sidebar-links-container">
-                <!-- Javascript category buttons rendered here -->
-            </nav>
+                <div>
+                    <button class="accordion-btn" onclick="toggleAccordion('side-festive')">
+                        <span>FESTIVE ART</span> <i class="fas fa-chevron-down text-[10px]" id="icon-side-festive"></i>
+                    </button>
+                    <div id="side-festive" class="accordion-content">
+                        <a href="thre.html" class="side-sub-link">Festive Arabic Art</a>
+                        <a href="indian_festive_mehndi.html" class="side-sub-link">Indian Festive Best</a>
+                        <a href="festive_indioarabic.html" class="side-sub-link">Indo-Arabic Fusion</a>
+                        <a href="tradi_geometric.html" class="side-sub-link">Moroccan Trends</a>
+                        <a href="festive_minimal_art.html" class="side-sub-link">Minimalist Elegance</a>
+                    </div>
+                </div>
+
+                <a href="custom_mehndi.html" class="accordion-btn"><span>CUSTOM CONCEPT</span><i class="fas fa-arrow-right text-[10px]"></i></a>
+                <a href="meet_me.html" class="accordion-btn"><span>MEET MASTER</span><i class="fas fa-arrow-right text-[10px]"></i></a>
+
+                <div>
+                    <!-- Updated to GALLERY with 5th Card Details -->
+                    <button class="accordion-btn" onclick="toggleAccordion('side-gallery')">
+                        <span>GALLERY</span> <i class="fas fa-chevron-down text-[10px]" id="icon-side-gallery"></i>
+                    </button>
+                    <div id="side-gallery" class="accordion-content">
+                        <a href="tradi.html" class="side-sub-link">Traditional Masterpieces</a>
+                        <a href="one.html" class="side-sub-link">Arabic Bridal Specials</a>
+                        <a href="two.html" class="side-sub-link">Indo-Western Fusion Luxe</a>
+                        <a href="thre.html" class="side-sub-link">Festive Arabic Collection</a>
+                        <a href="indian_festive_mehndi.html" class="side-sub-link">Indian Festive Classics</a>
+                        <a href="festive_indioarabic.html" class="side-sub-link">Indo-Arabic Fusion Art</a>
+                        <a href="tradi_geometric.html" class="side-sub-link">Moroccan Trends</a>
+                        <a href="festive_minimal_art.html" class="side-sub-link">Minimalist Elegance</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-4 mt-6">
+    <main class="container mx-auto px-6">
         
-        <!-- Hero Slider Area -->
-        <div id="hero-section" class="mb-10">
-            <div class="relative h-[250px] sm:h-[480px] rounded-[30px] sm:rounded-[60px] overflow-hidden border-2 border-primary/20 shadow-2xl">
-                <div id="hero-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000" style="background-image: url('flats.png');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                
-                <div class="absolute bottom-8 left-8 max-w-2xl pr-8">
-                    <h1 id="hero-title" class="text-2xl sm:text-6xl font-black mb-2 tracking-tighter leading-tight uppercase text-white">Explore Your<br>Dream Space.</h1>
-                    <p id="hero-subtitle" class="text-gray-300 text-[11px] sm:text-xl mb-5 font-black uppercase">Top rooms, flats, and shops at your fingertips.</p>
-                    <a href="#bento-container" class="inline-flex items-center px-8 py-4 font-black rounded-full text-[11px] sm:text-sm uppercase tracking-widest shadow-xl bg-primary text-black hover:scale-105 transition-transform">
-                        EXPLORE NOW
-                    </a>
-                </div>
-
-                <div class="absolute bottom-8 right-8 flex space-x-3">
-                    <!-- PREV AND NEXT BUTTONS HIGHLIGHTED -->
-                    <button id="slide-prev" class="slide-nav-btn w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl transition-all">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button id="slide-next" class="slide-nav-btn w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl transition-all">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+        <div id="hero-slider-main" class="hero-slider">
+            <div id="slide-img" class="slide-img-layer" style="background-image: url('bridal.png'); opacity: 1;"></div>
+            <div class="slide-content">
+                <p class="text-primary text-[8px] sm:text-[10px] tracking-[4px] sm:tracking-[6px] uppercase mb-1">Royal Mehndi Art</p>
+                <h1 id="slide-title" class="text-xl sm:text-2xl md:text-6xl font-black mb-1 text-white uppercase tracking-tighter leading-tight">Golden Henna Art</h1>
+                <p id="slide-desc" class="text-gray-100 text-[9px] sm:text-[11px] mb-2 tracking-widest uppercase">Premium Experience for your big day</p>
+                <button class="slide-btn">Explore Collection</button>
+            </div>
+            <div class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 flex gap-2 sm:gap-4 z-10">
+                <button onclick="changeSlide(-1)" class="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/80 border border-primary/40 text-primary hover:bg-primary hover:text-black transition-all"><i class="fas fa-chevron-left text-xs sm:text-base"></i></button>
+                <button onclick="changeSlide(1)" class="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/80 border border-primary/40 text-primary hover:bg-primary hover:text-black transition-all"><i class="fas fa-chevron-right text-xs sm:text-base"></i></button>
             </div>
         </div>
 
-        <div class="mb-8 px-2">
-            <h2 class="text-3xl sm:text-5xl font-black tracking-tighter uppercase leading-none">Rental <span class="text-primary">Services</span></h2>
-            <div class="h-1.5 w-24 bg-primary mt-3 rounded-full shadow-[0_0_10px_var(--primary)]"></div>
+        <div class="floral-divider">
+            <div class="floral-line"></div>
+            <i class="fas fa-leaf text-primary text-xl"></i>
+            <h2 class="text-3xl font-black tracking-tighter uppercase text-center px-4">Services</h2>
+            <i class="fas fa-leaf text-primary text-xl rotate-180"></i>
+            <div class="floral-line rev"></div>
         </div>
 
-        <!-- Category Grid -->
-        <div id="bento-container" class="bento-grid mb-12">
-            <!-- Generated via Script -->
+        <div class="card-grid mb-16">
+            <div class="premium-card group" onclick="openPopup('bridal')">
+                <img src="bridal.png" class="card-img">
+                <div class="mt-5 text-center">
+                    <h3 class="text-sm font-black group-hover:text-primary transition-colors uppercase tracking-widest">Bridal</h3>
+                    <p class="text-gray-400 text-[10px] mt-2 italic">Traditional Luxe</p>
+                </div>
+            </div>
+            <div class="premium-card group" onclick="openPopup('festive')">
+                <img src="festive.png" class="card-img">
+                <div class="mt-5 text-center">
+                    <h3 class="text-sm font-black group-hover:text-primary transition-colors uppercase tracking-widest">Festive</h3>
+                    <p class="text-gray-400 text-[10px] mt-2 italic">Modern Vibes</p>
+                </div>
+            </div>
+            <div class="premium-card group" onclick="window.location.href='custom_mehndi.html'">
+                <img src="custom.png" class="card-img">
+                <div class="mt-5 text-center">
+                    <h3 class="text-sm font-black group-hover:text-primary transition-colors uppercase tracking-widest">Custom</h3>
+                    <p class="text-gray-400 text-[10px] mt-2 italic">Bespoke Idea</p>
+                </div>
+            </div>
+            <div class="premium-card group" onclick="window.location.href='meet_me.html'">
+                <img src="artist.png" class="card-img">
+                <div class="mt-5 text-center">
+                    <h3 class="text-sm font-black group-hover:text-primary transition-colors uppercase tracking-widest">Artist</h3>
+                    <p class="text-gray-400 text-[10px] mt-2 italic">Meet Master</p>
+                </div>
+            </div>
+            <div class="premium-card group" onclick="openPopup('gallery')">
+                <img src="gallery.png" class="card-img">
+                <div class="mt-5 text-center">
+                    <h3 class="text-sm font-black group-hover:text-primary transition-colors uppercase tracking-widest">Gallery</h3>
+                    <p class="text-gray-400 text-[10px] mt-2 italic">Portfolio</p>
+                </div>
+            </div>
         </div>
     </main>
     
-    <!-- DOCK NAVIGATION -->
     <div class="iphone-dock-wrapper">
         <nav class="iphone-dock">
-            <a href="list_Your_property.html" class="dock-item">
-                <i class="fas fa-user-plus"></i><span>Register</span>
-            </a>
-            <a href="suggestion.html" class="dock-item">
-                <i class="fas fa-comment-dots"></i><span>Suggest</span>
-            </a>
-            <a href="main.html" class="dock-fab">
-                <i class="fas fa-home"></i>
-            </a>
-            <a href="learn.html" class="dock-item">
-                <i class="fas fa-book-open"></i><span>Learn</span>
-            </a>
-            <a href="see_my_listings.html" class="dock-item">
-                <i class="fas fa-user"></i><span>Profile</span>
-            </a>
+            <a href="#" class="nav-link active" onclick="openPopup('bridal')"><i class="fas fa-wand-magic-sparkles"></i><span>Studio</span></a>
+            <a href="#" class="nav-link"><i class="fas fa-fire"></i><span>Trends</span></a>
+            <a href="main.html" class="dock-fab"><i class="fas fa-house-chimney"></i></a>
+            <a href="#" class="nav-link" onclick="openPopup('gallery')"><i class="fas fa-images"></i><span>Gallery</span></a>
+            <a href="#" class="nav-link"><i class="fas fa-user-circle"></i><span>Profile</span></a>
         </nav>
     </div>
 
-    <!-- REGION MODAL -->
-    <div id="location-modal-overlay" class="modal-overlay">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h3 id="modal-title" class="text-xl font-black uppercase text-white">Select <span class="text-primary">Region</span></h3>
-                <button onclick="closeModal()" class="text-primary text-3xl"><i class="fas fa-times"></i></button>
+    <!-- MODAL -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-box">
+            <div id="modalBg" class="modal-bg-img"></div>
+            <div class="flex justify-between items-center mb-8 px-2 relative z-10">
+                <div>
+                    <h2 id="modalTitle" class="text-2xl font-black text-primary uppercase">Collection</h2>
+                    <p class="text-[10px] text-gray-300 uppercase tracking-[4px] mt-1">Refined Selections</p>
+                </div>
+                <button onclick="closePopup()" class="w-12 h-12 rounded-2xl bg-white/10 border border-primary/30 text-primary flex items-center justify-center"><i class="fas fa-times"></i></button>
             </div>
-            <div id="modal-list" class="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
-                <!-- Items Dynamic -->
-            </div>
+            <div id="modalList" class="space-y-4 max-h-[50vh] overflow-y-auto pr-2 px-2 relative z-10"></div>
         </div>
     </div>
 
     <script>
-        const SERVICE_DATA = [
-            { id: 'rooms', title: 'Rooms', icon: 'fa-bed', size: 'col-span-1 row-span-2', img: 'rooms.png', 
-                menu: [{n: "Rooms in Rural", l: "rooms_search_rural.html"}, {n: "Rooms in Urban", l: "rooms_search_urban.html"}, {n: "List Your Room", l: "list_Your_property.html"}] },
-            { id: 'flats', title: 'Flats', icon: 'fa-building', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-2', img: 'flats.png', 
-                menu: [{n: "Flats in Rural", l: "flats_search_rural.html"}, {n: "Flats in Urban", l: "flats_search_urban.html"}, {n: "List Your Flat", l: "list_Your_property.html"}] },
-            { id: 'shops', title: 'Shops', icon: 'fa-store', size: 'col-span-1 row-span-1', img: 'shops.png', 
-                menu: [{n: "Shops in Rural", l: "shops_search_rural.html"}, {n: "Shops in Urban", l: "shops_search_urban.html"}, {n: "List Your Shop", l: "list_Your_property.html"}] },
-            { id: 'pg', title: 'P.G.', icon: 'fa-user-group', size: 'col-span-1 row-span-1', img: 'payingguest.png', 
-                menu: [{n: "P.G. in Rural", l: "pg_search_rural.html"}, {n: "P.G. in Urban", l: "pg_search_urban.html"}, {n: "List Your P.G.", l: "list_Your_property.html"}] },
-            { id: 'hostels', title: 'Hostels', icon: 'fa-school', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-1', img: 'hostels.png', 
-                menu: [{n: "Hostels in Rural", l: "hostels_search_rural.html"}, {n: "Hostels in Urban", l: "hostels_search_urban.html"}] },
-            { id: 'houses', title: 'Houses', icon: 'fa-home', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-1', img: 'houses.png', 
-                menu: [{n: "Houses in Rural", l: "houses_search_rural.html"}, {n: "Houses in Urban", l: "houses_search_urban.html"}] },
-            { id: 'plots', title: 'Plots', icon: 'fa-map', size: 'col-span-1 row-span-1', img: 'plots.png', 
-                menu: [{n: "Plots in Rural", l: "plots_search_rural.html"}, {n: "Plots in Urban", l: "plots_search_urban.html"}] }
-        ];
-
-        const HERO_SLIDES = [
-            { title: "Smarter Spaces.<br>Faster Renting.", subtitle: "Urban locations par premium flats aur rooms ka collection.", bg: "flats.png" },
-            { title: "Business Hubs.<br>Prime Shops.", subtitle: "Commercial properties jo aapke brand ko boost dein.", bg: "shops.png" }
-        ];
-
-        function renderBento() {
-            const container = document.getElementById('bento-container');
-            container.innerHTML = SERVICE_DATA.map(item => `
-                <div class="glass-card flex flex-col justify-end p-5 sm:p-8 ${item.size} cursor-pointer group" onclick="openModal('${item.id}')">
-                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
-                    <div class="relative z-10">
-                        <i class="fas ${item.icon} text-primary text-sm mb-2 shadow-lg"></i>
-                        <h3 class="text-[13px] sm:text-2xl font-black tracking-tighter uppercase leading-tight text-white">${item.title}</h3>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderSidebar() {
-            const container = document.getElementById('sidebar-links-container');
-            container.innerHTML = SERVICE_DATA.map(item => `
-                <div class="w-full">
-                    <div class="sidebar-card-btn" onclick="toggleDropdown('${item.id}')">
-                        <div class="flex items-center">
-                            <i class="fas ${item.icon} text-primary mr-4 text-sm"></i>
-                            <span class="font-black text-xs uppercase text-white">${item.title}</span>
-                        </div>
-                        <i id="arrow-${item.id}" class="fas fa-chevron-down text-[10px] text-primary/50 transition-transform"></i>
-                    </div>
-                    <div id="dropdown-${item.id}" class="dropdown-container">
-                        ${item.menu.map(m => `<a href="${m.l}" class="dropdown-item-shs">${m.n}</a>`).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function toggleDropdown(id) {
-            const el = document.getElementById(`dropdown-${id}`);
-            const arrow = document.getElementById(`arrow-${id}`);
-            const isOpen = el.classList.toggle('open');
-            arrow.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-        }
-
-        function openModal(id) {
-            const item = SERVICE_DATA.find(x => x.id === id);
-            const overlay = document.getElementById('location-modal-overlay');
-            const list = document.getElementById('modal-list');
-            document.getElementById('modal-title').innerHTML = `Select <span class="text-primary">${item.title}</span>`;
-            list.innerHTML = item.menu.map(m => `
-                <a href="${m.l}" class="modal-item">
-                    <span class="text-sm font-black uppercase">${m.n}</span>
-                    <i class="fas fa-arrow-right text-xs text-primary"></i>
-                </a>
-            `).join('');
-            overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('location-modal-overlay').style.display = 'none';
-            document.body.style.overflow = '';
-        }
-
-        let currentSlide = 0;
-        function updateHero() {
-            const slide = HERO_SLIDES[currentSlide];
-            document.getElementById('hero-slider').style.backgroundImage = `url('${slide.bg}')`;
-            document.getElementById('hero-title').innerHTML = slide.title;
-            document.getElementById('hero-subtitle').innerText = slide.subtitle;
-        }
-
         const menuBtn = document.getElementById('menuBtn');
         const sidebar = document.getElementById('sidebar');
         const closeSidebarBtn = document.getElementById('closeSidebar');
@@ -353,15 +314,87 @@
         menuBtn.onclick = () => sidebar.classList.add('open');
         closeSidebarBtn.onclick = () => sidebar.classList.remove('open');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderBento();
-            renderSidebar();
-            updateHero();
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)'; 
+            }
+        }
 
-            document.getElementById('slide-next').onclick = () => { currentSlide = (currentSlide + 1) % HERO_SLIDES.length; updateHero(); };
-            document.getElementById('slide-prev').onclick = () => { currentSlide = (currentSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length; updateHero(); };
-            
-            setInterval(() => { currentSlide = (currentSlide + 1) % HERO_SLIDES.length; updateHero(); }, 6000);
+        const lists = {
+            bridal: { title: "Bridal Suite", bg: "blessingsssl.png", items: [{ name: "Traditional Royal", link: "bridal_traditional.html" }, { name: "Arabic Premium", link: "bridal_arabic.html" }, { name: "Indo-Western", link: "bridal_indowestern.html" }] },
+            festive: { title: "Festive Art", bg: "blessingsssl.png", items: [ { name: "Indo Arebic", link: "festive_indoarebic.html" },{ name: "Moroccan Trends", link: "festive_Moroccon.html" },{ name: "Arabic Festive", link: "festive_arabic.html" }, { name: "Indian Classic", link: "festive_indian.html" }, { name: "Minimal Style", link: "festive_minimal.html" }] },
+            gallery: { 
+                title: "Gallery", 
+                bg: "blessingsssl.png", 
+                items: [
+                    { name: "Traditional Bridal Masterpieces", link: "tradi.html" }, 
+                    { name: "Arabic Bridal Specials", link: "one.html" },
+                    { name: "Indo-Western Fusion Luxe", link: "two.html" },
+                    { name: "Festive Arabic Collection", link: "thre.html" },
+                    { name: "Indian Festive Classics", link: "indian_festive_mehndi.html" },
+                    { name: "Indo-Arabic Fusion Art", link: "festive_indioarabic.html" },
+                    { name: "Moroccan & Geometric Trends", link: "tradi_geometric.html" },
+                    { name: "Minimalist Festive Elegance", link: "festive_minimal_art.html" }
+                ] 
+            }
+        };
+
+        function openPopup(key) {
+            const data = lists[key];
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalBg').style.backgroundImage = `url('${data.bg}')`;
+            const container = document.getElementById('modalList');
+            container.innerHTML = data.items.map(item => `
+                <div class="list-item" onclick="window.location.href='${item.link}'">
+                    <span class="font-black text-xs uppercase">${item.name}</span>
+                    <i class="fas fa-chevron-right text-primary text-[10px]"></i>
+                </div>
+            `).join('');
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        const slides = [
+            { title: "Golden Bridal Art", desc: "Experience Royal Embroidery Patterns", img: "bridal.png" },
+            { title: "Royal Festive Art", desc: "Trendy Styles for Your Celebrations", img: "festive.png" }
+        ];
+        let currentSlide = 0;
+
+        function changeSlide(dir) {
+            currentSlide = (currentSlide + dir + slides.length) % slides.length;
+            const slide = slides[currentSlide];
+            const slideImg = document.getElementById('slide-img');
+            slideImg.style.opacity = '0';
+            setTimeout(() => {
+                slideImg.style.backgroundImage = `url('${slide.img}')`;
+                document.getElementById('slide-title').innerText = slide.title;
+                document.getElementById('slide-desc').innerText = slide.desc;
+                slideImg.style.opacity = '1';
+            }, 300);
+        }
+
+        setInterval(() => changeSlide(1), 5000);
+
+        document.querySelectorAll('.premium-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth < 1024) return;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) / 10;
+                const y = (e.clientY - rect.top - rect.height / 2) / 10;
+                card.style.transform = `rotateX(${-y}deg) rotateY(${x}deg) translateY(-10px)`;
+            });
+            card.addEventListener('mouseleave', () => card.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0)`);
         });
     </script>
 </body>
