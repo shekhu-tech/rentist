@@ -4,413 +4,256 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Rentist - Your Ultimate Rental Guide</title>
-    <!-- Tailwind CSS CDN -->
+    
+    <!-- Tailwind CSS aur Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+Devanagari:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- GLOBAL & THEME VARIABLES (Classic Light Green) --- */
+        /* --- SHINING GREEN DARK THEME --- */
         :root {
-            --color-primary: #76FF03; 
-            --color-primary-rgb: 118, 255, 3; 
-            --color-secondary: #00897B;
-            --color-text-primary: #f3f4f6; 
-            --bg-main-dark: #080808; 
-            --glass-bg-dark: rgba(26, 39, 51, 0.85); 
-            --premium-bg-dark: #121e29; 
-            --electric-green-glow: #76FF03; 
+            --primary: #76FF03; 
+            --primary-rgb: 118, 255, 3; 
+            --gold-dark: #B8860B; /* Golden Dark Color */
+            --bg-dark: #050505; 
+            --header-offset: calc(15px + env(safe-area-inset-top));
+            --header-height: 64px;
+            --footer-offset: calc(25px + env(safe-area-inset-bottom));
+            --footer-height: 76px;
+            --text-light: #ffffff;
+            --premium-bg-dark: #0a1208;
         }
 
-        /* --- BASE LAYOUT --- */
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-main-dark); 
-            color: var(--color-text-primary); 
-            min-height: 100vh;
-            /* Header spacing fixed for webview */
-            padding-top: calc(85px + env(safe-area-inset-top)); 
-            padding-bottom: calc(90px + env(safe-area-inset-bottom)); 
-            position: relative;
-            z-index: 1; 
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding-top: calc(var(--header-offset) + var(--header-height) + 20px);
+            padding-bottom: calc(var(--footer-offset) + var(--footer-height) + 40px);
+            margin: 0;
+            font-weight: 900; 
         }
 
         /* --- BACKGROUND --- */
         #fixed-media-background {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: -10; 
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15; 
-            background-image: url('flats.png');
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -10; background-size: cover; background-position: center;
+            opacity: 0.12; background-image: url('flats.png');
         }
 
-        /* --- HEADER FIXED (Solve Webview Overlap) --- */
-        .fixed-header-container {
+        /* --- SHINING GREEN HEADER --- */
+        .iphone-header {
+            position: fixed; top: var(--header-offset); left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 600px; height: var(--header-height);
+            background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(25px);
+            border: 2px solid rgba(118, 255, 3, 0.4); border-radius: 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; z-index: 2000; box-shadow: 0 0 25px rgba(118, 255, 3, 0.15);
+        }
+
+        /* --- SIDEBAR PANEL --- */
+        .mobile-panel {
             position: fixed; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            z-index: 2000;
-            padding-top: env(safe-area-inset-top);
-            background: rgba(8, 8, 8, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 4px solid var(--color-primary);
+            top: calc(var(--header-offset) + var(--header-height) + 10px); 
+            bottom: calc(var(--footer-offset) + var(--footer-height) + 10px);
+            right: 15px; width: 85%; max-width: 340px;
+            background: linear-gradient(165deg, #0a1505 0%, #050505 100%);
+            backdrop-filter: blur(45px); z-index: 1500; 
+            transform: translateX(120%); transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 2px solid var(--primary); border-radius: 35px; overflow: hidden;
+            box-shadow: -15px 0 40px rgba(0,0,0,0.9);
         }
-        
-        /* --- SIDEBAR ULTRA STYLE --- */
-        .mobile-menu-panel {
-            position: fixed;
-            top: calc(78px + env(safe-area-inset-top)); 
-            bottom: calc(80px + env(safe-area-inset-bottom));
-            right: 0;
-            width: 85%;
-            max-width: 350px;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            background: linear-gradient(165deg, rgba(20, 30, 40, 0.98) 0%, rgba(5, 10, 15, 1) 100%);
-            z-index: 1100;
-            border-left: 2px solid var(--color-primary);
-            border-top-left-radius: 40px;
-            border-bottom-left-radius: 40px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: -20px 0 60px rgba(0,0,0,0.8);
-        }
-        
-        .mobile-menu-overlay { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8); 
-            backdrop-filter: blur(10px); z-index: 1050; display: none; 
-        }
+        .mobile-panel.open { transform: translateX(0); }
+        .sidebar-inner { height: 100%; overflow-y: auto; padding: 25px 20px; }
+        .sidebar-close-btn { position: absolute; top: 15px; right: 15px; width: 35px; height: 35px; border-radius: 50%; background: var(--primary); color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; }
 
-        /* --- SIDEBAR & DROPDOWN ITEMS (Card-like style) --- */
-        .sidebar-card-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            margin-bottom: 10px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .sidebar-card-btn:hover, .sidebar-card-btn.active {
-            background: rgba(var(--color-primary-rgb), 0.1);
-            border-color: var(--color-primary);
-            box-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.3);
-        }
-        
-        .dropdown-container {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out;
-            padding-left: 10px;
-            margin-bottom: 10px;
-        }
-        .dropdown-container.open {
-            max-height: 300px;
-        }
-        
-        .dropdown-item-shs {
-            padding: 10px 15px;
-            margin: 5px 0;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 3px solid var(--color-primary);
-            font-size: 13px;
-            font-weight: 600;
-            display: block;
-            color: #ddd;
-            transition: all 0.2s;
-        }
-        .dropdown-item-shs:hover {
-            background: rgba(var(--color-primary-rgb), 0.1);
-            transform: translateX(5px);
-            color: var(--color-primary);
-        }
-
-        /* --- BOTTOM NAV --- */
-        .bottom-nav-fixed {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background-color: var(--glass-bg-dark); 
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.7);
-            border-top: 1px solid rgba(var(--color-primary-rgb), 0.3);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .nav-item-shs {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--color-text-primary); transition: all 0.3s ease;
-            font-size: 0.75rem; padding: 10px 0;
-            opacity: 0.7; text-decoration: none;
-        }
-        .nav-item-shs:hover, .nav-item-shs.active {
-            color: var(--color-primary); transform: scale(1.1); opacity: 1;
-        }
-        .central-fab {
-            position: absolute; top: -28px; width: 64px; height: 64px; border-radius: 50%;
-            background-color: var(--color-primary); border: 4px solid var(--bg-main-dark); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;
-            animation: pulseShadow 2s infinite;
-        }
-        @keyframes pulseShadow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(var(--color-primary-rgb), 0); }
-        }
-
-        /* --- BENTO GRID & HERO --- */
+        /* --- BENTO GRID CARDS --- */
         .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            grid-auto-rows: 140px; 
-            gap: 0.75rem;
+            display: grid; grid-template-columns: repeat(2, 1fr); 
+            grid-auto-rows: 140px; gap: 0.75rem;
         }
         @media (min-width: 768px) {
-            .bento-grid { 
-                grid-template-columns: repeat(4, 1fr); 
-                grid-auto-rows: minmax(180px, auto);
-                gap: 1.5rem;
-            }
+            .bento-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(180px, auto); gap: 1.5rem; }
         }
-
         .glass-card {
-            background: rgba(26, 39, 51, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(10, 20, 10, 0.6); backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(var(--color-primary-rgb), 0.2);
-            border-color: var(--color-primary);
+        .glass-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 0 20px rgba(118, 255, 3, 0.3); }
+
+        /* --- DOCK NAVIGATION --- */
+        .iphone-dock-wrapper { 
+            position: fixed; bottom: var(--footer-offset); 
+            left: 0; width: 100%; display: flex; justify-content: center; z-index: 2000; padding: 0 15px; 
         }
+        .iphone-dock { width: 100%; max-width: 500px; height: var(--footer-height); background: rgba(5, 10, 5, 0.9); backdrop-filter: blur(30px); border-radius: 32px; border: 2px solid rgba(118, 255, 3, 0.2); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
+        .dock-item { display: flex; flex-direction: column; align-items: center; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 1.1rem; font-weight: 900; }
+        .dock-item span { font-size: 0.65rem; margin-top: 4px; font-weight: 900; text-transform: uppercase; }
+        .dock-item.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .dock-fab { width: 60px; height: 60px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.5rem; transform: translateY(-25px); border: 4px solid var(--bg-dark); box-shadow: 0 0 25px rgba(118, 255, 3, 0.4); }
 
         /* --- MODAL --- */
         .modal-overlay {
-            position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.95);
+            position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.96);
             backdrop-filter: blur(15px); z-index: 2500; display: none; 
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;
+            justify-content: center; align-items: center;
         }
         .modal-content {
-            width: 95%; max-width: 450px; background: #121212; border-radius: 30px;
-            border: 1px solid var(--color-primary); padding: 25px;
-            box-shadow: 0 0 40px rgba(var(--color-primary-rgb), 0.2);
+            width: 95%; max-width: 450px; background: #080a08; border-radius: 30px;
+            border: 2px solid var(--primary); padding: 25px; box-shadow: 0 0 40px rgba(118, 255, 3, 0.2);
         }
+        .modal-item {
+            padding: 14px 18px; background: rgba(255,255,255,0.05); border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: #fff; border-left: 5px solid var(--primary); font-weight: 900;
+        }
+
+        /* --- SIDEBAR BUTTONS --- */
+        .sidebar-card-btn { background: rgba(118, 255, 3, 0.05); border: 2px solid rgba(118, 255, 3, 0.2); border-radius: 18px; margin-bottom: 8px; padding: 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .dropdown-container { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 10px; }
+        .dropdown-container.open { max-height: 350px; }
+        .dropdown-item-shs { padding: 12px 15px; margin: 5px 0; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border-left: 4px solid var(--primary); font-size: 13px; font-weight: 900; display: block; color: #eee; text-decoration: none; }
+
+        /* --- GOLDEN DARK BUTTON STYLE --- */
+        .gold-dark-btn {
+            background: var(--gold-dark) !important;
+            color: #000 !important;
+            box-shadow: 0 0 20px rgba(184, 134, 11, 0.5) !important;
+            border: none !important;
+        }
+
+        /* --- TEXT BOLD NO ITALIC (MANDATORY) --- */
+        * { font-style: normal !important; }
+        h1, h2, h3, h4, h5, span, p, a, button, div { font-weight: 900 !important; font-style: normal !important; }
+        i { font-style: normal !important; }
     </style>
 </head>
 <body>
     
     <div id="fixed-media-background"></div>
 
-    <!-- HEADER -->
-    <div class="fixed-header-container">
-        <header id="main-header" class="p-4 flex justify-between items-center container mx-auto">
-            <a href="main.html" class="flex items-center no-underline">
-                <img src="rentist.png" alt="Logo" class="h-10 w-10 mr-3 rounded-full border border-primary/50 object-cover" style="border-color: var(--color-primary);">
-                <img src="skillora.png" alt="Rentist" class="h-[35px] w-auto object-contain" onerror="this.src='https://placehold.co/100x35/000/76FF03?text=Rentist';" />
-            </a>
+    <!-- HEADER (GREEN SHINING) -->
+    <header class="iphone-header">
+        <div class="flex items-center gap-3">
+            <img src="rentist.png" alt="Logo" class="w-9 h-9 rounded-xl border-2 border-primary shadow-lg">
+            <img src="skillora.png" alt="Rentist" class="h-[22px]">
+        </div>
+        <button id="menuBtn" class="w-11 h-11 rounded-2xl bg-primary/10 border-2 border-primary/30 flex items-center justify-center text-primary text-xl shadow-lg">
+            <i class="fas fa-bars-staggered"></i>
+        </button>
+    </header>
 
-            <div class="flex items-center space-x-4">
-                <div class="hidden md:flex border-l-4 border-primary/50 pl-6 bg-primary/5 p-2 rounded-xl" style="border-color: var(--color-primary);">
-                    <a href="tel:8816014071" class="flex items-center font-extrabold text-white text-xl">
-                        <i class="fas fa-phone-alt mr-2" style="color: var(--color-primary);"></i>
-                    </a>
-                </div>
-                <!-- Premium Sidebar Toggle Button -->
-                <button id="mobile-menu-button" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-primary shadow-lg active:scale-90 transition-all" style="background-color: var(--color-primary);">
-                    <i class="fas fa-bars-staggered text-black text-xl"></i>
-                </button>
+    <!-- SIDEBAR (GREEN DARK) -->
+    <div id="sidebar" class="mobile-panel">
+        <div class="sidebar-inner">
+            <div class="sidebar-close-btn" id="closeSidebar"><i class="fas fa-times"></i></div>
+            
+            <!-- GOLDEN DARK LIST PROPERTY BUTTON AT TOP -->
+            <div class="mb-8 pt-6">
+                <a href="list_Your_property.html" class="gold-dark-btn block p-4 rounded-2xl font-black text-center uppercase text-sm tracking-wider hover:scale-[1.02] transition-transform">
+                    <i class="fas fa-plus-circle mr-2"></i> LIST PROPERTY ADD
+                </a>
             </div>
-        </header>
+
+            <div class="mb-6 border-b border-primary/20 pb-4">
+                <h2 class="text-xl font-black uppercase text-white">Ren<span class="text-primary">Tist</span></h2>
+                <p class="text-[9px] text-gray-500 uppercase tracking-[4px] font-black">Categories</p>
+            </div>
+
+            <nav id="sidebar-links-container">
+                <!-- Javascript category buttons rendered here -->
+            </nav>
+        </div>
     </div>
 
-    <!-- SIDEBAR (ULTRA SHINING) -->
-    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
-    <aside id="mobile-menu-panel" class="mobile-menu-panel translate-x-full">
-        <div class="p-7 pb-4 flex justify-between items-center">
-            <div class="flex flex-col">
-                <span class="text-[9px] font-black tracking-[5px] uppercase text-gray-500 mb-1"></span>
-                <h2 class="text-xl font-black italic uppercase tracking-tighter"> <span style="color: var(--color-primary);">Menu</span></h2>
-            </div>
-            <button id="mobile-menu-close-button" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 text-white border border-white/10 hover:bg-primary hover:text-black transition-all">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="px-6 mb-4">
-            <div class="p-4 rounded-[26px] bg-white/[0.03] border border-primary/20 flex items-center space-x-4 shadow-inner">
-                <div class="w-11 h-11 bg-primary/10 rounded-2xl flex items-center justify-center border border-primary/30 relative">
-                    <i class="fas fa-user-astronaut text-primary text-base" style="color: var(--color-primary);"></i>
-                    <div class="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full border-2 border-[#0A0A0A] animate-pulse"></div>
-                </div>
-                <div>
-                    <h4 class="text-xs font-black italic uppercase">Ren <span style="color: var(--color-primary);">TisT</span></h4>
-                    <p class="text-[8px] text-gray-400 uppercase font-black tracking-[3px]">Your-Rent-Guide</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sidebar Content - Dynamic Category Buttons with Dropdowns -->
-        <nav id="sidebar-links-container" class="px-6 pb-4 overflow-y-auto flex-grow">
-            <!-- Items generated by JS (Buttons same as cards with dropdown) -->
-        </nav>
-
-        <div class="p-6 pt-2">
-            <a href="list_Your_property.html" class="p-4 rounded-[24px] bg-primary text-black flex items-center justify-between group cursor-pointer shadow-[0_15px_35px_rgba(var(--color-primary-rgb),0.3)] hover:scale-[1.02] active:scale-95 transition-all" style="background-color: var(--color-primary);">
-                <h5 class="text-[11px] font-black uppercase tracking-tight italic">Post Property Ad</h5>
-                <div class="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center">
-                    <i class="fas fa-plus text-sm"></i>
-                </div>
-            </a>
-        </div>
-    </aside>
-
     <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-4">
+    <main class="max-w-7xl mx-auto px-4 mt-6">
+        
         <!-- Hero Slider Area -->
         <div id="hero-section" class="mb-10">
-            <div class="relative h-[250px] sm:h-[480px] rounded-[30px] sm:rounded-[60px] overflow-hidden border border-white/10 shadow-2xl">
+            <div class="relative h-[250px] sm:h-[480px] rounded-[30px] sm:rounded-[60px] overflow-hidden border-2 border-primary/20 shadow-2xl">
                 <div id="hero-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000" style="background-image: url('flats.png');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                 
-                <div class="absolute bottom-6 left-6 max-w-2xl pr-8">
-                    <h1 id="hero-title" class="text-xl sm:text-6xl font-black mb-2 tracking-tighter leading-tight italic uppercase text-white">Explore Your<br>Dream Space.</h1>
-                    <p id="hero-subtitle" class="text-gray-400 text-[10px] sm:text-xl mb-4 font-medium">Find top rooms, flats, and shops with ease.</p>
-                    <a href="#bento-container" class="inline-flex items-center px-6 py-3 font-black rounded-full text-[10px] sm:text-sm uppercase tracking-widest shadow-lg" style="background-color: var(--color-primary); color: #000;">
+                <div class="absolute bottom-8 left-8 max-w-2xl pr-8">
+                    <h1 id="hero-title" class="text-2xl sm:text-6xl font-black mb-2 tracking-tighter leading-tight uppercase text-white">Explore Your<br>Dream Space.</h1>
+                    <p id="hero-subtitle" class="text-gray-300 text-[11px] sm:text-xl mb-5 font-black uppercase">Top rooms, flats, and shops at your fingertips.</p>
+                    <a href="#bento-container" class="inline-flex items-center px-8 py-4 font-black rounded-full text-[11px] sm:text-sm uppercase tracking-widest shadow-xl bg-primary text-black hover:scale-105 transition-transform">
                         EXPLORE NOW
                     </a>
                 </div>
 
-                <div class="absolute bottom-6 right-6 flex space-x-2">
-                    <button id="slide-prev" class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center border border-white/10 rounded-xl backdrop-blur-xl text-white hover:bg-white/10 transition-all"><i class="fas fa-chevron-left"></i></button>
-                    <button id="slide-next" class="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center bg-white text-black rounded-xl hover:scale-105 transition-all"><i class="fas fa-chevron-right"></i></button>
+                <div class="absolute bottom-8 right-8 flex space-x-3">
+                    <button id="slide-prev" class="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center border-2 border-primary/30 rounded-2xl backdrop-blur-xl text-white hover:bg-primary/20"><i class="fas fa-chevron-left"></i></button>
+                    <button id="slide-next" class="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center bg-primary text-black rounded-2xl shadow-lg hover:scale-110 transition-all"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- Smart Rent Heading -->
-        <div class="mb-6 px-1">
-            <h2 class="text-2xl sm:text-4xl font-black tracking-tighter italic uppercase leading-none">Rental <span style="color: var(--color-primary);">Services</span></h2>
-            <p class="text-gray-500 font-bold uppercase text-[8px] tracking-[4px] mt-1 opacity-60">Handpicked Categories</p>
+        <div class="mb-8 px-2">
+            <h2 class="text-3xl sm:text-5xl font-black tracking-tighter uppercase leading-none">Rental <span class="text-primary">Services</span></h2>
+            <div class="h-1.5 w-24 bg-primary mt-3 rounded-full shadow-[0_0_10px_var(--primary)]"></div>
         </div>
 
         <!-- Category Grid -->
-        <div id="bento-container" class="bento-grid mb-10">
-            <!-- Bento Items Generated Here -->
+        <div id="bento-container" class="bento-grid mb-12">
+            <!-- Generated via Script -->
         </div>
     </main>
     
-    <!-- BOTTOM NAV -->
-    <nav class="bottom-nav-fixed">
-        <div class="flex justify-around items-end h-16 relative px-2">
-            <a href="list_Your_property.html" class="nav-item-shs">
-                <i class="fas fa-user-plus text-xl mb-1"></i>
-                <span class="font-medium">Register</span>
+    <!-- DOCK NAVIGATION -->
+    <div class="iphone-dock-wrapper">
+        <nav class="iphone-dock">
+            <a href="list_Your_property.html" class="dock-item">
+                <i class="fas fa-user-plus"></i><span>Register</span>
             </a>
-            <a href="suggestion.html" class="nav-item-shs">
-    <i class="fas fa-comment-dots text-xl mb-1"></i>
-    <span class="font-medium">Suggest</span>
-</a>
+            <a href="suggestion.html" class="dock-item">
+                <i class="fas fa-comment-dots"></i><span>Suggest</span>
+            </a>
+            <a href="main.html" class="dock-fab">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="learn.html" class="dock-item">
+                <i class="fas fa-book-open"></i><span>Learn</span>
+            </a>
+            <a href="see_my_listings.html" class="dock-item">
+                <i class="fas fa-user"></i><span>Profile</span>
+            </a>
+        </nav>
+    </div>
 
-            <div class="central-nav-item-shs" style="width: 20%; display: flex; justify-content: center; position: relative; height: 100%;">
-                <a href="main.html" class="central-fab">
-                    <i class="fas fa-home text-2xl text-black"></i>
-                </a>
-                <span class="absolute bottom-1 font-bold text-[10px]" style="color: var(--color-primary);">Home</span>
-            </div>
-            <a href="learn.html" class="nav-item-shs">
-                <i class="fas fa-book-open text-xl mb-1"></i>
-                <span class="font-medium">LearniT</span>
-            </a>
-            <a href="see_my_listings.html" class="nav-item-shs">
-                <i class="fas fa-user text-xl mb-1"></i> 
-                <span class="font-medium">Profiles</span>
-            </a>
-        </div>
-    </nav>
-
-    <!-- REGION MODAL (Keep as backup interaction) -->
+    <!-- REGION MODAL -->
     <div id="location-modal-overlay" class="modal-overlay">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-6">
-                <h3 id="modal-title" class="text-xl font-black italic uppercase">Select <span style="color: var(--color-primary);">Region</span></h3>
-                <button id="modal-close-button" class="text-white text-2xl"><i class="fas fa-times"></i></button>
+                <h3 id="modal-title" class="text-xl font-black uppercase text-white">Select <span class="text-primary">Region</span></h3>
+                <button onclick="closeModal()" class="text-primary text-3xl"><i class="fas fa-times"></i></button>
             </div>
-            <div id="modal-list" class="space-y-3 max-h-[60vh] overflow-y-auto">
-                <!-- Location Items -->
+            <div id="modal-list" class="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
+                <!-- Items Dynamic -->
             </div>
         </div>
     </div>
 
     <script>
-        // --- CENTRALIZED DATA (Wahi items jo rentist.html mein the) ---
         const SERVICE_DATA = [
             { id: 'rooms', title: 'Rooms', icon: 'fa-bed', size: 'col-span-1 row-span-2', img: 'rooms.png', 
-                menu: [
-                    {n: "Rooms in Rural", l: "rooms_search_rural.html"},
-                    {n: "Rooms in Urban", l: "rooms_search_urban.html"},
-                    {n: "List Your Room", l: "list_Your_property.html"},
-                    {n: "View Your Listings", l: "see_my_listings.html"}
-                ] 
-            },
+                menu: [{n: "Rooms in Rural", l: "rooms_search_rural.html"}, {n: "Rooms in Urban", l: "rooms_search_urban.html"}, {n: "List Your Room", l: "list_Your_property.html"}] },
             { id: 'flats', title: 'Flats', icon: 'fa-building', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-2', img: 'flats.png', 
-                menu: [
-                    {n: "Flats in Rural", l: "flats_search_rural.html"},
-                    {n: "Flats in Urban", l: "flats_search_urban.html"},
-                    {n: "List Your Flat", l: "list_Your_property.html"},
-                    {n: "View Your Listings", l: "see_my_listings.html"}
-                ] 
-            },
+                menu: [{n: "Flats in Rural", l: "flats_search_rural.html"}, {n: "Flats in Urban", l: "flats_search_urban.html"}, {n: "List Your Flat", l: "list_Your_property.html"}] },
             { id: 'shops', title: 'Shops', icon: 'fa-store', size: 'col-span-1 row-span-1', img: 'shops.png', 
-                menu: [
-                    {n: "Shops in Rural", l: "shops_search_rural.html"},
-                    {n: "Shops in Urban", l: "shops_search_urban.html"},
-                    {n: "List Your Shop", l: "list_Your_property.html"},
-                    {n: "View Your Listings", l: "see_my_listings.html"}
-                ] 
-            },
+                menu: [{n: "Shops in Rural", l: "shops_search_rural.html"}, {n: "Shops in Urban", l: "shops_search_urban.html"}, {n: "List Your Shop", l: "list_Your_property.html"}] },
             { id: 'pg', title: 'P.G.', icon: 'fa-user-group', size: 'col-span-1 row-span-1', img: 'payingguest.png', 
-                menu: [
-                    {n: "P.G. in Rural", l: "pg_search_rural.html"},
-                    {n: "P.G. in Urban", l: "pg_search_urban.html"},
-                    {n: "List Your P.G.", l: "list_Your_property.html"},
-                    {n: "View Your Listings", l: "see_my_listings.html"}
-                ] 
-            },
+                menu: [{n: "P.G. in Rural", l: "pg_search_rural.html"}, {n: "P.G. in Urban", l: "pg_search_urban.html"}, {n: "List Your P.G.", l: "list_Your_property.html"}] },
             { id: 'hostels', title: 'Hostels', icon: 'fa-school', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-1', img: 'hostels.png', 
-                menu: [
-                    {n: "Hostels in Rural", l: "hostels_search_rural.html"},
-                    {n: "Hostels in Urban", l: "hostels_search_urban.html"},
-                    {n: "List Your Hostel", l: "list_Your_property.html"},
-                    {n: "View Your Listings", l: "see_my_listings.html"}
-                ] 
-            },
+                menu: [{n: "Hostels in Rural", l: "hostels_search_rural.html"}, {n: "Hostels in Urban", l: "hostels_search_urban.html"}] },
             { id: 'houses', title: 'Houses', icon: 'fa-home', size: 'col-span-1 row-span-1 sm:col-span-2 sm:row-span-1', img: 'houses.png', 
-                menu: [
-                    {n: "Houses in Rural", l: "houses_search_rural.html"},
-                    {n: "Houses in Urban", l: "houses_search_urban.html"},
-                    {n: "List Your House", l: "list_Your_property.html"},
-                    {n: "View Your Listings", l: "see_my_listings.html"}
-                ] 
-            },
+                menu: [{n: "Houses in Rural", l: "houses_search_rural.html"}, {n: "Houses in Urban", l: "houses_search_urban.html"}] },
             { id: 'plots', title: 'Plots', icon: 'fa-map', size: 'col-span-1 row-span-1', img: 'plots.png', 
-                menu: [
-                    {n: "Plots in Rural", l: "plots_search_rural.html"},
-                    {n: "Plots in Urban", l: "plots_search_urban.html"},
-                    {n: "List Your Plot", l: "list_Your_property.html"},
-                    {n: "View Your Listings", l: "see_my_listings.html"}
-                ] 
-            }
+                menu: [{n: "Plots in Rural", l: "plots_search_rural.html"}, {n: "Plots in Urban", l: "plots_search_urban.html"}] }
         ];
 
         const HERO_SLIDES = [
@@ -418,18 +261,15 @@
             { title: "Business Hubs.<br>Prime Shops.", subtitle: "Commercial properties jo aapke brand ko boost dein.", bg: "shops.png" }
         ];
 
-        // --- RENDER FUNCTIONS ---
         function renderBento() {
             const container = document.getElementById('bento-container');
             container.innerHTML = SERVICE_DATA.map(item => `
-                <div class="glass-card rounded-[24px] sm:rounded-[40px] overflow-hidden p-4 sm:p-8 relative flex flex-col justify-end ${item.size} cursor-pointer group" onclick="openModal('${item.id}')">
-                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700" alt="${item.title}" onerror="this.src='https://placehold.co/400x400/111/76FF03?text=${item.title}'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                <div class="glass-card flex flex-col justify-end p-5 sm:p-8 ${item.size} cursor-pointer group" onclick="openModal('${item.id}')">
+                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
                     <div class="relative z-10">
-                        <div class="w-8 h-8 rounded-xl flex items-center justify-center mb-2 border border-primary/20" style="background: rgba(var(--color-primary-rgb), 0.2); border-color: var(--color-primary);">
-                            <i class="fas ${item.icon} text-xs" style="color: var(--color-primary);"></i>
-                        </div>
-                        <h3 class="text-[12px] sm:text-2xl font-black italic tracking-tighter uppercase leading-tight text-white">${item.title}</h3>
+                        <i class="fas ${item.icon} text-primary text-sm mb-2 shadow-lg"></i>
+                        <h3 class="text-[13px] sm:text-2xl font-black tracking-tighter uppercase leading-tight text-white">${item.title}</h3>
                     </div>
                 </div>
             `).join('');
@@ -437,22 +277,17 @@
 
         function renderSidebar() {
             const container = document.getElementById('sidebar-links-container');
-            // Sidebar Category Buttons with Dropdowns (Same button style as cards)
             container.innerHTML = SERVICE_DATA.map(item => `
                 <div class="w-full">
                     <div class="sidebar-card-btn" onclick="toggleDropdown('${item.id}')">
                         <div class="flex items-center">
-                            <div class="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 mr-4">
-                                <i class="fas ${item.icon} text-xs" style="color: var(--color-primary);"></i>
-                            </div>
-                            <span class="font-black italic text-sm uppercase text-white">${item.title}</span>
+                            <i class="fas ${item.icon} text-primary mr-4 text-sm"></i>
+                            <span class="font-black text-xs uppercase text-white">${item.title}</span>
                         </div>
-                        <i id="arrow-${item.id}" class="fas fa-chevron-down text-[10px] text-gray-500 transition-transform"></i>
+                        <i id="arrow-${item.id}" class="fas fa-chevron-down text-[10px] text-primary/50 transition-transform"></i>
                     </div>
                     <div id="dropdown-${item.id}" class="dropdown-container">
-                        ${item.menu.map(m => `
-                            <a href="${m.l}" class="dropdown-item-shs">${m.n}</a>
-                        `).join('')}
+                        ${item.menu.map(m => `<a href="${m.l}" class="dropdown-item-shs">${m.n}</a>`).join('')}
                     </div>
                 </div>
             `).join('');
@@ -462,91 +297,49 @@
             const el = document.getElementById(`dropdown-${id}`);
             const arrow = document.getElementById(`arrow-${id}`);
             const isOpen = el.classList.toggle('open');
-            
-            // Toggle arrow rotation
-            if(isOpen) arrow.classList.add('rotate-180');
-            else arrow.classList.remove('rotate-180');
-
-            // Close other dropdowns
-            SERVICE_DATA.forEach(item => {
-                if(item.id !== id) {
-                    document.getElementById(`dropdown-${item.id}`).classList.remove('open');
-                    document.getElementById(`arrow-${item.id}`).classList.remove('rotate-180');
-                }
-            });
+            arrow.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        // --- INTERACTION LOGIC ---
         function openModal(id) {
             const item = SERVICE_DATA.find(x => x.id === id);
             const overlay = document.getElementById('location-modal-overlay');
             const list = document.getElementById('modal-list');
-            document.getElementById('modal-title').innerHTML = `Select <span style="color: var(--color-primary);">${item.title}</span>`;
-            
+            document.getElementById('modal-title').innerHTML = `Select <span class="text-primary">${item.title}</span>`;
             list.innerHTML = item.menu.map(m => `
-                <div class="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary transition-all cursor-pointer flex justify-between items-center" 
-                     onclick="window.location.href='${m.l}'">
-                    <span class="text-sm font-black uppercase italic text-white">${m.n}</span>
-                    <i class="fas fa-arrow-right text-xs" style="color: var(--color-primary);"></i>
-                </div>
+                <a href="${m.l}" class="modal-item">
+                    <span class="text-sm font-black uppercase">${m.n}</span>
+                    <i class="fas fa-arrow-right text-xs text-primary"></i>
+                </a>
             `).join('');
-            
             overlay.style.display = 'flex';
-            setTimeout(() => overlay.style.opacity = 1, 10);
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            const overlay = document.getElementById('location-modal-overlay');
-            overlay.style.opacity = 0;
-            setTimeout(() => { overlay.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+            document.getElementById('location-modal-overlay').style.display = 'none';
+            document.body.style.overflow = '';
         }
 
-        // Hero Slider
         let currentSlide = 0;
         function updateHero() {
             const slide = HERO_SLIDES[currentSlide];
-            const el = document.getElementById('hero-slider');
-            if(!el) return;
-            el.style.backgroundImage = `url('${slide.bg}')`;
+            document.getElementById('hero-slider').style.backgroundImage = `url('${slide.bg}')`;
             document.getElementById('hero-title').innerHTML = slide.title;
             document.getElementById('hero-subtitle').innerText = slide.subtitle;
         }
 
-        // --- INITIALIZATION ---
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebar');
+
+        menuBtn.onclick = () => sidebar.classList.add('open');
+        closeSidebarBtn.onclick = () => sidebar.classList.remove('open');
+
         document.addEventListener('DOMContentLoaded', () => {
             renderBento();
             renderSidebar();
             updateHero();
 
-            // Menu Toggles
-            const menuBtn = document.getElementById('mobile-menu-button');
-            const menuPanel = document.getElementById('mobile-menu-panel');
-            const menuOverlay = document.getElementById('mobile-menu-overlay');
-            const closeBtn = document.getElementById('mobile-menu-close-button');
-
-            const openMenu = () => {
-                menuPanel.classList.remove('translate-x-full');
-                menuOverlay.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            };
-            const closeMenu = () => {
-                menuPanel.classList.add('translate-x-full');
-                menuOverlay.style.display = 'none';
-                document.body.style.overflow = '';
-            };
-
-            menuBtn.onclick = openMenu;
-            closeBtn.onclick = closeMenu;
-            menuOverlay.onclick = closeMenu;
-
-            // Modal Toggles
-            document.getElementById('modal-close-button').onclick = closeModal;
-            document.getElementById('location-modal-overlay').onclick = (e) => {
-                if(e.target.id === 'location-modal-overlay') closeModal();
-            };
-
-            // Slider Nav
             document.getElementById('slide-next').onclick = () => { currentSlide = (currentSlide + 1) % HERO_SLIDES.length; updateHero(); };
             document.getElementById('slide-prev').onclick = () => { currentSlide = (currentSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length; updateHero(); };
             
