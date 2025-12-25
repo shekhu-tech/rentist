@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -13,16 +13,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Inter:wght@700;900&family=Noto+Sans+Devanagari:wght@700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- SHINING GREEN DARK THEME --- */
         :root {
             --primary: #76FF03; 
             --primary-rgb: 118, 255, 3; 
-            --gold-dark: #B8860B; /* Golden Dark Color */
+            --gold-dark: #B8860B; 
             --bg-dark: #050505; 
             --header-offset: calc(15px + env(safe-area-inset-top));
             --header-height: 64px;
             --footer-offset: calc(25px + env(safe-area-inset-bottom));
-            --footer-height: 76px;
+            /* Footer height set to match header height */
+            --footer-height: 64px; 
             --text-light: #ffffff;
             --premium-bg-dark: #0a1208;
         }
@@ -36,6 +36,7 @@
             padding-bottom: calc(var(--footer-offset) + var(--footer-height) + 40px);
             margin: 0;
             font-weight: 900; 
+            overflow-x: hidden;
         }
 
         /* --- BACKGROUND --- */
@@ -92,10 +93,32 @@
             left: 0; width: 100%; display: flex; justify-content: center; z-index: 2000; padding: 0 15px; 
         }
         .iphone-dock { width: 100%; max-width: 500px; height: var(--footer-height); background: rgba(5, 10, 5, 0.9); backdrop-filter: blur(30px); border-radius: 32px; border: 2px solid rgba(118, 255, 3, 0.2); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
-        .dock-item { display: flex; flex-direction: column; align-items: center; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 1.1rem; font-weight: 900; }
-        .dock-item span { font-size: 0.65rem; margin-top: 4px; font-weight: 900; text-transform: uppercase; }
-        .dock-item.active { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        
+        .dock-item { display: flex; flex-direction: column; align-items: center; color: rgba(255,255,255,0.4); text-decoration: none; transition: 0.3s; padding: 5px; }
+        /* Footer icons made smaller (0.9rem) */
+        .dock-item i { font-size: 0.9rem; }
+        .dock-item span { font-size: 0.55rem; margin-top: 2px; font-weight: 900; text-transform: uppercase; }
+        
+        /* Highlight logic: white highlight for selected */
+        .dock-item.active { color: #ffffff; text-shadow: 0 0 10px rgba(255,255,255,0.6); }
+        
         .dock-fab { width: 60px; height: 60px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 1.5rem; transform: translateY(-25px); border: 4px solid var(--bg-dark); box-shadow: 0 0 25px rgba(118, 255, 3, 0.4); }
+
+        /* --- HERO BUTTON AUTO-WIDTH --- */
+        .hero-explore-btn {
+            background: var(--primary) !important;
+            color: #000 !important;
+            box-shadow: 0 10px 30px rgba(118, 255, 3, 0.4), inset 0 0 10px rgba(255,255,255,0.5) !important;
+            border: none !important;
+            transition: all 0.3s ease;
+            width: auto !important; /* Auto fit width */
+            display: inline-flex !important;
+            padding: 12px 24px !important;
+        }
+        .hero-explore-btn:hover {
+            box-shadow: 0 15px 40px rgba(118, 255, 3, 0.6) !important;
+            transform: translateY(-3px) scale(1.05);
+        }
 
         /* --- MODAL --- */
         .modal-overlay {
@@ -117,7 +140,6 @@
         .dropdown-container.open { max-height: 350px; }
         .dropdown-item-shs { padding: 12px 15px; margin: 5px 0; border-radius: 12px; background: rgba(255, 255, 255, 0.03); border-left: 4px solid var(--primary); font-size: 13px; font-weight: 900; display: block; color: #eee; text-decoration: none; }
 
-        /* --- GOLDEN DARK BUTTON STYLE --- */
         .gold-dark-btn {
             background: var(--gold-dark) !important;
             color: #000 !important;
@@ -125,7 +147,6 @@
             border: none !important;
         }
 
-        /* --- SLIDER HIGHLIGHTED BUTTONS --- */
         .slide-nav-btn {
             background-color: var(--primary) !important;
             color: #000 !important;
@@ -134,43 +155,17 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(5px);
         }
-        .slide-nav-btn:hover {
-            transform: scale(1.15) rotate(5deg);
-            background-color: #fff !important;
-            box-shadow: 0 0 30px var(--primary) !important;
-        }
-        .slide-nav-btn:active { transform: scale(0.95); }
 
-        /* --- IMPROVED HERO TEXT VISIBILITY --- */
-        #hero-title {
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0,0,0,0.5);
-        }
-        #hero-subtitle {
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9);
-        }
-        .hero-explore-btn {
-            background: var(--primary) !important;
-            color: #000 !important;
-            box-shadow: 0 10px 30px rgba(118, 255, 3, 0.4), inset 0 0 10px rgba(255,255,255,0.5) !important;
-            border: none !important;
-            transition: all 0.3s ease;
-        }
-        .hero-explore-btn:hover {
-            box-shadow: 0 15px 40px rgba(118, 255, 3, 0.6) !important;
-            transform: translateY(-3px) scale(1.05);
-        }
-
-        /* --- TEXT BOLD NO ITALIC (MANDATORY) --- */
+        /* --- TEXT BOLD NO ITALIC --- */
         * { font-style: normal !important; }
         h1, h2, h3, h4, h5, span, p, a, button, div { font-weight: 900 !important; font-style: normal !important; }
-        i { font-style: normal !important; }
     </style>
 </head>
 <body>
     
     <div id="fixed-media-background"></div>
 
-    <!-- HEADER (GREEN SHINING) -->
+    <!-- HEADER -->
     <header class="iphone-header">
         <div class="flex items-center gap-3">
             <img src="rentist.png" alt="Logo" class="w-9 h-9 rounded-xl border-2 border-primary shadow-lg">
@@ -181,50 +176,42 @@
         </button>
     </header>
 
-    <!-- SIDEBAR (GREEN DARK) -->
+    <!-- SIDEBAR -->
     <div id="sidebar" class="mobile-panel">
         <div class="sidebar-inner">
             <div class="sidebar-close-btn" id="closeSidebar"><i class="fas fa-times"></i></div>
             
-            <!-- GOLDEN DARK LIST PROPERTY BUTTON AT TOP -->
             <div class="mb-8 pt-6">
-                <a href="list_Your_property.html" class="gold-dark-btn block p-4 rounded-2xl font-black text-center uppercase text-sm tracking-wider hover:scale-[1.02] transition-transform">
+                <a href="list_Your_property.html" class="gold-dark-btn block p-4 rounded-2xl font-black text-center uppercase text-sm tracking-wider">
                     <i class="fas fa-plus-circle mr-2"></i> LIST PROPERTY ADD
                 </a>
             </div>
 
             <div class="mb-6 border-b border-primary/20 pb-4">
                 <h2 class="text-xl font-black uppercase text-white">Ren<span class="text-primary">Tist</span></h2>
-                <p class="text-[9px] text-gray-500 uppercase tracking-[4px] font-black">Categories</p>
+                <p class="text-[9px] text-gray-500 uppercase tracking-[4px]">Categories</p>
             </div>
 
-            <nav id="sidebar-links-container">
-                <!-- Javascript category buttons rendered here -->
-            </nav>
+            <nav id="sidebar-links-container"></nav>
         </div>
     </div>
 
     <!-- MAIN CONTENT -->
     <main class="max-w-7xl mx-auto px-4 mt-6">
         
-        <!-- Hero Slider Area -->
         <div id="hero-section" class="mb-10">
             <div class="relative h-[280px] sm:h-[480px] rounded-[30px] sm:rounded-[60px] overflow-hidden border-2 border-primary/30 shadow-2xl">
-                <!-- Slider Image -->
                 <div id="hero-slider" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 scale-105" style="background-image: url('flats.png');"></div>
-                
-                <!-- Darker Overlay for better text visibility -->
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20"></div>
                 
                 <div class="absolute bottom-8 left-6 sm:left-12 max-w-2xl pr-8 z-10">
                     <h1 id="hero-title" class="text-2xl sm:text-6xl font-black mb-2 tracking-tighter leading-tight uppercase text-white">Explore Your<br>Dream Space.</h1>
                     <p id="hero-subtitle" class="text-gray-100 text-[12px] sm:text-xl mb-6 font-black uppercase opacity-90">Top rooms, flats, and shops at your fingertips.</p>
-                    <a href="#bento-container" class="hero-explore-btn inline-flex items-center px-10 py-4 font-black rounded-full text-[11px] sm:text-sm uppercase tracking-widest">
+                    <a href="#bento-container" class="hero-explore-btn inline-flex items-center font-black rounded-full text-[11px] sm:text-sm uppercase tracking-widest">
                         EXPLORE NOW <i class="fas fa-arrow-right ml-2 text-[10px]"></i>
                     </a>
                 </div>
 
-                <!-- NAVIGATION BUTTONS -->
                 <div class="absolute bottom-8 right-6 sm:right-12 flex space-x-4 z-10">
                     <button id="slide-prev" class="slide-nav-btn w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl">
                         <i class="fas fa-chevron-left text-lg"></i>
@@ -241,29 +228,27 @@
             <div class="h-1.5 w-24 bg-primary mt-3 rounded-full shadow-[0_0_10px_var(--primary)]"></div>
         </div>
 
-        <!-- Category Grid -->
-        <div id="bento-container" class="bento-grid mb-12">
-            <!-- Generated via Script -->
-        </div>
+        <div id="bento-container" class="bento-grid mb-12"></div>
     </main>
     
     <!-- DOCK NAVIGATION -->
     <div class="iphone-dock-wrapper">
         <nav class="iphone-dock">
-            <a href="list_Your_property.html" class="dock-item">
+            <a href="list_Your_property.html" class="dock-item" onclick="handleDockClick(this)">
                 <i class="fas fa-user-plus"></i><span>Register</span>
             </a>
-            <a href="suggestion.html" class="dock-item">
+            <a href="suggestion.html" class="dock-item" onclick="handleDockClick(this)">
                 <i class="fas fa-comment-dots"></i><span>Suggest</span>
             </a>
+            <!-- Home FAB stays consistently active style -->
             <a href="main.html" class="dock-fab">
                 <i class="fas fa-home"></i>
             </a>
-            <a href="learn.html" class="dock-item">
-                <i class="fas fa-book-open"></i><span>Learn</span>
+            <a href="learn.html" class="dock-item" onclick="handleDockClick(this)">
+                <i class="fas fa-book-open"></i><span>LearnIT</span>
             </a>
-            <a href="see_my_listings.html" class="dock-item">
-                <i class="fas fa-user"></i><span>Profile</span>
+            <a href="see_my_listings.html" class="dock-item" onclick="handleDockClick(this)">
+                <i class="fas fa-user"></i><span>ProfileS</span>
             </a>
         </nav>
     </div>
@@ -275,9 +260,7 @@
                 <h3 id="modal-title" class="text-xl font-black uppercase text-white">Select <span class="text-primary">Region</span></h3>
                 <button onclick="closeModal()" class="text-primary text-3xl"><i class="fas fa-times"></i></button>
             </div>
-            <div id="modal-list" class="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
-                <!-- Items Dynamic -->
-            </div>
+            <div id="modal-list" class="space-y-3 max-h-[60vh] overflow-y-auto pr-2"></div>
         </div>
     </div>
 
@@ -303,6 +286,11 @@
             { title: "Smarter Spaces.<br>Faster Renting.", subtitle: "Urban locations par premium flats aur rooms ka collection.", bg: "flats.png" },
             { title: "Business Hubs.<br>Prime Shops.", subtitle: "Commercial properties jo aapke brand ko boost dein.", bg: "shops.png" }
         ];
+
+        function handleDockClick(el) {
+            document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+        }
 
         function renderBento() {
             const container = document.getElementById('bento-container');
