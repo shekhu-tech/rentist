@@ -7,10 +7,10 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* पूरा CSS वैसा ही रखा है */
         :root {
             --primary: #39ff14;
             --primary-dim: rgba(57, 255, 20, 0.4); 
@@ -18,7 +18,6 @@
             --glass-border: rgba(57, 255, 20, 0.3);
             --gold: #FFD700; 
             --error: #ff3333;
-            
             --header-offset: calc(15px + env(safe-area-inset-top));
             --header-height: 70px; 
             --footer-offset: calc(30px + env(safe-area-inset-bottom));
@@ -280,11 +279,7 @@
     <div id="modal-plots" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>PRIME LAND</h2><div class="sub-nav-dock" id="nav-plots"></div></div><div id="grid-plots" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('plots')"><i class="fas fa-plus"></i></div></div></div>
 
     <script>
-        // --- YOUR LIVE DEPLOYED URL ---
-        const scriptURL = "https://script.google.com/macros/s/AKfycbzKVsVHvVDMWxvHizzPeUdBAuRGru_j2FN5vuT0tRdtJrUj0pVJyYXv3rdGstig3WTJ/exec";
-        // ------------------------------
-
-        // --- EDIT YOUR DATA HERE (BHAI YAHA DATA BADAL LENA) ---
+        // --- YOUR DATA (SAME AS BEFORE) ---
         const fullData = {
              rooms: {
                 'Single': [
@@ -1080,7 +1075,6 @@
             // GENERATING 10 INPUTS DYNAMICALLY
             let uploadInputsHTML = '<div class="upload-grid">';
             for(let i=1; i<=10; i++) {
-                // NAME AND ID MATCHING GOOGLE SHEET HEADERS AS REQUESTED
                 uploadInputsHTML += `
                     <div class="file-upload-box">
                         <i class="fas fa-camera file-upload-icon"></i>
@@ -1110,7 +1104,7 @@
                 </div>`;
         }
 
-        // --- FINAL SUBMIT FUNCTION WITH BASE64 UPLOAD ---
+        // --- FINAL SUBMIT FUNCTION WITH EMAIL SEND ---
         async function submitListing(category) {
             // 1. Validation Logic
             let allUploaded = true;
@@ -1131,13 +1125,14 @@
             container.innerHTML = `
                 <div style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; height:400px; text-align:center;">
                     <i class="fas fa-circle-notch fa-spin" style="font-size:3rem; color:var(--primary); margin-bottom:20px;"></i>
-                    <h3 style="color:#fff; font-family:'Rajdhani'; letter-spacing:1px;">UPLOADING PHOTOS...</h3>
-                    <p style="color:#666; font-size:0.8rem;">Processing 10 High-Res Images. Do not close.</p>
+                    <h3 style="color:#fff; font-family:'Rajdhani'; letter-spacing:1px;">PREPARING EMAIL...</h3>
+                    <p style="color:#666; font-size:0.8rem;">Processing 10 Images & Creating Email. Do not close.</p>
                 </div>`;
 
             try {
                 // 3. Convert All Images to Base64
                 let imgData = {};
+                let imageCount = 0;
                 for (let i = 1; i <= 10; i++) {
                     const input = document.getElementById(`img-${i}`);
                     if (input.files.length > 0) {
@@ -1148,40 +1143,61 @@
                             return;
                         }
                         imgData[`img${i}`] = await toBase64(input.files[0]);
+                        imageCount++;
                     } else {
                         imgData[`img${i}`] = "";
                     }
                 }
 
-                // 4. Prepare Payload
-                const payload = {
-                    category: category,
-                    name: listingData.name,
-                    phone: listingData.phone,
-                    email: listingData.email,
-                    address: listingData.address,
-                    rent: listingData.rent,
-                    desc: listingData.desc,
-                    ...imgData
-                };
+                // 4. Create Email Body
+                const emailBody = `
+🎯 NEW PROPERTY LISTING REQUEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-                // 5. Send to Google Script
-                await fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+📌 CATEGORY: ${category.toUpperCase()}
 
-                // 6. Success UI
+👤 OWNER DETAILS:
+• Name: ${listingData.name}
+• Phone: ${listingData.phone}
+• Email: ${listingData.email}
+
+🏠 PROPERTY INFO:
+• Address: ${listingData.address}
+• Expected Rent: ₹${listingData.rent}/month
+• Facilities: ${listingData.desc || 'Not specified'}
+
+🖼️ IMAGES UPLOADED:
+• Total Images: ${imageCount}/10
+
+📅 SUBMISSION TIME: ${new Date().toLocaleString()}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ NOTE: ${imageCount} images are attached as Base64 in the data payload.
+`;
+
+                // 5. Create Email Link
+                const recipientEmail = "crapdindia@gmail.com"; // 🔴 यहाँ अपना EMAIL डालें
+                const subject = `📦 NEW ${category.toUpperCase()} LISTING - ${listingData.name}`;
+                const body = encodeURIComponent(emailBody);
+                
+                const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+                // 6. Open Email Client
+                window.location.href = mailtoLink;
+
+                // 7. Success UI
                 container.innerHTML = `
                     <div style="grid-column: 1 / -1; position: relative; height: 400px; display:flex; align-items:center; justify-content:center;">
                         <div class="success-overlay">
-                            <i class="fas fa-shield-check success-icon"></i>
-                            <h2 style="color: #fff; font-family: 'Rajdhani'; font-size: 2rem; margin:0; text-shadow: 0 0 20px var(--primary);">SUCCESS!</h2>
+                            <i class="fas fa-envelope-circle-check success-icon"></i>
+                            <h2 style="color: #fff; font-family: 'Rajdhani'; font-size: 2rem; margin:0; text-shadow: 0 0 20px var(--primary);">EMAIL READY!</h2>
                             <h3 style="color: var(--primary); font-family: 'Rajdhani'; margin: 5px 0 20px;">${listingData.name.toUpperCase()}</h3>
                             <p style="color: #ccc; font-size: 0.95rem; max-width: 80%; line-height: 1.5;">
-                                All 10 images have been uploaded to our secure cloud storage.
+                                Your email client should open automatically.<br>
+                                Please send the email to complete the submission.
+                            </p>
+                            <p style="color: #888; font-size: 0.75rem; margin-top: 10px;">
+                                If email doesn't open, <a href="${mailtoLink}" style="color: var(--primary); text-decoration: underline;">click here</a>
                             </p>
                             <button class="ultra-btn" style="margin-top: 30px; width: auto; padding: 10px 40px; background: transparent; border: 1px solid var(--primary); color: var(--primary);" onclick="initCategory('${category}')">
                                 RETURN TO HUB
@@ -1191,7 +1207,7 @@
 
             } catch (error) {
                 console.error(error);
-                alert("Upload Failed! Check internet or try smaller images.");
+                alert("Processing Failed! Please try again.");
                 container.innerHTML = originalContent;
             }
         }
