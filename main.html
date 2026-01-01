@@ -5,40 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>STI - Future Rentals 2026</title>
     
-    <!-- Tailwind CSS aur Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Premium Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     
-    <script>
-        // --- AUTO REDIRECT LOGIC START ---
-        (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (!urlParams.has('reset')) {
-                const savedPage = localStorage.getItem('sti_rental_preferred_page');
-            }
-        })();
-        // --- AUTO REDIRECT LOGIC END ---
-    </script>
-
     <style>
         :root {
-            /* NEON CYBER GREEN THEME - Color Corrected */
-            --primary: #39ff14;  /* Electric Neon Green */
+            --primary: #39ff14;
             --primary-dim: rgba(57, 255, 20, 0.4); 
-            --bg-dark: #020202; /* Deepest Black */
-            --glass-border: rgba(57, 255, 20, 0.4);
-            
-            --gold: #FFD700; /* Gold for Special Buttons/Stars */
+            --bg-dark: #020202;
+            --glass-border: rgba(57, 255, 20, 0.3);
+            --gold: #FFD700; 
+            --error: #ff3333;
             
             --header-offset: calc(15px + env(safe-area-inset-top));
             --header-height: 70px; 
-            
-            --footer-offset: calc(25px + env(safe-area-inset-bottom));
+            --footer-offset: calc(30px + env(safe-area-inset-bottom));
             --footer-height: 75px; 
-            
             --text-light: #ffffff; 
         }
 
@@ -54,7 +38,6 @@
             width: 100vw;
         }
 
-        /* --- FUTURISTIC BACKGROUND --- */
         #fixed-media-background {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             z-index: -10; background-size: cover; background-position: center;
@@ -63,596 +46,826 @@
             filter: brightness(25%) hue-rotate(85deg) contrast(130%) saturate(160%);
         }
 
-        /* --- FLOATING NEON HEADER --- */
+        /* HEADER */
         .iphone-header {
             position: fixed; top: var(--header-offset); left: 50%; transform: translateX(-50%);
             width: 92%; max-width: 600px; height: var(--header-height);
-            background: rgba(5, 10, 5, 0.90); 
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); 
-            border-radius: 24px;
+            background: rgba(5, 10, 5, 0.85); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px; z-index: 3000; 
-            box-shadow: 0 0 25px var(--primary-dim);
+            padding: 0 15px; z-index: 3000; box-shadow: 0 0 25px var(--primary-dim);
         }
+        .header-logo { width: 40px; height: 40px; border-radius: 12px; border: 2px solid var(--primary); box-shadow: 0 0 15px var(--primary); object-fit: cover;}
 
-        .header-logo { 
-            width: 40px; height: 40px; border-radius: 12px; 
-            border: 2px solid var(--primary); 
-            box-shadow: 0 0 15px var(--primary); 
-            object-fit: cover;
-        }
-
-        /* --- ANIMATED DOCK --- */
-        .iphone-dock-wrapper { 
-            position: fixed; bottom: var(--footer-offset); 
-            left: 0; width: 100%; display: flex; justify-content: center; z-index: 3000; padding: 0 10px; 
-        }
+        /* DOCK */
+        .iphone-dock-wrapper { position: fixed; bottom: var(--footer-offset); left: 0; width: 100%; display: flex; justify-content: center; z-index: 3000; padding: 0 10px; }
         .iphone-dock { 
-            width: 100%; max-width: 650px; 
-            height: var(--footer-height); 
-            background: rgba(0, 10, 0, 0.95); 
-            backdrop-filter: blur(35px); 
-            border-radius: 30px; 
-            border: 1px solid var(--glass-border); 
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 25px var(--primary-dim); 
-            padding: 0 5px; overflow: visible; 
+            width: auto; min-width: 320px; max-width: 500px; height: var(--footer-height); 
+            background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(50px) saturate(180%);
+            border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); 
+            display: flex; justify-content: center; align-items: center; gap: 15px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.2); 
+            padding: 0 20px; transition: width 0.3s ease;
+        }
+        .nav-item { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 14px; transition: all 0.3s; color: rgba(255, 255, 255, 0.6); cursor: pointer; position: relative; background: rgba(255,255,255,0.05); }
+        .nav-item i { font-size: 1.2rem; transition: all 0.3s ease; }
+        .iphone-dock:hover .nav-item:hover { transform: scale(1.3) translateY(-10px); margin: 0 10px; background: rgba(57, 255, 20, 0.2); color: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 10; }
+        .nav-item.active { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary-dim); transform: scale(1.1); }
+        .nav-item.active i { color: #000; }
+
+        /* MODALS */
+        .modal-overlay { position: fixed; top: calc(var(--header-offset) + var(--header-height) + 15px); bottom: calc(var(--footer-offset) + var(--footer-height) + 15px); left: 0; right: 0; z-index: 2500; display: none; justify-content: center; padding: 0 10px; pointer-events: none; }
+        .hidden-modal { display: none !important; }
+        .flex-modal { display: flex !important; animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .modal-box { pointer-events: auto; background: rgba(5, 12, 5, 0.96); border: 2px solid var(--primary); border-radius: 28px; width: 100%; max-width: 600px; height: 100%; padding: 15px; box-shadow: 0 0 80px rgba(57, 255, 20, 0.2); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        @media (min-width: 1024px) { .modal-box { max-width: 1300px; } .listing-grid { grid-template-columns: repeat(5, 1fr) !important; } .iphone-header { max-width: 800px; } }
+
+        /* ULTRA PRO MAX FLOATING BUTTON */
+        .modal-floating-btn { 
+            position: absolute; 
+            top: 50%; 
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 100; 
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(10px);
+            color: var(--primary); 
+            width: 40px; 
+            height: 100px; 
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid var(--primary);
+            border-right: none;
+            box-shadow: -5px 0 20px rgba(57, 255, 20, 0.3); 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            overflow: hidden;
         }
         
-        .nav-item { 
-            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            padding: 0; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            color: #555; cursor: pointer; position: relative; height: 100%;
-        }
-        
-        .nav-item .icon-box {
-            width: 38px; height: 38px; 
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; 
-            margin-bottom: 4px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid transparent; 
-            transition: all 0.3s ease;
+        .modal-floating-btn::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(180deg, transparent, rgba(57, 255, 20, 0.2), transparent);
+            animation: scanline 2s infinite linear;
         }
 
-        .nav-item i { font-size: 1.1rem; transition: all 0.3s ease; }
-        .nav-item span { 
-            font-size: 0.55rem; font-weight: 800; text-transform: uppercase; 
-            font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px;
-            opacity: 0.6; display: none; 
-        }
-        @media (min-width: 380px) { .nav-item span { display: block; } }
-        
-        /* Active State */
-        .nav-item.active { color: var(--primary); transform: translateY(-8px); }
-        .nav-item.active .icon-box {
-            background: var(--primary); 
-            box-shadow: 0 0 20px var(--primary); 
-            border-color: #fff;
-            color: #000;
-        }
-        .nav-item.active i { color: #000; transform: scale(1.1); }
-        .nav-item.active span { 
-            color: var(--primary); opacity: 1; 
+        .modal-floating-btn i {
+            animation: pulseNeon 2s infinite alternate;
+            font-size: 1.2rem;
             text-shadow: 0 0 10px var(--primary);
         }
 
-        /* --- MODAL & GRID --- */
-        .modal-overlay { 
-            position: fixed; 
-            top: calc(var(--header-offset) + var(--header-height) + 15px);
-            bottom: calc(var(--footer-offset) + var(--footer-height) + 15px);
-            left: 0; right: 0; z-index: 2500; 
-            display: none; justify-content: center; padding: 0 10px; 
-            pointer-events: none;
-        }
-        
-        .hidden-modal { display: none !important; }
-        .flex-modal { display: flex !important; animation: fadeIn 0.4s ease forwards; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-
-        .modal-box { 
-            pointer-events: auto;
-            background: rgba(5, 12, 5, 0.96); 
-            border: 2px solid var(--primary); 
-            border-radius: 28px; 
-            width: 100%; max-width: 600px; height: 100%; 
-            padding: 15px; 
-            box-shadow: 0 0 80px rgba(57, 255, 20, 0.2); 
-            position: relative; overflow: hidden; 
-            display: flex; flex-direction: column; 
-        }
-
-        @media (min-width: 768px) {
-            .modal-box { max-width: 900px; }
-            .listing-grid { grid-template-columns: repeat(3, 1fr) !important; } 
-        }
-
-        /* --- MODAL FLOATING LIST BUTTON (INSIDE MODAL - RIGHT SIDE) --- */
-        .modal-floating-btn {
-            position: absolute;
-            right: 20px;
-            bottom: 30px; /* Positioned clearly at the bottom right */
-            z-index: 100; /* Stays on top of content */
-            background: linear-gradient(135deg, #FFD700, #FFA500); /* Gold Gradient */
-            color: #000;
-            width: 55px; height: 55px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 25px rgba(255, 215, 0, 0.6);
-            border: 2px solid #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: pulseGold 2s infinite;
-        }
-        .modal-floating-btn:hover { transform: scale(1.1); box-shadow: 0 0 35px rgba(255, 215, 0, 0.9); }
-        .modal-floating-btn i { font-size: 1.6rem; }
-
-        @keyframes pulseGold {
-            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-        }
-
-        /* --- NEW HEADER LAYOUT --- */
-        .modal-header-center {
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            text-align: center; margin-bottom: 10px; position: relative; z-index: 10;
-            width: 100%; padding-bottom: 5px; 
-            flex-shrink: 0;
-        }
-        
-        .modal-header-center h2 { 
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 800;
-            color: var(--primary); 
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            width: 100%;
-        }
-
-        /* --- MINI DOCK FOR SUB-NAV --- */
-        .sub-nav-dock {
-            background: rgba(0, 20, 0, 0.7);
-            border: 1px solid rgba(57, 255, 20, 0.4);
-            border-radius: 18px;
-            padding: 6px;
-            display: flex; gap: 8px;
-            overflow-x: auto; white-space: nowrap; width: 100%;
-            -ms-overflow-style: none; scrollbar-width: none;
-        }
-        .sub-nav-dock::-webkit-scrollbar { display: none; }
-
-        .sub-nav-item {
-            background: rgba(57, 255, 20, 0.08);
-            color: #ddd;
-            padding: 6px 14px; border-radius: 12px;
-            font-size: 0.75rem; font-family: 'Rajdhani', sans-serif;
-            font-weight: 700;
-            border: 1px solid rgba(57, 255, 20, 0.2);
-            transition: all 0.3s ease;
-            flex-shrink: 0; text-transform: uppercase; letter-spacing: 1px;
-            cursor: pointer;
-        }
-        .sub-nav-item:hover, .sub-nav-item.active {
-            background: var(--primary); color: #000;
-            border-color: #fff;
-            box-shadow: 0 0 15px var(--primary-dim);
-            font-weight: 800;
-        }
-
-        /* --- LISTING CARDS (2-Col Mobile, Fixed Height) --- */
-        .scroll-content { 
-            flex-grow: 1; overflow-y: auto; 
-            padding-bottom: 80px; padding-top: 5px; 
-            -webkit-overflow-scrolling: touch; 
-        }
-        
-        .listing-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 5px;
-        }
-
-        .listing-card {
-            background: rgba(20, 25, 20, 0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 18px; overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            animation: slideUp 0.5s ease backwards;
-            display: flex; flex-direction: column;
-            height: 195px; /* Reduced Height due to smaller content */
-        }
-        
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-        .listing-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 5px 25px rgba(57, 255, 20, 0.2);
-            transform: translateY(-4px) scale(1.02);
-            background: rgba(0, 30, 0, 0.9);
-        }
-
-        .listing-img-box {
-            height: 95px; width: 100%; position: relative; overflow: hidden; flex-shrink: 0;
-        }
-        .listing-img-box img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-        .listing-card:hover .listing-img-box img { transform: scale(1.1); }
-        
-        /* FIXED RATING STYLE - REDUCED SIZE */
-        .listing-rating {
-            position: absolute; bottom: 6px; left: 6px; z-index: 50; 
-            background: rgba(0, 0, 0, 0.9); color: var(--gold);
-            padding: 2px 6px; border-radius: 6px;
-            font-size: 0.6rem; font-weight: 800; 
-            display: flex; align-items: center; gap: 3px;
-            border: 1px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        }
-
-        .listing-details { 
-            padding: 8px; display: flex; flex-direction: column; 
-            flex-grow: 1; justify-content: space-between;
-        }
-        
-        .listing-title {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.8rem; color: #fff; font-weight: 800;
-            text-transform: uppercase; line-height: 1.1;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .listing-loc {
-            font-size: 0.6rem; color: #bbb; display: flex; align-items: center; gap: 3px;
-            margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .listing-price {
-            font-size: 0.85rem; color: var(--primary); font-weight: 800;
-            text-shadow: 0 0 8px var(--primary-dim); 
-        }
-        
-        .action-btn {
+        .modal-floating-btn:hover {
+            width: 50px;
             background: rgba(57, 255, 20, 0.1);
-            border: 1px solid var(--primary); color: var(--primary);
-            text-align: center; padding: 5px; border-radius: 8px;
-            font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;
-            cursor: pointer; transition: all 0.3s; margin-top: auto;
-            font-size: 0.65rem;
-        }
-        .action-btn:hover {
-            background: var(--primary); color: #000;
-            box-shadow: 0 0 15px var(--primary);
+            box-shadow: -5px 0 30px rgba(57, 255, 20, 0.6);
         }
 
+        @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        @keyframes pulseNeon { from { opacity: 0.7; transform: scale(1); } to { opacity: 1; transform: scale(1.2); } }
+
+        /* LISTING ELEMENTS */
+        .modal-header-center { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 10px; width: 100%; padding-bottom: 5px; flex-shrink: 0; }
+        .modal-header-center h2 { font-family: 'Rajdhani', sans-serif; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 3px; font-size: 1.8rem; margin-bottom: 8px; width: 100%; text-shadow: 0 0 20px var(--primary); }
+        .sub-nav-dock { background: rgba(0, 20, 0, 0.7); border: 1px solid rgba(57, 255, 20, 0.4); border-radius: 18px; padding: 6px; display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; width: 100%; scrollbar-width: none; }
+        .sub-nav-item { background: rgba(57, 255, 20, 0.08); color: #ddd; padding: 6px 14px; border-radius: 12px; font-size: 0.75rem; font-family: 'Rajdhani', sans-serif; font-weight: 700; border: 1px solid rgba(57, 255, 255, 0.1); transition: all 0.3s ease; flex-shrink: 0; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        .sub-nav-item:hover, .sub-nav-item.active { background: var(--primary); color: #000; border-color: #fff; box-shadow: 0 0 15px var(--primary-dim); font-weight: 800; }
+        .scroll-content { flex-grow: 1; overflow-y: auto; padding-bottom: 80px; padding-top: 5px; -webkit-overflow-scrolling: touch; }
+        .listing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 5px; }
+        .listing-card { background: rgba(20, 25, 20, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; overflow: hidden; position: relative; transition: all 0.4s; animation: slideUp 0.5s ease backwards; display: flex; flex-direction: column; height: 185px; cursor: pointer; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .listing-card:hover { border-color: var(--primary); box-shadow: 0 5px 25px rgba(57, 255, 20, 0.2); transform: translateY(-4px) scale(1.02); background: rgba(0, 30, 0, 0.9); }
+        .listing-img-box { height: 85px; width: 100%; position: relative; overflow: hidden; flex-shrink: 0; }
+        .listing-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .listing-card:hover .listing-img-box img { transform: scale(1.1); }
+        .listing-rating { position: absolute; bottom: 6px; left: 6px; z-index: 50; background: rgba(0, 0, 0, 0.9); color: var(--gold); padding: 2px 6px; border-radius: 6px; font-size: 0.6rem; font-weight: 800; display: flex; align-items: center; gap: 3px; border: 1px solid rgba(255, 215, 0, 0.5); }
+        .listing-details { padding: 8px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .listing-title { font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: #fff; font-weight: 800; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .listing-loc { font-size: 0.6rem; color: #bbb; display: flex; align-items: center; gap: 3px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .listing-price { font-size: 0.85rem; color: var(--primary); font-weight: 800; text-shadow: 0 0 8px var(--primary-dim); }
+        .action-btn { background: rgba(57, 255, 20, 0.1); border: 1px solid var(--primary); color: var(--primary); text-align: center; padding: 5px; border-radius: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s; margin-top: auto; font-size: 0.65rem; }
+        .action-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary); }
+
+        /* ULTRA PRO MAX FORM STYLES */
+        .ultra-form-container { 
+            width: 100%; max-width: 450px; margin: auto; 
+            background: linear-gradient(145deg, rgba(10, 15, 10, 0.95), rgba(0, 5, 0, 0.98));
+            border: 1px solid var(--primary-dim); 
+            border-radius: 20px; padding: 25px; 
+            box-shadow: 0 0 40px rgba(57, 255, 20, 0.1); 
+            animation: zoomInForm 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; 
+            overflow: hidden;
+            display: flex; flex-direction: column; max-height: 80vh;
+        }
+
+        @keyframes zoomInForm { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        /* Glowing Progress Bar */
+        .form-progress-track { width: 100%; height: 4px; background: rgba(255,255,255,0.1); margin-bottom: 25px; border-radius: 2px; position: relative; flex-shrink: 0;}
+        .form-progress-fill { height: 100%; background: var(--primary); width: 33%; box-shadow: 0 0 15px var(--primary); transition: width 0.5s ease; border-radius: 2px; }
+
+        .form-header { text-align: center; margin-bottom: 25px; position: relative; z-index: 2; flex-shrink: 0;}
+        .form-header h3 { font-family: 'Rajdhani'; font-size: 1.8rem; margin: 0; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
+        .form-header p { font-size: 0.75rem; color: var(--primary); margin: 5px 0 0; font-weight: 600; letter-spacing: 1px; }
+
+        .ultra-input-group { position: relative; margin-bottom: 20px; flex-shrink: 0;}
+        .ultra-input { 
+            width: 100%; background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid #333; border-left: 3px solid #333;
+            color: #fff; padding: 15px; border-radius: 8px; 
+            outline: none; font-size: 0.95rem; font-family: 'Plus Jakarta Sans';
+            transition: all 0.3s ease; 
+        }
+        .ultra-input:focus { 
+            border-color: var(--primary); 
+            background: rgba(57, 255, 20, 0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        
+        /* Validation Error State */
+        .ultra-input.error-shake, .file-upload-box.error-shake { animation: shake 0.4s ease-in-out; border-color: var(--error) !important; color: var(--error); }
+        .file-upload-box.error-shake { background: rgba(255, 50, 50, 0.1); }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        
+        .error-msg { position: absolute; bottom: -18px; right: 5px; font-size: 0.65rem; color: var(--error); opacity: 0; transition: 0.3s; font-weight: 700; text-transform: uppercase; }
+        .ultra-input.error-shake + .error-msg { opacity: 1; bottom: -16px; }
+
+        .ultra-btn { 
+            background: linear-gradient(90deg, var(--primary), #2cb510); 
+            color: #000; font-weight: 800; padding: 14px; 
+            border-radius: 8px; font-size: 0.9rem; cursor: pointer; 
+            width: 100%; text-transform: uppercase; letter-spacing: 1px;
+            border: none; box-shadow: 0 5px 20px rgba(57, 255, 20, 0.3);
+            transition: transform 0.2s; font-family: 'Rajdhani';
+            position: relative; overflow: hidden;
+            flex-shrink: 0; margin-top: auto;
+        }
+        .ultra-btn:active { transform: scale(0.98); }
+        .ultra-btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255,255,255,0.2); transform: rotate(45deg); 
+            animation: shine 3s infinite; pointer-events: none;
+        }
+        @keyframes shine { 0% { transform: translateX(-150%) rotate(45deg); } 100% { transform: translateX(150%) rotate(45deg); } }
+
+        /* GRID FOR 10 IMAGES */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            min-height: 200px;
+        }
+        .upload-grid::-webkit-scrollbar { width: 4px; }
+        .upload-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .upload-grid::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+
+        .file-upload-box {
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 10px; padding: 10px;
+            text-align: center; 
+            position: relative; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 80px;
+        }
+        .file-upload-box:hover { border-color: var(--primary); background: rgba(57, 255, 20, 0.05); }
+        .file-upload-box input { opacity: 0; position: absolute; top:0; left:0; width:100%; height:100%; cursor: pointer; }
+        .file-upload-icon { font-size: 1.2rem; color: var(--primary); margin-bottom: 3px; }
+        .file-checked { border-color: var(--primary); border-style: solid; background: rgba(57,255,20,0.1); }
+        .file-checked::after { content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: 5px; right: 5px; color: var(--primary); font-size: 0.8rem; }
+
+        /* Success Overlay */
+        .success-overlay { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 20px; animation: zoomIn 0.5s; }
+        .success-icon { font-size: 4rem; color: var(--primary); margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        
+        .action-btn { pointer-events: auto; }
     </style>
 </head>
 <body>
     
     <div id="fixed-media-background"></div>
 
-    <!-- FLOATING HEADER -->
     <header class="iphone-header">
-        <div class="header-left">
-            <img class="header-logo" src="sti.png" alt="Logo" onerror="this.src='https://via.placeholder.com/40/39FF14/000000?text=S'">
-        </div>
-        <div class="header-center">
-             <h1 style="font-family: 'Rajdhani'; font-weight: 800; font-size: 1.5rem; color: #fff; letter-spacing: 2px;">
-                STI <span style="color: var(--primary); text-shadow: 0 0 10px var(--primary);">RENTALS</span>
-            </h1>
-        </div>
-        <div class="header-right">
-            <img class="header-logo" src="sti.png" alt="Logo" onerror="this.src='https://via.placeholder.com/40/39FF14/000000?text=S'">
-        </div>
+        <div class="header-left"><img class="header-logo" src="sti.png" alt="S" onerror="this.src='https://via.placeholder.com/40/39FF14/000000?text=S'"></div>
+        <div class="header-center"><h1 style="font-family:'Rajdhani';font-weight:800;font-size:1.5rem;color:#fff;letter-spacing:2px;">STI <span style="color:var(--primary);text-shadow:0 0 10px var(--primary);">RENTALS</span></h1></div>
+        <div class="header-right"><img class="header-logo" src="sti.png" alt="S" onerror="this.src='https://via.placeholder.com/40/39FF14/000000?text=S'"></div>
     </header>
 
-    <main></main>
-    
-    <!-- DOCK NAV -->
     <div class="iphone-dock-wrapper">
         <nav class="iphone-dock">
-            <div class="nav-item" onclick="activateTab(this, 'rooms')">
-                <div class="icon-box"><i class="fas fa-bed"></i></div>
-                <span>Rooms</span>
-            </div>
-            <div class="nav-item" onclick="activateTab(this, 'flats')">
-                <div class="icon-box"><i class="fas fa-building-user"></i></div>
-                <span>Flats</span>
-            </div>
-            <div class="nav-item" onclick="activateTab(this, 'shops')">
-                <div class="icon-box"><i class="fas fa-shop"></i></div>
-                <span>Shops</span>
-            </div>
-            <div class="nav-item active" onclick="activateTab(this, 'pg')">
-                <div class="icon-box"><i class="fas fa-people-roof"></i></div>
-                <span>PG</span>
-            </div>
-            <div class="nav-item" onclick="activateTab(this, 'hostels')">
-                <div class="icon-box"><i class="fas fa-hotel"></i></div>
-                <span>Hostels</span>
-            </div>
-            <div class="nav-item" onclick="activateTab(this, 'houses')">
-                <div class="icon-box"><i class="fas fa-house-chimney"></i></div>
-                <span>Houses</span>
-            </div>
-            <div class="nav-item" onclick="activateTab(this, 'plots')">
-                <div class="icon-box"><i class="fas fa-map-location-dot"></i></div>
-                <span>Plots</span>
-            </div>
+            <div class="nav-item" onclick="activateTab(this, 'rooms')"><i class="fas fa-bed"></i></div>
+            <div class="nav-item" onclick="activateTab(this, 'flats')"><i class="fas fa-building-user"></i></div>
+            <div class="nav-item" onclick="activateTab(this, 'shops')"><i class="fas fa-shop"></i></div>
+            <div class="nav-item active" onclick="activateTab(this, 'pg')"><i class="fas fa-people-roof"></i></div>
+            <div class="nav-item" onclick="activateTab(this, 'hostels')"><i class="fas fa-hotel"></i></div>
+            <div class="nav-item" onclick="activateTab(this, 'houses')"><i class="fas fa-house-chimney"></i></div>
+            <div class="nav-item" onclick="activateTab(this, 'plots')"><i class="fas fa-map-location-dot"></i></div>
         </nav>
     </div>
 
-    <!-- ===== 7 POPUPS WITH DYNAMIC CONTENT AND FLOATING BUTTONS ===== -->
-
-    <!-- 1. ROOMS -->
-    <div id="modal-rooms" class="modal-overlay hidden-modal">
-        <div class="modal-box">
-            <div class="modal-header-center">
-                <h2>RENTAL ROOMS</h2>
-                <div class="sub-nav-dock" id="nav-rooms"></div>
-            </div>
-            <div id="grid-rooms" class="scroll-content listing-grid"></div>
-            <!-- In-Modal Floating Button -->
-            <div class="modal-floating-btn" onclick="openListPropertyForm('rooms')"><i class="fas fa-plus"></i></div>
-        </div>
-    </div>
-
-    <!-- 2. FLATS -->
-    <div id="modal-flats" class="modal-overlay hidden-modal">
-        <div class="modal-box">
-            <div class="modal-header-center">
-                <h2>SMART FLATS</h2>
-                <div class="sub-nav-dock" id="nav-flats"></div>
-            </div>
-            <div id="grid-flats" class="scroll-content listing-grid"></div>
-            <div class="modal-floating-btn" onclick="openListPropertyForm('flats')"><i class="fas fa-plus"></i></div>
-        </div>
-    </div>
-
-    <!-- 3. SHOPS -->
-    <div id="modal-shops" class="modal-overlay hidden-modal">
-        <div class="modal-box">
-            <div class="modal-header-center">
-                <h2>RETAIL HUBS</h2>
-                <div class="sub-nav-dock" id="nav-shops"></div>
-            </div>
-            <div id="grid-shops" class="scroll-content listing-grid"></div>
-            <div class="modal-floating-btn" onclick="openListPropertyForm('shops')"><i class="fas fa-plus"></i></div>
-        </div>
-    </div>
-
-    <!-- 4. PG (Default) -->
-    <div id="modal-pg" class="modal-overlay hidden-modal">
-        <div class="modal-box">
-            <div class="modal-header-center">
-                <h2>PREMIUM PG</h2>
-                <div class="sub-nav-dock" id="nav-pg"></div>
-            </div>
-            <div id="grid-pg" class="scroll-content listing-grid"></div>
-            <div class="modal-floating-btn" onclick="openListPropertyForm('pg')"><i class="fas fa-plus"></i></div>
-        </div>
-    </div>
-
-    <!-- 5. HOSTELS -->
-    <div id="modal-hostels" class="modal-overlay hidden-modal">
-        <div class="modal-box">
-            <div class="modal-header-center">
-                <h2>STUDENT LIVING</h2>
-                <div class="sub-nav-dock" id="nav-hostels"></div>
-            </div>
-            <div id="grid-hostels" class="scroll-content listing-grid"></div>
-            <div class="modal-floating-btn" onclick="openListPropertyForm('hostels')"><i class="fas fa-plus"></i></div>
-        </div>
-    </div>
-
-    <!-- 6. HOUSES -->
-    <div id="modal-houses" class="modal-overlay hidden-modal">
-        <div class="modal-box">
-            <div class="modal-header-center">
-                <h2>LUXURY VILLAS</h2>
-                <div class="sub-nav-dock" id="nav-houses"></div>
-            </div>
-            <div id="grid-houses" class="scroll-content listing-grid"></div>
-            <div class="modal-floating-btn" onclick="openListPropertyForm('houses')"><i class="fas fa-plus"></i></div>
-        </div>
-    </div>
-
-    <!-- 7. PLOTS -->
-    <div id="modal-plots" class="modal-overlay hidden-modal">
-        <div class="modal-box">
-            <div class="modal-header-center">
-                <h2>PRIME LAND</h2>
-                <div class="sub-nav-dock" id="nav-plots"></div>
-            </div>
-            <div id="grid-plots" class="scroll-content listing-grid"></div>
-            <div class="modal-floating-btn" onclick="openListPropertyForm('plots')"><i class="fas fa-plus"></i></div>
-        </div>
-    </div>
+    <div id="modal-rooms" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>RENTAL ROOMS</h2><div class="sub-nav-dock" id="nav-rooms"></div></div><div id="grid-rooms" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('rooms')"><i class="fas fa-plus"></i></div></div></div>
+    <div id="modal-flats" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>SMART FLATS</h2><div class="sub-nav-dock" id="nav-flats"></div></div><div id="grid-flats" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('flats')"><i class="fas fa-plus"></i></div></div></div>
+    <div id="modal-shops" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>RETAIL HUBS</h2><div class="sub-nav-dock" id="nav-shops"></div></div><div id="grid-shops" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('shops')"><i class="fas fa-plus"></i></div></div></div>
+    <div id="modal-pg" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>PREMIUM PG</h2><div class="sub-nav-dock" id="nav-pg"></div></div><div id="grid-pg" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('pg')"><i class="fas fa-plus"></i></div></div></div>
+    <div id="modal-hostels" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>STUDENT LIVING</h2><div class="sub-nav-dock" id="nav-hostels"></div></div><div id="grid-hostels" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('hostels')"><i class="fas fa-plus"></i></div></div></div>
+    <div id="modal-houses" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>LUXURY VILLAS</h2><div class="sub-nav-dock" id="nav-houses"></div></div><div id="grid-houses" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('houses')"><i class="fas fa-plus"></i></div></div></div>
+    <div id="modal-plots" class="modal-overlay hidden-modal"><div class="modal-box"><div class="modal-header-center"><h2>PRIME LAND</h2><div class="sub-nav-dock" id="nav-plots"></div></div><div id="grid-plots" class="scroll-content listing-grid"></div><div class="modal-floating-btn" onclick="startListingFlow('plots')"><i class="fas fa-plus"></i></div></div></div>
 
     <script>
-        // --- DEEP RESEARCHED DATA: 10 SUB-TYPES PER CATEGORY ---
+        // --- YOUR LIVE DEPLOYED URL ---
+        const scriptURL = "https://script.google.com/macros/s/AKfycbzKVsVHvVDMWxvHizzPeUdBAuRGru_j2FN5vuT0tRdtJrUj0pVJyYXv3rdGstig3WTJ/exec";
+        // ------------------------------
+
+        // --- EDIT YOUR DATA HERE (BHAI YAHA DATA BADAL LENA) ---
         const fullData = {
-            rooms: {
-                'Single': [ { title: "Eco Pod Single", price: "₹4,200", loc: "Green Belt", rating: "4.5", img: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=600&auto=format&fit=crop" }, { title: "Compact Solo", price: "₹3,800", loc: "Metro Stn", rating: "4.2", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600&auto=format&fit=crop" } ],
-                'Double': [ { title: "Duo Space", price: "₹3,000/bed", loc: "Uni Campus", rating: "4.2", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600&auto=format&fit=crop" }, { title: "Twin Share", price: "₹3,500/bed", loc: "Sec-14", rating: "4.4", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" } ],
-                'Triple': [ { title: "Friends Trio", price: "₹2,500/bed", loc: "Market", rating: "4.1", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" }, { title: "Budget 3", price: "₹2,200/bed", loc: "Extn", rating: "3.9", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600&auto=format&fit=crop" } ],
-                'Studio': [ { title: "Neon Studio", price: "₹6,500", loc: "Cyber Hub", rating: "4.8", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600&auto=format&fit=crop" }, { title: "Artist Loft", price: "₹7,000", loc: "Art Dist", rating: "4.7", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600&auto=format&fit=crop" } ],
-                'Furnished': [ { title: "Exec Suite", price: "₹9,000", loc: "Tech Park", rating: "4.9", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600&auto=format&fit=crop" }, { title: "Royal Room", price: "₹8,500", loc: "Civil Lines", rating: "4.6", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600&auto=format&fit=crop" } ],
-                'Unfurnished': [ { title: "Raw Space", price: "₹3,000", loc: "Old City", rating: "3.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" }, { title: "Empty Room", price: "₹2,800", loc: "Colony", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600&auto=format&fit=crop" } ],
-                'AC Room': [ { title: "Cool Stay", price: "₹5,500", loc: "Main Rd", rating: "4.5", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600&auto=format&fit=crop" }, { title: "Chilled Pod", price: "₹6,000", loc: "Plaza", rating: "4.6", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600&auto=format&fit=crop" } ],
-                'Non-AC': [ { title: "Simple Stay", price: "₹3,000", loc: "Lane 2", rating: "4.0", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600&auto=format&fit=crop" }, { title: "Eco Room", price: "₹2,800", loc: "Corner", rating: "4.1", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" } ],
-                'Terrace': [ { title: "Sky Room", price: "₹4,500", loc: "Rooftop", rating: "4.7", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600&auto=format&fit=crop" }, { title: "Open View", price: "₹5,000", loc: "Top Flr", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600&auto=format&fit=crop" } ],
-                'Basement': [ { title: "Quiet Base", price: "₹2,500", loc: "Under", rating: "3.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600&auto=format&fit=crop" }, { title: "Study Den", price: "₹2,800", loc: "Lower", rating: "3.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600&auto=format&fit=crop" } ]
+             rooms: {
+                'Single': [
+                    { title: "Edit Name 1", price: "₹4,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=600",  link: "rooms_single_1.html"  },
+                    { title: "Edit Name 2", price: "₹4,200", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "rooms_single_2.html" },
+                    { title: "Edit Name 3", price: "₹3,800", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600", link: "rooms_single_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_single_4.html" },
+                    { title: "Edit Name 5", price: "₹3,500", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600", link: "rooms_single_5.html" },
+                    { title: "Edit Name 6", price: "₹6,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "rooms_single_6.html" }
+                ],
+                'Double': [
+                    { title: "Edit Name 1", price: "₹4,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "rooms_double_1.html" },
+                    { title: "Edit Name 2", price: "₹4,200", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600", link: "rooms_double_2.html" },
+                    { title: "Edit Name 3", price: "₹3,800", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "rooms_double_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "rooms_double_4.html" },
+                    { title: "Edit Name 5", price: "₹3,500", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "rooms_double_5.html" },
+                    { title: "Edit Name 6", price: "₹6,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_double_6.html" }
+                ],
+                'Triple': [
+                    { title: "Edit Name 1", price: "₹4,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "rooms_triple_1.html" },
+                    { title: "Edit Name 2", price: "₹4,200", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "rooms_triple_2.html" },
+                    { title: "Edit Name 3", price: "₹3,800", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "rooms_triple_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "rooms_triple_4.html" },
+                    { title: "Edit Name 5", price: "₹3,500", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "rooms_triple_5.html" },
+                    { title: "Edit Name 6", price: "₹6,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "rooms_triple_6.html" }
+                ],
+                'Studio': [
+                    { title: "Edit Name 1", price: "₹6,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "rooms_studio_1.html" },
+                    { title: "Edit Name 2", price: "₹6,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "rooms_studio_2.html" },
+                    { title: "Edit Name 3", price: "₹6,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "rooms_studio_3.html" },
+                    { title: "Edit Name 4", price: "₹6,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "rooms_studio_4.html" },
+                    { title: "Edit Name 5", price: "₹6,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "rooms_studio_5.html" },
+                    { title: "Edit Name 6", price: "₹6,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "rooms_studio_6.html" }
+                ],
+                'Furnished': [
+                    { title: "Edit Name 1", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "rooms_furnished_1.html" },
+                    { title: "Edit Name 2", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "rooms_furnished_2.html" },
+                    { title: "Edit Name 3", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "rooms_furnished_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "rooms_furnished_4.html" },
+                    { title: "Edit Name 5", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "rooms_furnished_5.html" },
+                    { title: "Edit Name 6", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "rooms_furnished_6.html" }
+                ],
+                'Unfurnished': [
+                    { title: "Edit Name 1", price: "₹3,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "rooms_unfurnished_1.html" },
+                    { title: "Edit Name 2", price: "₹3,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "rooms_unfurnished_2.html" },
+                    { title: "Edit Name 3", price: "₹3,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "rooms_unfurnished_3.html" },
+                    { title: "Edit Name 4", price: "₹3,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "rooms_unfurnished_4.html" },
+                    { title: "Edit Name 5", price: "₹3,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "rooms_unfurnished_5.html" },
+                    { title: "Edit Name 6", price: "₹3,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "rooms_unfurnished_6.html" }
+                ],
+                'AC Room': [
+                    { title: "Edit Name 1", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_ac_1.html" },
+                    { title: "Edit Name 2", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_ac_2.html" },
+                    { title: "Edit Name 3", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_ac_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_ac_4.html" },
+                    { title: "Edit Name 5", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_ac_5.html" },
+                    { title: "Edit Name 6", price: "₹5,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "rooms_ac_6.html" }
+                ],
+                'Non-AC': [
+                    { title: "Edit Name 1", price: "₹3,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600", link: "rooms_nonac_1.html" },
+                    { title: "Edit Name 2", price: "₹3,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600", link: "rooms_nonac_2.html" },
+                    { title: "Edit Name 3", price: "₹3,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600", link: "rooms_nonac_3.html" },
+                    { title: "Edit Name 4", price: "₹3,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600", link: "rooms_nonac_4.html" },
+                    { title: "Edit Name 5", price: "₹3,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600", link: "rooms_nonac_5.html" },
+                    { title: "Edit Name 6", price: "₹3,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=600", link: "rooms_nonac_6.html" }
+                ],
+                'Terrace': [
+                    { title: "Edit Name 1", price: "₹5,500", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "rooms_terrace_1.html" },
+                    { title: "Edit Name 2", price: "₹5,500", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "rooms_terrace_2.html" },
+                    { title: "Edit Name 3", price: "₹5,500", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "rooms_terrace_3.html" },
+                    { title: "Edit Name 4", price: "₹5,500", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "rooms_terrace_4.html" },
+                    { title: "Edit Name 5", price: "₹5,500", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "rooms_terrace_5.html" },
+                    { title: "Edit Name 6", price: "₹5,500", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "rooms_terrace_6.html" }
+                ],
+                'Basement': [
+                    { title: "Edit Name 1", price: "₹3,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "rooms_basement_1.html" },
+                    { title: "Edit Name 2", price: "₹3,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "rooms_basement_2.html" },
+                    { title: "Edit Name 3", price: "₹3,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "rooms_basement_3.html" },
+                    { title: "Edit Name 4", price: "₹3,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "rooms_basement_4.html" },
+                    { title: "Edit Name 5", price: "₹3,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "rooms_basement_5.html" },
+                    { title: "Edit Name 6", price: "₹3,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "rooms_basement_6.html" }
+                ]
             },
             flats: {
-                '1 BHK': [ { title: "Smart 1BHK", price: "₹12,000", loc: "Hub", rating: "4.6", img: "https://images.unsplash.com/photo-1484154218962-a1c002085d2f?q=80&w=600&auto=format&fit=crop" } ],
-                '2 BHK': [ { title: "Skyline 2BHK", price: "₹22,000", loc: "Tower", rating: "4.7", img: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=600&auto=format&fit=crop" } ],
-                '3 BHK': [ { title: "Grand 3BHK", price: "₹35,000", loc: "Elite", rating: "4.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600&auto=format&fit=crop" } ],
-                '4 BHK': [ { title: "Royal 4BHK", price: "₹50,000", loc: "Kings", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600&auto=format&fit=crop" } ],
-                'Studio': [ { title: "Chic Studio", price: "₹15,000", loc: "Metro", rating: "4.5", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600&auto=format&fit=crop" } ],
-                'Penthouse': [ { title: "Sky Villa", price: "₹60,000", loc: "Top", rating: "5.0", img: "https://images.unsplash.com/photo-1600596542815-2250c385e311?q=80&w=600&auto=format&fit=crop" } ],
-                'Duplex': [ { title: "Lux Duplex", price: "₹45,000", loc: "Posh", rating: "4.9", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600&auto=format&fit=crop" } ],
-                'Serviced': [ { title: "Hotel Apt", price: "₹40,000", loc: "Biz", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600&auto=format&fit=crop" } ],
-                'Builder Flr': [ { title: "Indep Floor", price: "₹25,000", loc: "Sec-5", rating: "4.4", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600&auto=format&fit=crop" } ],
-                'Basement': [ { title: "Base Flat", price: "₹8,000", loc: "Budget", rating: "3.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600&auto=format&fit=crop" } ]
+                '1 BHK': [
+                    { title: "Edit Name 1", price: "₹12,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_1bhk_1.html" },
+                    { title: "Edit Name 2", price: "₹12,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_1bhk_2.html" },
+                    { title: "Edit Name 3", price: "₹12,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_1bhk_3.html" },
+                    { title: "Edit Name 4", price: "₹12,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_1bhk_4.html" },
+                    { title: "Edit Name 5", price: "₹12,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_1bhk_5.html" },
+                    { title: "Edit Name 6", price: "₹12,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_1bhk_6.html" }
+                ],
+                '2 BHK': [
+                    { title: "Edit Name 1", price: "₹18,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_2bhk_1.html" },
+                    { title: "Edit Name 2", price: "₹18,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_2bhk_2.html" },
+                    { title: "Edit Name 3", price: "₹18,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_2bhk_3.html" },
+                    { title: "Edit Name 4", price: "₹18,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_2bhk_4.html" },
+                    { title: "Edit Name 5", price: "₹18,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_2bhk_5.html" },
+                    { title: "Edit Name 6", price: "₹18,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_2bhk_6.html" }
+                ],
+                '3 BHK': [
+                    { title: "Edit Name 1", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "flats_3bhk_1.html" },
+                    { title: "Edit Name 2", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "flats_3bhk_2.html" },
+                    { title: "Edit Name 3", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "flats_3bhk_3.html" },
+                    { title: "Edit Name 4", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "flats_3bhk_4.html" },
+                    { title: "Edit Name 5", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "flats_3bhk_5.html" },
+                    { title: "Edit Name 6", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "flats_3bhk_6.html" }
+                ],
+                '4 BHK': [
+                    { title: "Edit Name 1", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_4bhk_1.html" },
+                    { title: "Edit Name 2", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_4bhk_2.html" },
+                    { title: "Edit Name 3", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_4bhk_3.html" },
+                    { title: "Edit Name 4", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_4bhk_4.html" },
+                    { title: "Edit Name 5", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_4bhk_5.html" },
+                    { title: "Edit Name 6", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_4bhk_6.html" }
+                ],
+                'Studio Apt': [
+                    { title: "Edit Name 1", price: "₹10,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "flats_studio_1.html" },
+                    { title: "Edit Name 2", price: "₹10,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "flats_studio_2.html" },
+                    { title: "Edit Name 3", price: "₹10,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "flats_studio_3.html" },
+                    { title: "Edit Name 4", price: "₹10,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "flats_studio_4.html" },
+                    { title: "Edit Name 5", price: "₹10,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "flats_studio_5.html" },
+                    { title: "Edit Name 6", price: "₹10,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=600", link: "flats_studio_6.html" }
+                ],
+                'Penthouse': [
+                    { title: "Edit Name 1", price: "₹50,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1600596542815-2250c385e311?q=80&w=600", link: "flats_penthouse_1.html" },
+                    { title: "Edit Name 2", price: "₹50,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1600596542815-2250c385e311?q=80&w=600", link: "flats_penthouse_2.html" },
+                    { title: "Edit Name 3", price: "₹50,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1600596542815-2250c385e311?q=80&w=600", link: "flats_penthouse_3.html" },
+                    { title: "Edit Name 4", price: "₹50,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1600596542815-2250c385e311?q=80&w=600", link: "flats_penthouse_4.html" },
+                    { title: "Edit Name 5", price: "₹50,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1600596542815-2250c385e311?q=80&w=600", link: "flats_penthouse_5.html" },
+                    { title: "Edit Name 6", price: "₹50,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1600596542815-2250c385e311?q=80&w=600", link: "flats_penthouse_6.html" }
+                ],
+                'Duplex': [
+                    { title: "Edit Name 1", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "flats_duplex_1.html" },
+                    { title: "Edit Name 2", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "flats_duplex_2.html" },
+                    { title: "Edit Name 3", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "flats_duplex_3.html" },
+                    { title: "Edit Name 4", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "flats_duplex_4.html" },
+                    { title: "Edit Name 5", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "flats_duplex_5.html" },
+                    { title: "Edit Name 6", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "flats_duplex_6.html" }
+                ],
+                'Serviced': [
+                    { title: "Edit Name 1", price: "₹30,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_serviced_1.html" },
+                    { title: "Edit Name 2", price: "₹30,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_serviced_2.html" },
+                    { title: "Edit Name 3", price: "₹30,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_serviced_3.html" },
+                    { title: "Edit Name 4", price: "₹30,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_serviced_4.html" },
+                    { title: "Edit Name 5", price: "₹30,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_serviced_5.html" },
+                    { title: "Edit Name 6", price: "₹30,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "flats_serviced_6.html" }
+                ],
+                'Builder Flr': [
+                    { title: "Edit Name 1", price: "₹20,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "flats_builder_1.html" },
+                    { title: "Edit Name 2", price: "₹20,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "flats_builder_2.html" },
+                    { title: "Edit Name 3", price: "₹20,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "flats_builder_3.html" },
+                    { title: "Edit Name 4", price: "₹20,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "flats_builder_4.html" },
+                    { title: "Edit Name 5", price: "₹20,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "flats_builder_5.html" },
+                    { title: "Edit Name 6", price: "₹20,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "flats_builder_6.html" }
+                ],
+                'Basement': [
+                    { title: "Edit Name 1", price: "₹8,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_basement_1.html" },
+                    { title: "Edit Name 2", price: "₹8,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_basement_2.html" },
+                    { title: "Edit Name 3", price: "₹8,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_basement_3.html" },
+                    { title: "Edit Name 4", price: "₹8,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_basement_4.html" },
+                    { title: "Edit Name 5", price: "₹8,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_basement_5.html" },
+                    { title: "Edit Name 6", price: "₹8,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "flats_basement_6.html" }
+                ]
             },
             shops: {
-                'Mall Shop': [ { title: "Brand Store", price: "₹40,000", loc: "City Mall", rating: "4.8", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop" } ],
-                'High St': [ { title: "Glass Shop", price: "₹55,000", loc: "Mkt Rd", rating: "4.9", img: "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600&auto=format&fit=crop" } ],
-                'Office': [ { title: "Biz Desk", price: "₹15,000", loc: "Tower", rating: "4.7", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600&auto=format&fit=crop" } ],
-                'Showroom': [ { title: "Main Show", price: "₹80,000", loc: "Corner", rating: "5.0", img: "https://images.unsplash.com/photo-1556740758-90de2977864f?q=80&w=600&auto=format&fit=crop" } ],
-                'Kiosk': [ { title: "Food Stall", price: "₹10,000", loc: "Entry", rating: "4.4", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600&auto=format&fit=crop" } ],
-                'Food Ct': [ { title: "Pizza Point", price: "₹25,000", loc: "L3", rating: "4.6", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop" } ],
-                'Warehouse': [ { title: "Store Room", price: "₹20,000", loc: "Ind Area", rating: "4.2", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" } ],
-                'Co-work': [ { title: "Shared Dsk", price: "₹5,000", loc: "Hub", rating: "4.5", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop" } ],
-                'Basement': [ { title: "Godown", price: "₹12,000", loc: "Lower", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600&auto=format&fit=crop" } ],
-                'Rooftop': [ { title: "Sky Cafe", price: "₹35,000", loc: "Top", rating: "4.8", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600&auto=format&fit=crop" } ]
+                'Mall Shop': [
+                    { title: "Edit Name 1", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600", link: "shops_mall_1.html" },
+                    { title: "Edit Name 2", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600", link: "shops_mall_2.html" },
+                    { title: "Edit Name 3", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600", link: "shops_mall_3.html" },
+                    { title: "Edit Name 4", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600", link: "shops_mall_4.html" },
+                    { title: "Edit Name 5", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600", link: "shops_mall_5.html" },
+                    { title: "Edit Name 6", price: "₹35,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600", link: "shops_mall_6.html" }
+                ],
+                'High St': [
+                    { title: "Edit Name 1", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600", link: "shops_highst_1.html" },
+                    { title: "Edit Name 2", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600", link: "shops_highst_2.html" },
+                    { title: "Edit Name 3", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600", link: "shops_highst_3.html" },
+                    { title: "Edit Name 4", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600", link: "shops_highst_4.html" },
+                    { title: "Edit Name 5", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600", link: "shops_highst_5.html" },
+                    { title: "Edit Name 6", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?q=80&w=600", link: "shops_highst_6.html" }
+                ],
+                'Office': [
+                    { title: "Edit Name 1", price: "₹15,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600", link: "shops_office_1.html" },
+                    { title: "Edit Name 2", price: "₹15,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600", link: "shops_office_2.html" },
+                    { title: "Edit Name 3", price: "₹15,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600", link: "shops_office_3.html" },
+                    { title: "Edit Name 4", price: "₹15,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600", link: "shops_office_4.html" },
+                    { title: "Edit Name 5", price: "₹15,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600", link: "shops_office_5.html" },
+                    { title: "Edit Name 6", price: "₹15,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600", link: "shops_office_6.html" }
+                ],
+                'Showroom': [
+                    { title: "Edit Name 1", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1556740758-90de2977864f?q=80&w=600", link: "shops_showroom_1.html" },
+                    { title: "Edit Name 2", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1556740758-90de2977864f?q=80&w=600", link: "shops_showroom_2.html" },
+                    { title: "Edit Name 3", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1556740758-90de2977864f?q=80&w=600", link: "shops_showroom_3.html" },
+                    { title: "Edit Name 4", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1556740758-90de2977864f?q=80&w=600", link: "shops_showroom_4.html" },
+                    { title: "Edit Name 5", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1556740758-90de2977864f?q=80&w=600", link: "shops_showroom_5.html" },
+                    { title: "Edit Name 6", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1556740758-90de2977864f?q=80&w=600", link: "shops_showroom_6.html" }
+                ],
+                'Kiosk': [
+                    { title: "Edit Name 1", price: "₹10,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600", link: "shops_kiosk_1.html" },
+                    { title: "Edit Name 2", price: "₹10,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600", link: "shops_kiosk_2.html" },
+                    { title: "Edit Name 3", price: "₹10,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600", link: "shops_kiosk_3.html" },
+                    { title: "Edit Name 4", price: "₹10,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600", link: "shops_kiosk_4.html" },
+                    { title: "Edit Name 5", price: "₹10,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600", link: "shops_kiosk_5.html" },
+                    { title: "Edit Name 6", price: "₹10,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600", link: "shops_kiosk_6.html" }
+                ],
+                'Food Ct': [
+                    { title: "Edit Name 1", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600", link: "shops_foodct_1.html" },
+                    { title: "Edit Name 2", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600", link: "shops_foodct_2.html" },
+                    { title: "Edit Name 3", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600", link: "shops_foodct_3.html" },
+                    { title: "Edit Name 4", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600", link: "shops_foodct_4.html" },
+                    { title: "Edit Name 5", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600", link: "shops_foodct_5.html" },
+                    { title: "Edit Name 6", price: "₹25,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600", link: "shops_foodct_6.html" }
+                ],
+                'Warehouse': [
+                    { title: "Edit Name 1", price: "₹20,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "shops_warehouse_1.html" },
+                    { title: "Edit Name 2", price: "₹20,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "shops_warehouse_2.html" },
+                    { title: "Edit Name 3", price: "₹20,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "shops_warehouse_3.html" },
+                    { title: "Edit Name 4", price: "₹20,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "shops_warehouse_4.html" },
+                    { title: "Edit Name 5", price: "₹20,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "shops_warehouse_5.html" },
+                    { title: "Edit Name 6", price: "₹20,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "shops_warehouse_6.html" }
+                ],
+                'Co-work': [
+                    { title: "Edit Name 1", price: "₹6,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600", link: "shops_cowork_1.html" },
+                    { title: "Edit Name 2", price: "₹6,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600", link: "shops_cowork_2.html" },
+                    { title: "Edit Name 3", price: "₹6,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600", link: "shops_cowork_3.html" },
+                    { title: "Edit Name 4", price: "₹6,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600", link: "shops_cowork_4.html" },
+                    { title: "Edit Name 5", price: "₹6,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600", link: "shops_cowork_5.html" },
+                    { title: "Edit Name 6", price: "₹6,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600", link: "shops_cowork_6.html" }
+                ],
+                'Basement': [
+                    { title: "Edit Name 1", price: "₹10,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "shops_basement_1.html" },
+                    { title: "Edit Name 2", price: "₹10,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "shops_basement_2.html" },
+                    { title: "Edit Name 3", price: "₹10,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "shops_basement_3.html" },
+                    { title: "Edit Name 4", price: "₹10,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "shops_basement_4.html" },
+                    { title: "Edit Name 5", price: "₹10,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "shops_basement_5.html" },
+                    { title: "Edit Name 6", price: "₹10,000", loc: "Edit Loc", rating: "3.5", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "shops_basement_6.html" }
+                ],
+                'Rooftop': [
+                    { title: "Edit Name 1", price: "₹15,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600", link: "shops_rooftop_1.html" },
+                    { title: "Edit Name 2", price: "₹15,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600", link: "shops_rooftop_2.html" },
+                    { title: "Edit Name 3", price: "₹15,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600", link: "shops_rooftop_3.html" },
+                    { title: "Edit Name 4", price: "₹15,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600", link: "shops_rooftop_4.html" },
+                    { title: "Edit Name 5", price: "₹15,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600", link: "shops_rooftop_5.html" },
+                    { title: "Edit Name 6", price: "₹15,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600", link: "shops_rooftop_6.html" }
+                ]
             },
             pg: {
-                'Boys': [ { title: "Alpha Boys", price: "₹8,000", loc: "Sec-18", rating: "4.7", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600&auto=format&fit=crop" } ],
-                'Girls': [ { title: "Zenith Girls", price: "₹9,000", loc: "Safe", rating: "4.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" } ],
-                'Co-Ed': [ { title: "Friends Hub", price: "₹10,000", loc: "Cyber", rating: "4.8", img: "https://images.unsplash.com/photo-1502005229766-939cb9342514?q=80&w=600&auto=format&fit=crop" } ],
-                'Luxury': [ { title: "Elite PG", price: "₹18,000", loc: "Golf", rating: "5.0", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600&auto=format&fit=crop" } ],
-                'Budget': [ { title: "Save PG", price: "₹5,000", loc: "Laxmi", rating: "4.1", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600&auto=format&fit=crop" } ],
-                'Single': [ { title: "Solo Room", price: "₹12,000", loc: "Posh", rating: "4.7", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600&auto=format&fit=crop" } ],
-                'Double': [ { title: "Twin Share", price: "₹7,000", loc: "DLF", rating: "4.5", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600&auto=format&fit=crop" } ],
-                'Triple': [ { title: "Trio Bed", price: "₹5,500", loc: "Uni", rating: "4.3", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" } ],
-                'AC PG': [ { title: "Cool Stay", price: "₹9,500", loc: "Main", rating: "4.6", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600&auto=format&fit=crop" } ],
-                'Food': [ { title: "Meal Incl", price: "₹11,000", loc: "Homey", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600&auto=format&fit=crop" } ]
+                'Boys': [
+                    { title: "Edit Name 1", price: "₹8,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "pg_boys_1.html" },
+                    { title: "Edit Name 2", price: "₹8,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "pg_boys_2.html" },
+                    { title: "Edit Name 3", price: "₹8,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "pg_boys_3.html" },
+                    { title: "Edit Name 4", price: "₹8,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "pg_boys_4.html" },
+                    { title: "Edit Name 5", price: "₹8,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "pg_boys_5.html" },
+                    { title: "Edit Name 6", price: "₹8,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "pg_boys_6.html" }
+                ],
+                'Girls': [
+                    { title: "Edit Name 1", price: "₹8,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_girls_1.html" },
+                    { title: "Edit Name 2", price: "₹8,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_girls_2.html" },
+                    { title: "Edit Name 3", price: "₹8,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_girls_3.html" },
+                    { title: "Edit Name 4", price: "₹8,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_girls_4.html" },
+                    { title: "Edit Name 5", price: "₹8,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_girls_5.html" },
+                    { title: "Edit Name 6", price: "₹8,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_girls_6.html" }
+                ],
+                'Co-Ed': [
+                    { title: "Edit Name 1", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502005229766-939cb9342514?q=80&w=600", link: "pg_coed_1.html" },
+                    { title: "Edit Name 2", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502005229766-939cb9342514?q=80&w=600", link: "pg_coed_2.html" },
+                    { title: "Edit Name 3", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502005229766-939cb9342514?q=80&w=600", link: "pg_coed_3.html" },
+                    { title: "Edit Name 4", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502005229766-939cb9342514?q=80&w=600", link: "pg_coed_4.html" },
+                    { title: "Edit Name 5", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502005229766-939cb9342514?q=80&w=600", link: "pg_coed_5.html" },
+                    { title: "Edit Name 6", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1502005229766-939cb9342514?q=80&w=600", link: "pg_coed_6.html" }
+                ],
+                'Luxury': [
+                    { title: "Edit Name 1", price: "₹15,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "pg_luxury_1.html" },
+                    { title: "Edit Name 2", price: "₹15,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "pg_luxury_2.html" },
+                    { title: "Edit Name 3", price: "₹15,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "pg_luxury_3.html" },
+                    { title: "Edit Name 4", price: "₹15,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "pg_luxury_4.html" },
+                    { title: "Edit Name 5", price: "₹15,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "pg_luxury_5.html" },
+                    { title: "Edit Name 6", price: "₹15,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "pg_luxury_6.html" }
+                ],
+                'Budget': [
+                    { title: "Edit Name 1", price: "₹5,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "pg_budget_1.html" },
+                    { title: "Edit Name 2", price: "₹5,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "pg_budget_2.html" },
+                    { title: "Edit Name 3", price: "₹5,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "pg_budget_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "pg_budget_4.html" },
+                    { title: "Edit Name 5", price: "₹5,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "pg_budget_5.html" },
+                    { title: "Edit Name 6", price: "₹5,000", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=600", link: "pg_budget_6.html" }
+                ],
+                'Single Occ': [
+                    { title: "Edit Name 1", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600", link: "pg_singleocc_1.html" },
+                    { title: "Edit Name 2", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600", link: "pg_singleocc_2.html" },
+                    { title: "Edit Name 3", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600", link: "pg_singleocc_3.html" },
+                    { title: "Edit Name 4", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600", link: "pg_singleocc_4.html" },
+                    { title: "Edit Name 5", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600", link: "pg_singleocc_5.html" },
+                    { title: "Edit Name 6", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1616594031246-d53654136601?q=80&w=600", link: "pg_singleocc_6.html" }
+                ],
+                'Double Occ': [
+                    { title: "Edit Name 1", price: "₹7,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "pg_doubleocc_1.html" },
+                    { title: "Edit Name 2", price: "₹7,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "pg_doubleocc_2.html" },
+                    { title: "Edit Name 3", price: "₹7,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "pg_doubleocc_3.html" },
+                    { title: "Edit Name 4", price: "₹7,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "pg_doubleocc_4.html" },
+                    { title: "Edit Name 5", price: "₹7,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "pg_doubleocc_5.html" },
+                    { title: "Edit Name 6", price: "₹7,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "pg_doubleocc_6.html" }
+                ],
+                'Triple Occ': [
+                    { title: "Edit Name 1", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_tripleocc_1.html" },
+                    { title: "Edit Name 2", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_tripleocc_2.html" },
+                    { title: "Edit Name 3", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_tripleocc_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_tripleocc_4.html" },
+                    { title: "Edit Name 5", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_tripleocc_5.html" },
+                    { title: "Edit Name 6", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "pg_tripleocc_6.html" }
+                ],
+                'AC PG': [
+                    { title: "Edit Name 1", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "pg_ac_1.html" },
+                    { title: "Edit Name 2", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "pg_ac_2.html" },
+                    { title: "Edit Name 3", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "pg_ac_3.html" },
+                    { title: "Edit Name 4", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "pg_ac_4.html" },
+                    { title: "Edit Name 5", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "pg_ac_5.html" },
+                    { title: "Edit Name 6", price: "₹9,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600", link: "pg_ac_6.html" }
+                ],
+                'With Food': [
+                    { title: "Edit Name 1", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "pg_food_1.html" },
+                    { title: "Edit Name 2", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "pg_food_2.html" },
+                    { title: "Edit Name 3", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "pg_food_3.html" },
+                    { title: "Edit Name 4", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "pg_food_4.html" },
+                    { title: "Edit Name 5", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "pg_food_5.html" },
+                    { title: "Edit Name 6", price: "₹10,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "pg_food_6.html" }
+                ]
             },
             hostels: {
-                'Student M': [ { title: "Boys Hostel", price: "₹6,000", loc: "Campus", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" } ],
-                'Student F': [ { title: "Girls Wing", price: "₹6,500", loc: "Gate", rating: "4.7", img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?q=80&w=600&auto=format&fit=crop" } ],
-                'Working M': [ { title: "Exec Stay", price: "₹8,000", loc: "Office", rating: "4.4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600&auto=format&fit=crop" } ],
-                'Working F': [ { title: "Safe Home", price: "₹8,500", loc: "Tech", rating: "4.6", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600&auto=format&fit=crop" } ],
-                'AC Host': [ { title: "Chill Zone", price: "₹7,500", loc: "New", rating: "4.5", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600&auto=format&fit=crop" } ],
-                'Non-AC': [ { title: "Econ Bed", price: "₹4,500", loc: "Old", rating: "4.0", img: "https://images.unsplash.com/photo-1596276020587-8044fe049813?q=80&w=600&auto=format&fit=crop" } ],
-                'Dorm': [ { title: "Bunk Bed", price: "₹3,500", loc: "Hall", rating: "3.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600&auto=format&fit=crop" } ],
-                'Luxury': [ { title: "VIP Host", price: "₹12,000", loc: "Posh", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600&auto=format&fit=crop" } ],
-                'Backpack': [ { title: "Traveler", price: "₹500/Day", loc: "City", rating: "4.3", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600&auto=format&fit=crop" } ],
-                'Campus': [ { title: "Uni Block", price: "₹5,000", loc: "Inside", rating: "4.2", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600&auto=format&fit=crop" } ]
+                'Student M': [
+                    { title: "Edit Name 1", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_studentm_1.html" },
+                    { title: "Edit Name 2", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_studentm_2.html" },
+                    { title: "Edit Name 3", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_studentm_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_studentm_4.html" },
+                    { title: "Edit Name 5", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_studentm_5.html" },
+                    { title: "Edit Name 6", price: "₹5,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_studentm_6.html" }
+                ],
+                'Student F': [
+                    { title: "Edit Name 1", price: "₹5,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?q=80&w=600", link: "hostels_studentf_1.html" },
+                    { title: "Edit Name 2", price: "₹5,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?q=80&w=600", link: "hostels_studentf_2.html" },
+                    { title: "Edit Name 3", price: "₹5,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?q=80&w=600", link: "hostels_studentf_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?q=80&w=600", link: "hostels_studentf_4.html" },
+                    { title: "Edit Name 5", price: "₹5,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?q=80&w=600", link: "hostels_studentf_5.html" },
+                    { title: "Edit Name 6", price: "₹5,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?q=80&w=600", link: "hostels_studentf_6.html" }
+                ],
+                'Working M': [
+                    { title: "Edit Name 1", price: "₹6,000", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "hostels_workingm_1.html" },
+                    { title: "Edit Name 2", price: "₹6,000", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "hostels_workingm_2.html" },
+                    { title: "Edit Name 3", price: "₹6,000", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "hostels_workingm_3.html" },
+                    { title: "Edit Name 4", price: "₹6,000", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "hostels_workingm_4.html" },
+                    { title: "Edit Name 5", price: "₹6,000", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "hostels_workingm_5.html" },
+                    { title: "Edit Name 6", price: "₹6,000", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "hostels_workingm_6.html" }
+                ],
+                'Working F': [
+                    { title: "Edit Name 1", price: "₹6,500", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600", link: "hostels_workingf_1.html" },
+                    { title: "Edit Name 2", price: "₹6,500", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600", link: "hostels_workingf_2.html" },
+                    { title: "Edit Name 3", price: "₹6,500", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600", link: "hostels_workingf_3.html" },
+                    { title: "Edit Name 4", price: "₹6,500", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600", link: "hostels_workingf_4.html" },
+                    { title: "Edit Name 5", price: "₹6,500", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600", link: "hostels_workingf_5.html" },
+                    { title: "Edit Name 6", price: "₹6,500", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1512918760513-95f1929c3d38?q=80&w=600", link: "hostels_workingf_6.html" }
+                ],
+                'AC Hostel': [
+                    { title: "Edit Name 1", price: "₹7,500", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_ac_1.html" },
+                    { title: "Edit Name 2", price: "₹7,500", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_ac_2.html" },
+                    { title: "Edit Name 3", price: "₹7,500", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_ac_3.html" },
+                    { title: "Edit Name 4", price: "₹7,500", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_ac_4.html" },
+                    { title: "Edit Name 5", price: "₹7,500", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_ac_5.html" },
+                    { title: "Edit Name 6", price: "₹7,500", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_ac_6.html" }
+                ],
+                'Non-AC': [
+                    { title: "Edit Name 1", price: "₹4,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1596276020587-8044fe049813?q=80&w=600", link: "hostels_nonac_1.html" },
+                    { title: "Edit Name 2", price: "₹4,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1596276020587-8044fe049813?q=80&w=600", link: "hostels_nonac_2.html" },
+                    { title: "Edit Name 3", price: "₹4,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1596276020587-8044fe049813?q=80&w=600", link: "hostels_nonac_3.html" },
+                    { title: "Edit Name 4", price: "₹4,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1596276020587-8044fe049813?q=80&w=600", link: "hostels_nonac_4.html" },
+                    { title: "Edit Name 5", price: "₹4,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1596276020587-8044fe049813?q=80&w=600", link: "hostels_nonac_5.html" },
+                    { title: "Edit Name 6", price: "₹4,500", loc: "Edit Loc", rating: "4.0", img: "https://images.unsplash.com/photo-1596276020587-8044fe049813?q=80&w=600", link: "hostels_nonac_6.html" }
+                ],
+                'Dormitory': [
+                    { title: "Edit Name 1", price: "₹3,500", loc: "Edit Loc", rating: "3.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_dormitory_1.html" },
+                    { title: "Edit Name 2", price: "₹3,500", loc: "Edit Loc", rating: "3.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_dormitory_2.html" },
+                    { title: "Edit Name 3", price: "₹3,500", loc: "Edit Loc", rating: "3.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_dormitory_3.html" },
+                    { title: "Edit Name 4", price: "₹3,500", loc: "Edit Loc", rating: "3.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_dormitory_4.html" },
+                    { title: "Edit Name 5", price: "₹3,500", loc: "Edit Loc", rating: "3.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_dormitory_5.html" },
+                    { title: "Edit Name 6", price: "₹3,500", loc: "Edit Loc", rating: "3.9", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=600", link: "hostels_dormitory_6.html" }
+                ],
+                'Luxury': [
+                    { title: "Edit Name 1", price: "₹12,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "hostels_luxury_1.html" },
+                    { title: "Edit Name 2", price: "₹12,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "hostels_luxury_2.html" },
+                    { title: "Edit Name 3", price: "₹12,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "hostels_luxury_3.html" },
+                    { title: "Edit Name 4", price: "₹12,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "hostels_luxury_4.html" },
+                    { title: "Edit Name 5", price: "₹12,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "hostels_luxury_5.html" },
+                    { title: "Edit Name 6", price: "₹12,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600", link: "hostels_luxury_6.html" }
+                ],
+                'Backpacker': [
+                    { title: "Edit Name 1", price: "₹800/Day", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "hostels_backpacker_1.html" },
+                    { title: "Edit Name 2", price: "₹800/Day", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "hostels_backpacker_2.html" },
+                    { title: "Edit Name 3", price: "₹800/Day", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "hostels_backpacker_3.html" },
+                    { title: "Edit Name 4", price: "₹800/Day", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "hostels_backpacker_4.html" },
+                    { title: "Edit Name 5", price: "₹800/Day", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "hostels_backpacker_5.html" },
+                    { title: "Edit Name 6", price: "₹800/Day", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1522771753037-633361652bff?q=80&w=600", link: "hostels_backpacker_6.html" }
+                ],
+                'Campus': [
+                    { title: "Edit Name 1", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_campus_1.html" },
+                    { title: "Edit Name 2", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_campus_2.html" },
+                    { title: "Edit Name 3", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_campus_3.html" },
+                    { title: "Edit Name 4", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_campus_4.html" },
+                    { title: "Edit Name 5", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_campus_5.html" },
+                    { title: "Edit Name 6", price: "₹5,000", loc: "Edit Loc", rating: "4.2", img: "https://images.unsplash.com/photo-1520277129738-95822c2a0d7d?q=80&w=600", link: "hostels_campus_6.html" }
+                ]
             },
             houses: {
-                'Villa': [ { title: "Grand Villa", price: "₹60,000", loc: "Palm", rating: "5.0", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600&auto=format&fit=crop" } ],
-                'Bungalow': [ { title: "Vintage", price: "₹50,000", loc: "Civil", rating: "4.8", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600&auto=format&fit=crop" } ],
-                'Farmhouse': [ { title: "Weekend", price: "₹30k/Wk", loc: "Sohna", rating: "4.9", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=600&auto=format&fit=crop" } ],
-                'Floor': [ { title: "Indep Flr", price: "₹25,000", loc: "Sec-4", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600&auto=format&fit=crop" } ],
-                'Row House': [ { title: "Line Home", price: "₹35,000", loc: "Gated", rating: "4.6", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600&auto=format&fit=crop" } ],
-                'Cottage': [ { title: "Cozy Cot", price: "₹40,000", loc: "Hill", rating: "4.7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600&auto=format&fit=crop" } ],
-                'Mansion': [ { title: "Huge Home", price: "₹1 Lakh", loc: "Estate", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600&auto=format&fit=crop" } ],
-                'Tiny': [ { title: "Small Hse", price: "₹15,000", loc: "Eco", rating: "4.3", img: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600&auto=format&fit=crop" } ],
-                'Guest': [ { title: "Annex", price: "₹12,000", loc: "Rear", rating: "4.0", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600&auto=format&fit=crop" } ],
-                'Haveli': [ { title: "Heritage", price: "₹70,000", loc: "Old", rating: "4.9", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=600&auto=format&fit=crop" } ]
+                'Villa': [
+                    { title: "Edit Name 1", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600", link: "houses_villa_1.html" },
+                    { title: "Edit Name 2", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600", link: "houses_villa_2.html" },
+                    { title: "Edit Name 3", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600", link: "houses_villa_3.html" },
+                    { title: "Edit Name 4", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600", link: "houses_villa_4.html" },
+                    { title: "Edit Name 5", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600", link: "houses_villa_5.html" },
+                    { title: "Edit Name 6", price: "₹60,000", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=600", link: "houses_villa_6.html" }
+                ],
+                'Bungalow': [
+                    { title: "Edit Name 1", price: "₹50,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600", link: "houses_bungalow_1.html" },
+                    { title: "Edit Name 2", price: "₹50,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600", link: "houses_bungalow_2.html" },
+                    { title: "Edit Name 3", price: "₹50,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600", link: "houses_bungalow_3.html" },
+                    { title: "Edit Name 4", price: "₹50,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600", link: "houses_bungalow_4.html" },
+                    { title: "Edit Name 5", price: "₹50,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600", link: "houses_bungalow_5.html" },
+                    { title: "Edit Name 6", price: "₹50,000", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600", link: "houses_bungalow_6.html" }
+                ],
+                'Farmhouse': [
+                    { title: "Edit Name 1", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=600", link: "houses_farmhouse_1.html" },
+                    { title: "Edit Name 2", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=600", link: "houses_farmhouse_2.html" },
+                    { title: "Edit Name 3", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=600", link: "houses_farmhouse_3.html" },
+                    { title: "Edit Name 4", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=600", link: "houses_farmhouse_4.html" },
+                    { title: "Edit Name 5", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=600", link: "houses_farmhouse_5.html" },
+                    { title: "Edit Name 6", price: "₹40,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=600", link: "houses_farmhouse_6.html" }
+                ],
+                'Indep Floor': [
+                    { title: "Edit Name 1", price: "₹30,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "houses_indepfloor_1.html" },
+                    { title: "Edit Name 2", price: "₹30,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "houses_indepfloor_2.html" },
+                    { title: "Edit Name 3", price: "₹30,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "houses_indepfloor_3.html" },
+                    { title: "Edit Name 4", price: "₹30,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "houses_indepfloor_4.html" },
+                    { title: "Edit Name 5", price: "₹30,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "houses_indepfloor_5.html" },
+                    { title: "Edit Name 6", price: "₹30,000", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600", link: "houses_indepfloor_6.html" }
+                ],
+                'Row House': [
+                    { title: "Edit Name 1", price: "₹35,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "houses_rowhouse_1.html" },
+                    { title: "Edit Name 2", price: "₹35,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "houses_rowhouse_2.html" },
+                    { title: "Edit Name 3", price: "₹35,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "houses_rowhouse_3.html" },
+                    { title: "Edit Name 4", price: "₹35,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "houses_rowhouse_4.html" },
+                    { title: "Edit Name 5", price: "₹35,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "houses_rowhouse_5.html" },
+                    { title: "Edit Name 6", price: "₹35,000", loc: "Edit Loc", rating: "4.6", img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=600", link: "houses_rowhouse_6.html" }
+                ],
+                'Cottage': [
+                    { title: "Edit Name 1", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "houses_cottage_1.html" },
+                    { title: "Edit Name 2", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "houses_cottage_2.html" },
+                    { title: "Edit Name 3", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "houses_cottage_3.html" },
+                    { title: "Edit Name 4", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "houses_cottage_4.html" },
+                    { title: "Edit Name 5", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "houses_cottage_5.html" },
+                    { title: "Edit Name 6", price: "₹25,000", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=600", link: "houses_cottage_6.html" }
+                ],
+                'Mansion': [
+                    { title: "Edit Name 1", price: "₹1.5 L", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "houses_mansion_1.html" },
+                    { title: "Edit Name 2", price: "₹1.5 L", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "houses_mansion_2.html" },
+                    { title: "Edit Name 3", price: "₹1.5 L", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "houses_mansion_3.html" },
+                    { title: "Edit Name 4", price: "₹1.5 L", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "houses_mansion_4.html" },
+                    { title: "Edit Name 5", price: "₹1.5 L", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "houses_mansion_5.html" },
+                    { title: "Edit Name 6", price: "₹1.5 L", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600", link: "houses_mansion_6.html" }
+                ],
+                'Tiny House': [
+                    { title: "Edit Name 1", price: "₹15,000", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600", link: "houses_tiny_1.html" },
+                    { title: "Edit Name 2", price: "₹15,000", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600", link: "houses_tiny_2.html" },
+                    { title: "Edit Name 3", price: "₹15,000", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600", link: "houses_tiny_3.html" },
+                    { title: "Edit Name 4", price: "₹15,000", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600", link: "houses_tiny_4.html" },
+                    { title: "Edit Name 5", price: "₹15,000", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600", link: "houses_tiny_5.html" },
+                    { title: "Edit Name 6", price: "₹15,000", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600", link: "houses_tiny_6.html" }
+                ],
+                'Guest House': [
+                    { title: "Edit Name 1", price: "₹20,000", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "houses_guest_1.html" },
+                    { title: "Edit Name 2", price: "₹20,000", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "houses_guest_2.html" },
+                    { title: "Edit Name 3", price: "₹20,000", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "houses_guest_3.html" },
+                    { title: "Edit Name 4", price: "₹20,000", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "houses_guest_4.html" },
+                    { title: "Edit Name 5", price: "₹20,000", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "houses_guest_5.html" },
+                    { title: "Edit Name 6", price: "₹20,000", loc: "Edit Loc", rating: "4.1", img: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600", link: "houses_guest_6.html" }
+                ],
+                'Haveli': [
+                    { title: "Edit Name 1", price: "₹80,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=600", link: "houses_haveli_1.html" },
+                    { title: "Edit Name 2", price: "₹80,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=600", link: "houses_haveli_2.html" },
+                    { title: "Edit Name 3", price: "₹80,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=600", link: "houses_haveli_3.html" },
+                    { title: "Edit Name 4", price: "₹80,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=600", link: "houses_haveli_4.html" },
+                    { title: "Edit Name 5", price: "₹80,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=600", link: "houses_haveli_5.html" },
+                    { title: "Edit Name 6", price: "₹80,000", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?q=80&w=600", link: "houses_haveli_6.html" }
+                ]
             },
             plots: {
-                'Residential': [ { title: "Home Plot", price: "₹80 Lakh", loc: "Sun City", rating: "4.6", img: "https://images.unsplash.com/photo-1598528738936-c50861ccf5a3?q=80&w=600&auto=format&fit=crop" } ],
-                'Commercial': [ { title: "Shop Land", price: "₹2 Cr", loc: "Mkt", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600&auto=format&fit=crop" } ],
-                'Industrial': [ { title: "Factory", price: "₹1.5 Cr", loc: "IMT", rating: "4.7", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600&auto=format&fit=crop" } ],
-                'Agri': [ { title: "Farm Soil", price: "₹50k/Mo", loc: "Rural", rating: "4.5", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600&auto=format&fit=crop" } ],
-                'Farm Land': [ { title: "Acre Plot", price: "₹40k/Mo", loc: "Out", rating: "4.4", img: "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?q=80&w=600&auto=format&fit=crop" } ],
-                'Corner': [ { title: "2 Side Open", price: "₹1 Cr", loc: "Sec-10", rating: "5.0", img: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=600&auto=format&fit=crop" } ],
-                'Park Face': [ { title: "View Plot", price: "₹90 Lakh", loc: "Green", rating: "4.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop" } ],
-                'Main Rd': [ { title: "Hwy Plot", price: "₹3 Cr", loc: "NH-8", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600&auto=format&fit=crop" } ],
-                'Gated': [ { title: "Secure", price: "₹1.2 Cr", loc: "DLF", rating: "4.7", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600&auto=format&fit=crop" } ],
-                'Invest': [ { title: "Future", price: "₹40 Lakh", loc: "New", rating: "4.3", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600&auto=format&fit=crop" } ]
+                'Residential': [
+                    { title: "Edit Name 1", price: "90 Lakh", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1598528738936-c50861ccf5a3?q=80&w=600", link: "plots_residential_1.html" },
+                    { title: "Edit Name 2", price: "90 Lakh", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1598528738936-c50861ccf5a3?q=80&w=600", link: "plots_residential_2.html" },
+                    { title: "Edit Name 3", price: "90 Lakh", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1598528738936-c50861ccf5a3?q=80&w=600", link: "plots_residential_3.html" },
+                    { title: "Edit Name 4", price: "90 Lakh", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1598528738936-c50861ccf5a3?q=80&w=600", link: "plots_residential_4.html" },
+                    { title: "Edit Name 5", price: "90 Lakh", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1598528738936-c50861ccf5a3?q=80&w=600", link: "plots_residential_5.html" },
+                    { title: "Edit Name 6", price: "90 Lakh", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1598528738936-c50861ccf5a3?q=80&w=600", link: "plots_residential_6.html" }
+                ],
+                'Commercial': [
+                    { title: "Edit Name 1", price: "1 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_commercial_1.html" },
+                    { title: "Edit Name 2", price: "1 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_commercial_2.html" },
+                    { title: "Edit Name 3", price: "1 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_commercial_3.html" },
+                    { title: "Edit Name 4", price: "1 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_commercial_4.html" },
+                    { title: "Edit Name 5", price: "1 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_commercial_5.html" },
+                    { title: "Edit Name 6", price: "1 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_commercial_6.html" }
+                ],
+                'Industrial': [
+                    { title: "Edit Name 1", price: "1.2 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_industrial_1.html" },
+                    { title: "Edit Name 2", price: "1.2 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_industrial_2.html" },
+                    { title: "Edit Name 3", price: "1.2 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_industrial_3.html" },
+                    { title: "Edit Name 4", price: "1.2 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_industrial_4.html" },
+                    { title: "Edit Name 5", price: "1.2 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_industrial_5.html" },
+                    { title: "Edit Name 6", price: "1.2 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_industrial_6.html" }
+                ],
+                'Agriculture': [
+                    { title: "Edit Name 1", price: "50 Lakh", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_agriculture_1.html" },
+                    { title: "Edit Name 2", price: "50 Lakh", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_agriculture_2.html" },
+                    { title: "Edit Name 3", price: "50 Lakh", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_agriculture_3.html" },
+                    { title: "Edit Name 4", price: "50 Lakh", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_agriculture_4.html" },
+                    { title: "Edit Name 5", price: "50 Lakh", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_agriculture_5.html" },
+                    { title: "Edit Name 6", price: "50 Lakh", loc: "Edit Loc", rating: "4.5", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_agriculture_6.html" }
+                ],
+                'Farm Land': [
+                    { title: "Edit Name 1", price: "80 Lakh", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?q=80&w=600", link: "plots_farmland_1.html" },
+                    { title: "Edit Name 2", price: "80 Lakh", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?q=80&w=600", link: "plots_farmland_2.html" },
+                    { title: "Edit Name 3", price: "80 Lakh", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?q=80&w=600", link: "plots_farmland_3.html" },
+                    { title: "Edit Name 4", price: "80 Lakh", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?q=80&w=600", link: "plots_farmland_4.html" },
+                    { title: "Edit Name 5", price: "80 Lakh", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?q=80&w=600", link: "plots_farmland_5.html" },
+                    { title: "Edit Name 6", price: "80 Lakh", loc: "Edit Loc", rating: "4.4", img: "https://images.unsplash.com/photo-1628744876497-eb30460be9f6?q=80&w=600", link: "plots_farmland_6.html" }
+                ],
+                'Corner Plot': [
+                    { title: "Edit Name 1", price: "1.2 Cr", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=600", link: "plots_corner_1.html" },
+                    { title: "Edit Name 2", price: "1.2 Cr", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=600", link: "plots_corner_2.html" },
+                    { title: "Edit Name 3", price: "1.2 Cr", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=600", link: "plots_corner_3.html" },
+                    { title: "Edit Name 4", price: "1.2 Cr", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=600", link: "plots_corner_4.html" },
+                    { title: "Edit Name 5", price: "1.2 Cr", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=600", link: "plots_corner_5.html" },
+                    { title: "Edit Name 6", price: "1.2 Cr", loc: "Edit Loc", rating: "5.0", img: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=600", link: "plots_corner_6.html" }
+                ],
+                'Park Face': [
+                    { title: "Edit Name 1", price: "1 Cr", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "plots_parkface_1.html" },
+                    { title: "Edit Name 2", price: "1 Cr", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "plots_parkface_2.html" },
+                    { title: "Edit Name 3", price: "1 Cr", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "plots_parkface_3.html" },
+                    { title: "Edit Name 4", price: "1 Cr", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "plots_parkface_4.html" },
+                    { title: "Edit Name 5", price: "1 Cr", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "plots_parkface_5.html" },
+                    { title: "Edit Name 6", price: "1 Cr", loc: "Edit Loc", rating: "4.8", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600", link: "plots_parkface_6.html" }
+                ],
+                'Main Road': [
+                    { title: "Edit Name 1", price: "3 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_mainroad_1.html" },
+                    { title: "Edit Name 2", price: "3 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_mainroad_2.html" },
+                    { title: "Edit Name 3", price: "3 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_mainroad_3.html" },
+                    { title: "Edit Name 4", price: "3 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_mainroad_4.html" },
+                    { title: "Edit Name 5", price: "3 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_mainroad_5.html" },
+                    { title: "Edit Name 6", price: "3 Cr", loc: "Edit Loc", rating: "4.9", img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600", link: "plots_mainroad_6.html" }
+                ],
+                'Gated Comm': [
+                    { title: "Edit Name 1", price: "1.1 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_gated_1.html" },
+                    { title: "Edit Name 2", price: "1.1 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_gated_2.html" },
+                    { title: "Edit Name 3", price: "1.1 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_gated_3.html" },
+                    { title: "Edit Name 4", price: "1.1 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_gated_4.html" },
+                    { title: "Edit Name 5", price: "1.1 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_gated_5.html" },
+                    { title: "Edit Name 6", price: "1.1 Cr", loc: "Edit Loc", rating: "4.7", img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=600", link: "plots_gated_6.html" }
+                ],
+                'Investment': [
+                    { title: "Edit Name 1", price: "40 Lakh", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_investment_1.html" },
+                    { title: "Edit Name 2", price: "40 Lakh", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_investment_2.html" },
+                    { title: "Edit Name 3", price: "40 Lakh", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_investment_3.html" },
+                    { title: "Edit Name 4", price: "40 Lakh", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_investment_4.html" },
+                    { title: "Edit Name 5", price: "40 Lakh", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_investment_5.html" },
+                    { title: "Edit Name 6", price: "40 Lakh", loc: "Edit Loc", rating: "4.3", img: "https://images.unsplash.com/photo-1565514020176-db8b248a39a0?q=80&w=600", link: "plots_investment_6.html" }
+                ]
             }
         };
 
-        // --- RENDER LOGIC WITH DYNAMIC SUB-NAV ---
-        function initCategory(category) {
-            const navContainer = document.getElementById(`nav-${category}`);
-            const gridContainer = document.getElementById(`grid-${category}`);
-            if (!navContainer || !gridContainer) return;
+        let currentCategory = 'pg';
+        let listingData = {}; 
 
-            const subTypes = Object.keys(fullData[category]);
-            
-            // Render Sub-Nav
-            navContainer.innerHTML = subTypes.map((type, index) => `
-                <div class="sub-nav-item ${index === 0 ? 'active' : ''}" 
-                     onclick="switchSubType('${category}', '${type}', this)">
-                    ${type}
-                </div>
-            `).join('');
-
-            // Render Initial Grid
-            renderGrid(category, subTypes[0]);
-        }
-
-        function switchSubType(category, subType, btnElement) {
-            const parent = document.getElementById(`nav-${category}`);
-            parent.querySelectorAll('.sub-nav-item').forEach(el => el.classList.remove('active'));
-            btnElement.classList.add('active');
-            renderGrid(category, subType);
-        }
-
-        // --- NEW: OPEN LIST PROPERTY FORM (IN POPUP CONTEXT) ---
-        function openListPropertyForm(category) {
-            const container = document.getElementById(`grid-${category}`);
-            
-            // Replace grid with form
-            container.innerHTML = '';
-            
-            setTimeout(() => {
-                container.innerHTML = `
-                    <div style="grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; padding: 20px; height: 100%;">
-                        <div style="background: rgba(20,20,20,0.9); border: 1px solid #39ff14; padding: 25px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; animation: fadeIn 0.5s ease; box-shadow: 0 0 30px rgba(57, 255, 20, 0.1);">
-                            <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #39ff14; margin-bottom: 15px;"></i>
-                            <h3 style="color: #fff; font-size: 1.5rem; margin-bottom: 5px; font-family: 'Rajdhani', sans-serif;">LIST YOUR ${category.toUpperCase()}</h3>
-                            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Join the future of renting.</p>
-                            
-                            <input type="text" placeholder="Property Title" style="width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 10px; margin-bottom: 10px; outline: none; font-size: 0.9rem;">
-                            <input type="text" placeholder="Location" style="width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 10px; margin-bottom: 10px; outline: none; font-size: 0.9rem;">
-                            <input type="number" placeholder="Rent (₹)" style="width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 10px; margin-bottom: 20px; outline: none; font-size: 0.9rem;">
-                            
-                            <div class="action-btn" onclick="alert('Listing Submitted for Review!')" style="background: #39ff14; color: #000; font-size: 1rem; padding: 12px; margin-top: 0;">
-                                SUBMIT LISTING
-                            </div>
-                            <div onclick="initCategory('${category}')" style="color: #666; font-size: 0.8rem; margin-top: 15px; cursor: pointer; text-decoration: underline;">Cancel</div>
-                        </div>
-                    </div>
-                `;
-            }, 50);
-        }
-
-        function renderGrid(category, subType) {
-            const container = document.getElementById(`grid-${category}`);
-            const items = fullData[category][subType];
-
-            container.innerHTML = ''; 
-            
-            setTimeout(() => {
-                // Generate dummy cards for the selected subtype (repeating to fill grid if needed)
-                // Using 6 cards logic from before, but data has 1 or 2. Let's repeat data to make it look full.
-                const displayItems = [...items, ...items, ...items, ...items, ...items].slice(0, 10); 
-                
-                container.innerHTML = displayItems.map((item, index) => {
-                    const pageLink = `property_${item.title.replace(/\s+/g, '_').toLowerCase()}.html`;
-                    return `
-                    <div class="listing-card" style="animation-delay: ${index * 0.1}s">
-                        <div class="listing-img-box">
-                            <span class="listing-rating"><i class="fas fa-star"></i> ${item.rating}</span>
-                            <img src="${item.img}" alt="${item.title}">
-                        </div>
-                        <div class="listing-details">
-                            <div class="listing-title">${item.title}</div>
-                            <div class="listing-loc"><i class="fas fa-location-dot text-green-400"></i> ${item.loc}</div>
-                            <div class="listing-price">${item.price}</div>
-                            <div class="action-btn" onclick="window.location.href='${pageLink}'">
-                                Book Now
-                            </div>
-                        </div>
-                    </div>
-                `}).join('');
-            }, 50);
-        }
-
-        let currentCategory = 'pg'; 
-
+        // --- NAVIGATION LOGIC ---
         function activateTab(element, category) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
@@ -674,10 +887,320 @@
             }
         }
 
+        // --- GRID RENDERING LOGIC ---
+        function initCategory(category) {
+            const navContainer = document.getElementById(`nav-${category}`);
+            const gridContainer = document.getElementById(`grid-${category}`);
+            if (!navContainer || !gridContainer) return;
+
+            if(gridContainer.getAttribute('data-view') === 'form') {
+                gridContainer.setAttribute('data-view', 'grid');
+                const floatBtn = gridContainer.parentElement.querySelector('.modal-floating-btn');
+                if(floatBtn) floatBtn.style.display = 'flex';
+            }
+
+            const subTypes = Object.keys(fullData[category]);
+            navContainer.innerHTML = subTypes.map((type, index) => `
+                <div class="sub-nav-item ${index === 0 ? 'active' : ''}" 
+                     onclick="switchSubType('${category}', '${type}', this)">
+                    ${type}
+                </div>
+            `).join('');
+            renderGrid(category, subTypes[0]);
+        }
+
+        function switchSubType(category, subType, btnElement) {
+            const parent = document.getElementById(`nav-${category}`);
+            parent.querySelectorAll('.sub-nav-item').forEach(el => el.classList.remove('active'));
+            btnElement.classList.add('active');
+            renderGrid(category, subType);
+        }
+
+        function renderGrid(category, subType) {
+            const container = document.getElementById(`grid-${category}`);
+            // Safety check for empty data
+            let displayItems = [];
+            if (fullData[category] && fullData[category][subType]) {
+                displayItems = fullData[category][subType];
+            }
+            
+            // Render
+            if(displayItems.length === 0) {
+                 container.innerHTML = `<div style="text-align:center; color:#666; width:200%; padding:20px;">No items found.</div>`;
+                 return;
+            }
+
+            container.innerHTML = displayItems.map((item, index) => {
+                return `
+                <div class="listing-card" style="animation-delay: ${index * 0.05}s" onclick="window.location.href='${item.link || '#'}'">
+                    <div class="listing-img-box">
+                        <span class="listing-rating"><i class="fas fa-star"></i> ${item.rating}</span>
+                        <img src="${item.img}" alt="${item.title}">
+                    </div>
+                    <div class="listing-details">
+                        <div class="listing-title">${item.title}</div>
+                        <div class="listing-loc"><i class="fas fa-location-dot text-green-400"></i> ${item.loc}</div>
+                        <div class="listing-price">${item.price}</div>
+                        <div class="action-btn" onclick="event.stopPropagation(); alert('Booking feature coming soon!')">
+                            Book Now
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // --- NEW MECHANISM: VALIDATION HELPER ---
+        function validateField(id, regex, errorMsg) {
+            const el = document.getElementById(id);
+            const val = el.value.trim();
+            const parent = el.parentElement;
+            
+            // Reset previous error
+            el.classList.remove('error-shake');
+            
+            if (!regex.test(val)) {
+                el.classList.add('error-shake');
+                el.focus();
+                // Add shake animation reset to allow re-shake
+                setTimeout(() => el.classList.remove('error-shake'), 400);
+                return false;
+            }
+            return true;
+        }
+
+        // --- HELPER: Convert File to Base64 (CRUCIAL FOR IMAGE UPLOAD) ---
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        function handleFileSelect(input) {
+            const box = input.parentElement;
+            if(input.files && input.files.length > 0) {
+                box.classList.add('file-checked');
+                box.classList.remove('error-shake');
+            } else {
+                box.classList.remove('file-checked');
+            }
+        }
+
+        // --- ULTRA PRO MAX LISTING FLOW ---
+        function startListingFlow(category) {
+            listingData = {}; 
+            const container = document.getElementById(`grid-${category}`);
+            const floatBtn = container.parentElement.querySelector('.modal-floating-btn');
+            if(floatBtn) floatBtn.style.display = 'none';
+
+            container.setAttribute('data-view', 'form');
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; display: flex; justify-content: center; padding-top: 10px;">
+                    <div class="ultra-form-container">
+                        <div class="form-progress-track"><div class="form-progress-fill" style="width:33%"></div></div>
+                        <div class="form-header">
+                            <h3>Identity</h3>
+                            <p>STEP 1 OF 3</p>
+                        </div>
+                        
+                        <div class="ultra-input-group">
+                            <input type="text" id="inp-name" class="ultra-input" placeholder="Full Owner Name">
+                            <div class="error-msg">Name must be 3+ chars</div>
+                        </div>
+                        <div class="ultra-input-group">
+                            <input type="tel" id="inp-phone" class="ultra-input" placeholder="10-Digit Mobile Number" maxlength="10">
+                            <div class="error-msg">Enter valid 10-digit Phone</div>
+                        </div>
+                        <div class="ultra-input-group">
+                            <input type="email" id="inp-email" class="ultra-input" placeholder="Email Address">
+                            <div class="error-msg">Invalid Email Format</div>
+                        </div>
+                        
+                        <button class="ultra-btn" onclick="goToStep2('${category}')">Proceed Next <i class="fas fa-arrow-right"></i></button>
+                        <div onclick="initCategory('${category}')" style="text-align:center; margin-top:15px; color:#666; font-size:0.75rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px;">Cancel Request</div>
+                    </div>
+                </div>`;
+        }
+
+        function goToStep2(category) {
+            // New Validation Mechanism
+            const isNameValid = validateField('inp-name', /^.{3,}$/, "Name too short");
+            if(!isNameValid) return;
+            
+            const isPhoneValid = validateField('inp-phone', /^[0-9]{10}$/, "Invalid Phone");
+            if(!isPhoneValid) return;
+
+            const isEmailValid = validateField('inp-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid Email");
+            if(!isEmailValid) return;
+
+            // Save Data
+            listingData.name = document.getElementById('inp-name').value;
+            listingData.phone = document.getElementById('inp-phone').value;
+            listingData.email = document.getElementById('inp-email').value;
+
+            const container = document.getElementById(`grid-${category}`);
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; display: flex; justify-content: center; padding-top: 10px;">
+                    <div class="ultra-form-container">
+                        <div class="form-progress-track"><div class="form-progress-fill" style="width:66%"></div></div>
+                        <div class="form-header">
+                            <h3>Property Info</h3>
+                            <p>STEP 2 OF 3</p>
+                        </div>
+                        
+                        <div class="ultra-input-group">
+                            <input type="text" id="inp-address" class="ultra-input" placeholder="Complete Property Address">
+                            <div class="error-msg">Address is required</div>
+                        </div>
+                        <div class="ultra-input-group">
+                            <input type="number" id="inp-rent" class="ultra-input" placeholder="Expected Rent (₹ / Month)">
+                            <div class="error-msg">Rent amount is required</div>
+                        </div>
+                        <div class="ultra-input-group">
+                            <textarea id="inp-desc" class="ultra-input" rows="3" placeholder="Facilities (e.g. WiFi, AC, Parking)"></textarea>
+                        </div>
+
+                        <button class="ultra-btn" onclick="goToStep3('${category}')">Next Step <i class="fas fa-arrow-right"></i></button>
+                        <div onclick="startListingFlow('${category}')" style="text-align:center; margin-top:15px; color:#666; font-size:0.75rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px;">Go Back</div>
+                    </div>
+                </div>`;
+        }
+
+        function goToStep3(category) {
+            const isAddrValid = validateField('inp-address', /^.{5,}$/, "Address too short");
+            if(!isAddrValid) return;
+
+            const isRentValid = validateField('inp-rent', /^[0-9]{1,}$/, "Rent Required");
+            if(!isRentValid) return;
+
+            listingData.address = document.getElementById('inp-address').value;
+            listingData.rent = document.getElementById('inp-rent').value;
+            listingData.desc = document.getElementById('inp-desc').value;
+
+            // GENERATING 10 INPUTS DYNAMICALLY
+            let uploadInputsHTML = '<div class="upload-grid">';
+            for(let i=1; i<=10; i++) {
+                // NAME AND ID MATCHING GOOGLE SHEET HEADERS AS REQUESTED
+                uploadInputsHTML += `
+                    <div class="file-upload-box">
+                        <i class="fas fa-camera file-upload-icon"></i>
+                        <div style="font-size:0.7rem; color:#aaa;">Upload Image_${i}</div>
+                        <input type="file" id="img-${i}" accept="image/*" onchange="handleFileSelect(this)">
+                    </div>
+                `;
+            }
+            uploadInputsHTML += '</div>';
+
+            const container = document.getElementById(`grid-${category}`);
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; display: flex; justify-content: center; padding-top: 10px;">
+                    <div class="ultra-form-container">
+                        <div class="form-progress-track"><div class="form-progress-fill" style="width:100%"></div></div>
+                        <div class="form-header">
+                            <h3>Gallery Upload</h3>
+                            <p>STEP 3 OF 3</p>
+                            <p style="font-size: 0.65rem; color: #888; margin-top:5px;">Min. 10 Images Required</p>
+                        </div>
+                        
+                        ${uploadInputsHTML}
+
+                        <button class="ultra-btn" onclick="submitListing('${category}')">SUBMIT REQUEST <i class="fas fa-rocket"></i></button>
+                        <div onclick="goToStep2('${category}')" style="text-align:center; margin-top:15px; color:#666; font-size:0.75rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px;">Go Back</div>
+                    </div>
+                </div>`;
+        }
+
+        // --- FINAL SUBMIT FUNCTION WITH BASE64 UPLOAD ---
+        async function submitListing(category) {
+            // 1. Validation Logic
+            let allUploaded = true;
+            for(let i=1; i<=10; i++) {
+                const input = document.getElementById(`img-${i}`);
+                if(!input.files || input.files.length === 0) {
+                    allUploaded = false;
+                    const box = input.parentElement;
+                    box.classList.add('error-shake');
+                    setTimeout(() => box.classList.remove('error-shake'), 400);
+                }
+            }
+            if(!allUploaded) return;
+
+            // 2. Show Uploading UI
+            const container = document.getElementById(`grid-${category}`);
+            const originalContent = container.innerHTML;
+            container.innerHTML = `
+                <div style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; height:400px; text-align:center;">
+                    <i class="fas fa-circle-notch fa-spin" style="font-size:3rem; color:var(--primary); margin-bottom:20px;"></i>
+                    <h3 style="color:#fff; font-family:'Rajdhani'; letter-spacing:1px;">UPLOADING PHOTOS...</h3>
+                    <p style="color:#666; font-size:0.8rem;">Processing 10 High-Res Images. Do not close.</p>
+                </div>`;
+
+            try {
+                // 3. Convert All Images to Base64
+                let imgData = {};
+                for (let i = 1; i <= 10; i++) {
+                    const input = document.getElementById(`img-${i}`);
+                    if (input.files.length > 0) {
+                        // Check file size limit (2MB safety)
+                        if(input.files[0].size > 2 * 1024 * 1024) {
+                            alert(`Image ${i} is too large (>2MB). Please compress it.`);
+                            container.innerHTML = originalContent;
+                            return;
+                        }
+                        imgData[`img${i}`] = await toBase64(input.files[0]);
+                    } else {
+                        imgData[`img${i}`] = "";
+                    }
+                }
+
+                // 4. Prepare Payload
+                const payload = {
+                    category: category,
+                    name: listingData.name,
+                    phone: listingData.phone,
+                    email: listingData.email,
+                    address: listingData.address,
+                    rent: listingData.rent,
+                    desc: listingData.desc,
+                    ...imgData
+                };
+
+                // 5. Send to Google Script
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                // 6. Success UI
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; position: relative; height: 400px; display:flex; align-items:center; justify-content:center;">
+                        <div class="success-overlay">
+                            <i class="fas fa-shield-check success-icon"></i>
+                            <h2 style="color: #fff; font-family: 'Rajdhani'; font-size: 2rem; margin:0; text-shadow: 0 0 20px var(--primary);">SUCCESS!</h2>
+                            <h3 style="color: var(--primary); font-family: 'Rajdhani'; margin: 5px 0 20px;">${listingData.name.toUpperCase()}</h3>
+                            <p style="color: #ccc; font-size: 0.95rem; max-width: 80%; line-height: 1.5;">
+                                All 10 images have been uploaded to our secure cloud storage.
+                            </p>
+                            <button class="ultra-btn" style="margin-top: 30px; width: auto; padding: 10px 40px; background: transparent; border: 1px solid var(--primary); color: var(--primary);" onclick="initCategory('${category}')">
+                                RETURN TO HUB
+                            </button>
+                        </div>
+                    </div>`;
+
+            } catch (error) {
+                console.error(error);
+                alert("Upload Failed! Check internet or try smaller images.");
+                container.innerHTML = originalContent;
+            }
+        }
+
         window.addEventListener('DOMContentLoaded', function() {
             Object.keys(fullData).forEach(cat => initCategory(cat));
             openPopup(currentCategory);
         });
+
     </script>
 </body>
 </html>
