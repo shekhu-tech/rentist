@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Privacy Policy | Rentist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: #f8f8f8;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        h1, h2 {
+            color: #222;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            margin-bottom: 12px;
+        }
+        ul {
+            margin: 10px 0;
+        }
+        a {
+            color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Privacy Policy</h1>
+<p><strong>Last updated:</strong> January 2026</p>
+
+<p>Welcome to <strong>rentist/</strong> (“we”, “our”, “us”). This Privacy Policy explains how we collect, use, share, and protect your information when you use our website and associated mobile application.</p>
+
+<h2>Information We Collect</h2>
+<p>We may collect the following type of information:</p>
+<ul>
+    <li>Personal information (such as name, email address, phone number if voluntarily provided)</li>
+    <li>Device information (such as device type, operating system, IP address)</li>
+    <li>Usage data (features used, time spent, pages viewed)</li>
+</ul>
+
+<h2>How We Use Your Information</h2>
+<p>We use the information for the following purposes:</p>
+<ul>
+    <li>To provide and maintain our services</li>
+    <li>To personalize user experience</li>
+    <li>To improve website and app performance</li>
+    <li>To communicate updates or support messages</li>
+</ul>
+
+<h2>Sharing Your Information</h2>
+<p>We do not sell or rent your personal information to any third parties for marketing.</p>
+<p>Your data may be shared only:</p>
+<ul>
+    <li>When required by law</li>
+    <li>To protect our rights</li>
+    <li>With analytics and service providers who support functionality</li>
+</ul>
+
+<h2>Third-Party Services</h2>
+<p>We may use third-party analytics or hosting services that may collect information. These services have their own privacy policies.</p>
+
+<h2>Security of Your Data</h2>
+<p>We follow reasonable measures to secure your data, but no internet transmission can be 100% secure.</p>
+
+<h2>Children’s Privacy</h2>
+<p>Our services are not intended for children under 13, and we do not knowingly collect data from them.</p>
+
+<h2>Your Rights</h2>
+<p>You have rights to access, update, or delete your personal information. Contact us if you wish to do this.</p>
+
+<h2>Changes to Policy</h2>
+<p>We may update this policy from time to time. Changes will be posted here with a revised “Last Updated” date.</p>
+
+<h2>Contact Us</h2>
+<p>If you have any questions about this Privacy Policy, please contact us:</p>
+<p>
+<strong>Email:</strong>shekharinsha944@gmail.com<br>
+
+</p>
+
+</div>
+
+</body>
+</html>
